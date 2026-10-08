@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BecauseDev IT Studio — Fan Games Developer</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #00ff9d;
+    --green-dark: #00b36b;
+    --red: #ff3b3b;
+    --bg: #05060a;
+    --bg2: #0a0d14;
+    --text: #e6f5ff;
+    --muted: #8aa0b3;
+  }
+
+  html, body {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  #matrix {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, var(--bg) 75%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5, 6, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 16px 24px;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(0, 255, 157, 0.6);
+  }
+
+  .logo::before { content: '> '; color: var(--red); }
+
+  nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  nav button {
+    background: transparent;
+    border: 1.5px solid rgba(0, 255, 157, 0.4);
+    color: var(--text);
+    padding: 10px 18px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  nav button:hover {
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
+    transform: translateY(-2px);
+  }
+
+  nav button.active {
+    background: rgba(0, 255, 157, 0.15);
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 22px rgba(0, 255, 157, 0.5);
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+  }
+
+  section {
+    display: none;
+    animation: fadeIn 0.6s ease;
+  }
+
+  section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 48px;
+    color: var(--green);
+    margin-bottom: 24px;
+    text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+    letter-spacing: 3px;
+  }
+
+  h2 {
+    font-size: 32px;
+    color: var(--green);
+    margin: 32px 0 16px;
+    letter-spacing: 2px;
+    border-left: 4px solid var(--red);
+    padding-left: 16px;
+  }
+
+  h3 {
+    font-size: 22px;
+    color: var(--text);
+    margin: 20px 0 12px;
+    letter-spacing: 1px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .terminal-box {
+    background: rgba(10, 13, 20, 0.85);
+    border: 1.5px solid rgba(0, 255, 157, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: 0 0 40px rgba(0, 255, 157, 0.1);
+    position: relative;
+  }
+
+  .terminal-box::before {
+    content: '● ● ●';
+    position: absolute;
+    top: 10px;
+    left: 16px;
+    color: var(--red);
+    font-size: 12px;
+    letter-spacing: 4px;
+    opacity: 0.7;
+  }
+
+  .terminal-box .content {
+    margin-top: 20px;
+  }
+
+  .card {
+    background: rgba(10, 13, 20, 0.8);
+    border: 1.5px solid rgba(0, 255, 157, 0.25);
+    border-radius: 14px;
+    padding: 28px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--green), transparent);
+  }
+
+  .card:hover {
+    border-color: var(--green);
+    box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
+    transform: translateX(6px);
+  }
+
+  .card h3 {
+    color: var(--green);
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .badge.dev {
+    background: rgba(255, 200, 0, 0.15);
+    color: #ffc800;
+    border: 1px solid rgba(255, 200, 0, 0.4);
+  }
+
+  .badge.soon {
+    background: rgba(0, 255, 157, 0.15);
+    color: var(--green);
+    border: 1px solid rgba(0, 255, 157, 0.4);
+  }
+
+  .badge.released {
+    background: rgba(0, 180, 255, 0.15);
+    color: #00b4ff;
+    border: 1px solid rgba(0, 180, 255, 0.4);
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(0, 255, 157, 0.05));
+    border: 1.5px solid var(--green);
+    color: var(--green);
+    padding: 14px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn:hover::before { left: 100%; }
+
+  .btn:hover {
+    background: rgba(0, 255, 157, 0.25);
+    box-shadow: 0 0 30px rgba(0, 255, 157, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .stat {
+    background: rgba(10, 13, 20, 0.85);
+    border: 1.5px solid rgba(0, 255, 157, 0.25);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat:hover {
+    border-color: var(--green);
+    box-shadow: 0 0 25px rgba(0, 255, 157, 0.3);
+  }
+
+  .stat .num {
+    font-size: 36px;
+    color: var(--green);
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
+  }
+
+  .stat .label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(0, 255, 157, 0.2);
+    padding: 30px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+    background: rgba(5, 6, 10, 0.9);
+  }
+
+  footer .highlight { color: var(--green); }
+
+  .typing::after {
+    content: '▊';
+    color: var(--green);
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 10px 0 10px 28px;
+    color: var(--muted);
+    font-size: 15px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  ul li::before {
+    content: '▸';
+    color: var(--green);
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px; }
+    nav button { padding: 8px 12px; font-size: 12px; }
+    main { padding: 40px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="overlay"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">BecauseDev IT Studio</div>
+    <nav>
+      <button class="active" data-section="home">Главная</button>
+      <button data-section="about">Информация о нас</button>
+      <button data-section="projects">Наши проекты</button>
+      <button data-section="games">Наши игры</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ГЛАВНАЯ -->
+  <section id="home" class="active">
+    <h1 class="typing">BecauseDev IT Studio</h1>
+    <p><strong>Независимая студия разработки фанатских игр</strong> в жанре мобильного хоррора. Мы создаём проекты в стиле Keplerians — с атмосферой, страхом и душой.</p>
+    <p>Наша цель — подарить фанатам жанра новые эмоции и продолжения любимых вселенных, сделанные с уважением к оригиналу.</p>
+
+    <div class="terminal-box">
+      <div class="content">
+        <p><strong>&gt; Статус:</strong> <span style="color: var(--green);">Активная разработка</span></p>
+        <p><strong>&gt; Текущий проект:</strong> <span style="color: var(--green);">Ice Scream: Life</span></p>
+        <p><strong>&gt; Платформа:</strong> Android (мобильный хоррор)</p>
+        <p><strong>&gt; Дата релиза:</strong> <span style="color: var(--red);">15 ноября 2026</span></p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">1</div><div class="label">Проект в работе</div></div>
+      <div class="stat"><div class="num">100%</div><div class="label">Фанатская работа</div></div>
+      <div class="stat"><div class="num">Android</div><div class="label">Целевая платформа</div></div>
+      <div class="stat"><div class="num">∞</div><div class="label">Любовь к делу</div></div>
+    </div>
+  </section>
+
+  <!-- О НАС -->
+  <section id="about">
+    <h1>Информация о нас</h1>
+    <p><strong>BecauseDev IT Studio</strong> — это небольшая независимая команда разработчиков, создающая фанатские игры по мотивам вселенной Ice Scream и других хоррор-проектов.</p>
+
+    <h2>Кто мы такие</h2>
+    <p>Мы — фанаты жанра мобильных хорроров и, в частности, игр студии Keplerians. Нас вдохновили такие проекты, как <strong>Ice Scream</strong>, <strong>Evil Nun</strong>, <strong>Granny</strong> и <strong>Mr. Meat</strong>. Мы решили не просто играть, а создавать своё — продолжения, ремейки и собственные идеи в этом жанре.</p>
+
+    <h2>Чем мы занимаемся</h2>
+    <ul>
+      <li>Разработка фанатских игр в жанре mobile first-person horror</li>
+      <li>Создание собственных 3D-локаций, персонажей и анимаций</li>
+      <li>Написание сюжетов и сценариев по мотивам известных вселенных</li>
+      <li>Публикация APK-файлов наших игр в открытом доступе</li>
+      <li>Развитие сообщества и обмен опытом с другими разработчиками</li>
+    </ul>
+
+    <h2>Наш подход</h2>
+    <p>Мы верим, что <strong>качество важнее скорости</strong>. Каждый проект мы делаем с душой, продумывая каждую деталь: от механики управления до атмосферы и звука. Мы не гонимся за хайпом — мы делаем то, что нам самим было бы интересно играть.</p>
+
+    <h2>Технологии</h2>
+    <ul>
+      <li><strong>Godot Engine 4.7</strong> — основной игровой движок</li>
+      <li><strong>GDScript</strong> — язык программирования игровой логики</li>
+      <li><strong>Blender</strong> — для создания и редактирования 3D-моделей</li>
+      <li><strong>GitHub Pages</strong> — для публикации сайта и релизов</li>
+    </ul>
+
+    <h2>Планы на будущее</h2>
+    <p>Мы планируем выпустить несколько частей Ice Scream: Life, сделать ремейк классической Granny, а также работать над собственными оригинальными хоррор-проектами. Следите за обновлениями!</p>
+  </section>
+
+  <!-- ПРОЕКТЫ -->
+  <section id="projects">
+    <h1>Наши проекты</h1>
+    <p>Актуальные проекты студии на разных стадиях разработки.</p>
+
+    <div class="card">
+      <span class="badge dev">В разработке</span>
+      <h3>Ice Scream: Life</h3>
+      <p><strong>Жанр:</strong> Mobile First-Person Horror</p>
+      <p><strong>Платформа:</strong> Android</p>
+      <p><strong>Дата релиза:</strong> <span style="color: var(--red); font-weight: bold;">15 ноября 2026</span></p>
+      <p>Фанатское продолжение вселенной Ice Scream. История разворачивается спустя 3 года после событий оригинала. Джей возвращается в Barrio — уже не ребёнком, а подростком. Но Род никуда не ушёл...</p>
+      <p><strong>Что делаем сейчас:</strong></p>
+      <ul>
+        <li>Доделываем 3D-карту Barrio (коллизии, точки интереса)</li>
+        <li>Строим лесную локацию</li>
+        <li>Добавляем кнопки приседа, бега и взаимодействия</li>
+        <li>Прописываем ИИ друзей и Мэдлин</li>
+        <li>Работаем над звуком и анимациями</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="badge soon">Скоро!</span>
+      <h3>Granny: Remake BecauseDev</h3>
+      <p><strong>Жанр:</strong> Mobile Horror / Escape</p>
+      <p><strong>Платформа:</strong> Android</p>
+      <p><strong>Статус:</strong> На стадии планирования</p>
+      <p>Наш взгляд на классическую Granny. Улучшенная графика, новые механики, та же атмосфера страха и погони. Подробности появятся позже.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge soon">Скоро!</span>
+      <h3>Секретный проект</h3>
+      <p>У нас есть планы на <strong>оригинальный хоррор-проект</strong>, не связанный с какой-либо существующей вселенной. Пока рано раскрывать детали, но мы уверены — вам понравится.</p>
+    </div>
+  </section>
+
+  <!-- НАШИ ИГРЫ -->
+  <section id="games">
+    <h1>Наши игры</h1>
+    <div class="terminal-box">
+      <div class="content">
+        <p style="font-size: 18px; color: var(--green); text-align: center;">
+          &gt; Тут будут публиковаться APK-файлы наших игр!
+        </p>
+        <p style="text-align: center; color: var(--muted);">
+          Как только проект выйдет в релиз, ссылка на скачивание появится на этой странице.
+        </p>
+      </div>
+    </div>
+
+    <h2>Скоро в релизе</h2>
+    <div class="card">
+      <span class="badge dev">В разработке</span>
+      <h3>Ice Scream: Life — Chapter 1</h3>
+      <p>Релиз запланирован на <strong>15 ноября 2026</strong>. APK-файл будет доступен для скачивания прямо здесь.</p>
+      <button class="btn" disabled style="opacity: 0.5; cursor: not-allowed;">Скоро</button>
+    </div>
+
+    <h2>Будущие релизы</h2>
+    <p>Следите за обновлениями. Все релизы будут публиковаться в этом разделе.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 <span class="highlight">BecauseDev IT Studio</span> — Fan Games Developer</p>
+  <p style="margin-top: 8px;">Не является официальным продуктом Keplerians. Все trademarks принадлежат их правообладателям.</p>
+</footer>
+
+<script>
+// ============ MATRIX EFFECT ============
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+let w, h, cols, drops;
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]{}/\\|=+-*&%$#@!?';
+const fontSize = 16;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  cols = Math.floor(w / fontSize);
+  drops = new Array(cols).fill(0).map(() => Math.random() * h);
+}
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(5, 6, 10, 0.08)';
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.font = fontSize + 'px Consolas, monospace';
+
+  for (let i = 0; i < cols; i++) {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    const x = i * fontSize;
+    const y = drops[i];
+
+    // Основная яркая голова
+    ctx.fillStyle = '#00ff9d';
+    ctx.shadowColor = '#00ff9d';
+    ctx.shadowBlur = 12;
+    ctx.fillText(ch, x, y);
+
+    // Затухающий хвост
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(0, 255, 157, 0.5)';
+    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize * 2);
+
+    if (y > h && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i] += fontSize * 0.6;
+  }
+}
+
+window.addEventListener('resize', resize);
+resize();
+setInterval(drawMatrix, 50);
+
+// ============ NAVIGATION ============
+const navButtons = document.querySelectorAll('nav button');
+const sections = document.querySelectorAll('section');
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.section;
+
+    navButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
