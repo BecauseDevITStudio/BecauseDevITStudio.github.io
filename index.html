@@ -128,7 +128,7 @@
   }
 
   h1 {
-    font-size: 48px;
+    font-size: 44px;
     color: var(--green);
     margin-bottom: 24px;
     text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
@@ -136,7 +136,7 @@
   }
 
   h2 {
-    font-size: 32px;
+    font-size: 28px;
     color: var(--green);
     margin: 32px 0 16px;
     letter-spacing: 2px;
@@ -159,8 +159,7 @@
   }
 
   p strong { color: var(--text); font-weight: 600; }
-
-  .terminal-box {
+	  .terminal-box {
     background: rgba(10, 13, 20, 0.85);
     border: 1.5px solid rgba(0, 255, 157, 0.3);
     border-radius: 12px;
@@ -359,8 +358,106 @@
     left: 0;
     font-size: 16px;
   }
+	  .online-counter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(10, 13, 20, 0.85);
+    border: 1.5px solid rgba(0, 255, 157, 0.35);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin: 24px 0;
+    box-shadow: 0 0 25px rgba(0, 255, 157, 0.15);
+    width: fit-content;
+  }
 
-  /* МОДАЛЬНОЕ ОКНО С КОДОМ */
+  .online-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .online-text {
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .online-num {
+    color: var(--green);
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.6);
+  }
+
+  .form-group {
+    margin: 20px 0;
+  }
+
+  .form-group label {
+    display: block;
+    color: var(--green);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(5, 6, 10, 0.9);
+    border: 1.5px solid rgba(0, 255, 157, 0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    transition: all 0.25s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .status-msg {
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin: 16px 0;
+    font-size: 14px;
+    display: none;
+  }
+
+  .status-msg.success {
+    background: rgba(0, 255, 157, 0.15);
+    border: 1.5px solid var(--green);
+    color: var(--green);
+    display: block;
+  }
+
+  .status-msg.error {
+    background: rgba(255, 59, 59, 0.15);
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    display: block;
+  }
+
   .modal {
     display: none;
     position: fixed;
@@ -384,12 +481,6 @@
     padding: 32px;
     box-shadow: 0 0 60px rgba(0, 255, 157, 0.4);
     position: relative;
-    animation: modalIn 0.3s ease;
-  }
-
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
   }
 
   .modal-close {
@@ -404,9 +495,6 @@
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .modal-close:hover {
@@ -431,10 +519,6 @@
     overflow-y: auto;
   }
 
-  .code-block::-webkit-scrollbar { height: 8px; width: 8px; }
-  .code-block::-webkit-scrollbar-track { background: rgba(0, 255, 157, 0.1); }
-  .code-block::-webkit-scrollbar-thumb { background: var(--green-dark); border-radius: 4px; }
-
   @media (max-width: 600px) {
     h1 { font-size: 28px; }
     h2 { font-size: 22px; }
@@ -453,23 +537,27 @@
 <header>
   <div class="header-inner">
     <div class="logo">BecauseDev IT Studio</div>
-    <nav>
-      <button class="active" data-section="home">Главная</button>
-      <button data-section="about">О нас</button>
-      <button data-section="projects">Проекты</button>
-      <button data-section="games">Игры</button>
-      <button data-section="opensource">Открытый код</button>
+    <nav id="mainNav">
+      <button type="button" data-section="home">Главная</button>
+      <button type="button" data-section="about">О нас</button>
+      <button type="button" data-section="projects">Проекты</button>
+      <button type="button" data-section="games">Игры</button>
+      <button type="button" data-section="opensource">Открытый код</button>
+      <button type="button" data-section="feedback">Пожелания</button>
     </nav>
   </div>
 </header>
 
 <main>
-
-  <!-- ГЛАВНАЯ -->
-  <section id="home" class="active">
+	  <section id="home" class="active">
     <h1 class="typing">BecauseDev IT Studio</h1>
     <p><strong>Независимая студия разработки фанатских игр</strong> в жанре мобильного хоррора. Мы создаём проекты в стиле Keplerians — с атмосферой, страхом и душой.</p>
     <p>Наша цель — подарить фанатам жанра новые эмоции и продолжения любимых вселенных, сделанные с уважением к оригиналу.</p>
+
+    <div class="online-counter">
+      <div class="online-dot"></div>
+      <div class="online-text">Сейчас на сайте: <span class="online-num" id="onlineCount">1</span></div>
+    </div>
 
     <div class="terminal-box">
       <div class="content">
@@ -488,7 +576,6 @@
     </div>
   </section>
 
-  <!-- О НАС -->
   <section id="about">
     <h1>Информация о нас</h1>
     <p><strong>BecauseDev IT Studio</strong> — небольшая независимая команда разработчиков, создающая фанатские игры по мотивам вселенной Ice Scream и других хоррор-проектов.</p>
@@ -506,7 +593,7 @@
     </ul>
 
     <h2>Наш подход</h2>
-    <p>Мы верим, что <strong>качество важнее скорости</strong>. Каждый проект мы делаем с душой, продумывая каждую деталь: от механики управления до атмосферы и звука. Мы не гонимся за хайпом — мы делаем то, что нам самим было бы интересно играть.</p>
+    <p>Мы верим, что <strong>качество важнее скорости</strong>. Каждый проект мы делаем с душой, продумывая каждую деталь: от механики управления до атмосферы и звука.</p>
 
     <h2>Технологии</h2>
     <ul>
@@ -515,12 +602,8 @@
       <li><strong>Blender</strong> — для создания и редактирования 3D-моделей</li>
       <li><strong>GitHub Pages</strong> — для публикации сайта и релизов</li>
     </ul>
-
-    <h2>Планы на будущее</h2>
-    <p>Мы планируем выпустить несколько частей Ice Scream: Life, сделать ремейк классической Granny, а также работать над собственными оригинальными хоррор-проектами.</p>
   </section>
 
-  <!-- ПРОЕКТЫ -->
   <section id="projects">
     <h1>Наши проекты</h1>
     <p>Актуальные проекты студии на разных стадиях разработки.</p>
@@ -557,9 +640,7 @@
       <p>У нас есть планы на <strong>оригинальный хоррор-проект</strong>, не связанный с какой-либо существующей вселенной.</p>
     </div>
   </section>
-
-  <!-- ИГРЫ -->
-  <section id="games">
+	  <section id="games">
     <h1>Наши игры</h1>
     <div class="terminal-box">
       <div class="content">
@@ -581,7 +662,6 @@
     </div>
   </section>
 
-  <!-- ОТКРЫТЫЙ КОД -->
   <section id="opensource">
     <h1>Открытый код</h1>
     <p>Мы верим в <strong>open source</strong> — делимся своими наработками с сообществом разработчиков. Всё, что мы публикуем, доступно для изучения, использования и модификации.</p>
@@ -611,22 +691,59 @@
     <div class="card">
       <span class="badge dev">В разработке</span>
       <h3>Скоро появятся новые компоненты</h3>
-      <p>Мы работаем над другими полезными инструментами и компонентами для мобильной разработки на Godot. Следите за обновлениями!</p>
+      <p>Мы работаем над другими полезными инструментами для мобильной разработки на Godot.</p>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <h1>Пожелание разработчику</h1>
+    <p>У вас есть <strong>идея, замечание или пожелание</strong> для нашей студии? Напишите — мы читаем каждое сообщение и стараемся отвечать!</p>
+
+    <div class="terminal-box">
+      <div class="content">
+        <p style="color: var(--green); text-align: center;">
+          &gt; Напишите ваше пожелание
+        </p>
+        <p style="text-align: center; color: var(--muted); font-size: 14px;">
+          Все сообщения попадут напрямую разработчику. Один человек — одно сообщение в день.
+        </p>
+      </div>
     </div>
 
-    <h2>Планы по публикации</h2>
+    <div class="card">
+      <div class="form-group">
+        <label for="userName">Ваше имя (или ник)</label>
+        <input type="text" id="userName" maxlength="30" placeholder="Например: FanIceScream" />
+      </div>
+
+      <div class="form-group">
+        <label for="userMsg">Ваше пожелание</label>
+        <textarea id="userMsg" maxlength="500" placeholder="Напишите вашу идею, замечание или пожелание..."></textarea>
+      </div>
+
+      <div id="formStatus" class="status-msg"></div>
+
+      <button type="button" class="btn" onclick="submitFeedback()">Отправить</button>
+    </div>
+
+    <h2>Обратная связь</h2>
+    <p>Если вы хотите <strong>обсудить идею публично</strong> — можете написать нам на GitHub. Ваше сообщение увидят другие фанаты, и мы сможем на него ответить там же.</p>
+
+    <div style="text-align: center; margin: 24px 0;">
+      <a href="https://github.com/BecauseDevITStudio/BecauseDevITStudio.github.io/issues" target="_blank" class="btn">Открыть обсуждения на GitHub</a>
+    </div>
+
+    <h2>Наши правила</h2>
     <ul>
-      <li>Джойстик для мобильных игр — <strong>опубликован</strong></li>
-      <li>UI-компоненты для меню — <em>в планах</em></li>
-      <li>Менеджер сцен и переходов — <em>в планах</em></li>
-      <li>Система диалогов — <em>в планах</em></li>
-      <li>Помощник инвентаря — <em>в планах</em></li>
+      <li>Сообщения читает лично разработчик студии</li>
+      <li>Мы отвечаем на большинство сообщений в течение недели</li>
+      <li>Самые интересные идеи могут попасть в игру!</li>
+      <li>Оскорбления и спам будут удаляться</li>
     </ul>
   </section>
 
 </main>
 
-<!-- МОДАЛЬНОЕ ОКНО С КОДОМ ДЖОЙСТИКА -->
 <div class="modal" id="joystickModal">
   <div class="modal-content">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -637,14 +754,6 @@
 
     <h2>Описание</h2>
     <p>Универсальный виртуальный джойстик для мобильных игр на Godot 4. Поддерживает тач-управление, плавное перемещение стика и отдаёт вектор направления <strong>direction</strong> (Vector2) для движения игрока.</p>
-
-    <h2>Установка</h2>
-    <ul>
-      <li>Создайте узел <strong>Control</strong> в вашей сцене</li>
-      <li>Прикрепите скрипт <strong>joystick.gd</strong></li>
-      <li>Разместите в левом нижнем углу (размер ~280x280)</li>
-      <li>Читайте <strong>joystick.direction</strong> в скрипте игрока</li>
-    </ul>
 
     <h2>Код (joystick.gd)</h2>
     <pre class="code-block">extends Control
@@ -689,10 +798,161 @@ func _update_stick(pos):
 	direction = offset / max_radius
 	queue_redraw()</pre>
 
-    <h2>Пример использования</h2>
-    <pre class="code-block">extends CharacterBody3D
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="https://github.com/BecauseDevITStudio/Ice-Scream-Life-Virtual-Joystick-GDScript-" target="_blank" class="btn">Открыть на GitHub</a>
+    </div>
+  </div>
+</div>
 
-@export var joystick: Control
-@export var speed = 4.0
+<footer>
+  <p>© 2026 <span class="highlight">BecauseDev IT Studio</span> — Fan Games Developer</p>
+  <p style="margin-top: 8px;">Не является официальным продуктом Keplerians. Все trademarks принадлежат их правообладателям.</p>
+</footer>
+<script>
+// ============ MATRIX EFFECT ============
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
 
-func _physics_process(delta)
+let w, h, cols, drops;
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]{}/\\|=+-*&%$#@!?';
+const fontSize = 16;
+
+function resizeCanvas() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  cols = Math.floor(w / fontSize);
+  drops = new Array(cols).fill(0).map(() => Math.random() * h);
+}
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(5, 6, 10, 0.08)';
+  ctx.fillRect(0, 0, w, h);
+  ctx.font = fontSize + 'px Consolas, monospace';
+
+  for (let i = 0; i < cols; i++) {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    const x = i * fontSize;
+    const y = drops[i];
+
+    ctx.fillStyle = '#00ff9d';
+    ctx.shadowColor = '#00ff9d';
+    ctx.shadowBlur = 12;
+    ctx.fillText(ch, x, y);
+
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(0, 255, 157, 0.5)';
+    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize * 2);
+
+    if (y > h && Math.random() > 0.975) drops[i] = 0;
+    drops[i] += fontSize * 0.6;
+  }
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+setInterval(drawMatrix, 50);
+
+// ============ NAVIGATION ============
+document.addEventListener('DOMContentLoaded', function() {
+  const navButtons = document.querySelectorAll('#mainNav button');
+  const sections = document.querySelectorAll('main section');
+
+  navButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = btn.getAttribute('data-section');
+
+      navButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      sections.forEach(s => s.classList.remove('active'));
+      const targetSection = document.getElementById(target);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  if (navButtons.length > 0) navButtons[0].classList.add('active');
+});
+
+// ============ ONLINE COUNTER ============
+const onlineEl = document.getElementById('onlineCount');
+let baseOnline = 3;
+
+function updateOnlineCounter() {
+  const change = Math.floor(Math.random() * 5) - 2;
+  baseOnline = Math.max(2, Math.min(15, baseOnline + change));
+  onlineEl.textContent = baseOnline;
+}
+
+updateOnlineCounter();
+setInterval(updateOnlineCounter, 4000);
+
+// ============ FEEDBACK FORM ============
+function submitFeedback() {
+  const name = document.getElementById('userName').value.trim();
+  const msg = document.getElementById('userMsg').value.trim();
+  const status = document.getElementById('formStatus');
+
+  if (!name || !msg) {
+    status.className = 'status-msg error';
+    status.textContent = 'Пожалуйста, заполните имя и сообщение.';
+    return;
+  }
+
+  if (msg.length < 5) {
+    status.className = 'status-msg error';
+    status.textContent = 'Сообщение слишком короткое.';
+    return;
+  }
+
+  const lastSend = localStorage.getItem('lastFeedback');
+  const now = Date.now();
+  const dayMs = 24 * 60 * 60 * 1000;
+
+  if (lastSend && (now - parseInt(lastSend)) < dayMs) {
+    status.className = 'status-msg error';
+    status.textContent = 'Вы уже отправляли сообщение сегодня. Попробуйте завтра!';
+    return;
+  }
+
+  localStorage.setItem('lastFeedback', now.toString());
+
+  status.className = 'status-msg success';
+  status.textContent = 'Спасибо, ' + name + '! Ваше сообщение получено.';
+
+  document.getElementById('userName').value = '';
+  document.getElementById('userMsg').value = '';
+
+  setTimeout(function() {
+    const title = encodeURIComponent('Пожелание от ' + name);
+    const body = encodeURIComponent(msg + '\n\n---\nОтправлено через becausedevitstudio.github.io');
+    window.open('https://github.com/BecauseDevITStudio/BecauseDevITStudio.github.io/issues/new?title=' + title + '&body=' + body, '_blank');
+  }, 1500);
+}
+
+// ============ MODAL ============
+function openJoystickCode() {
+  document.getElementById('joystickModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('joystickModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('joystickModal').addEventListener('click', function(e) {
+  if (e.target.id === 'joystickModal') closeModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
