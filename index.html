@@ -6,7 +6,6 @@
 <title>BecauseDev IT Studio — Indie Horror Game Developer</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
     --green: #00ff9d;
     --green-dark: #00b36b;
@@ -16,7 +15,6 @@
     --text: #e6f5ff;
     --muted: #8aa0b3;
   }
-
   html, body {
     font-family: 'Consolas', 'Courier New', monospace;
     background: var(--bg);
@@ -25,7 +23,6 @@
     overflow-x: hidden;
     scroll-behavior: smooth;
   }
-
   #matrix {
     position: fixed;
     top: 0; left: 0;
@@ -34,7 +31,6 @@
     opacity: 0.35;
     pointer-events: none;
   }
-
   .overlay {
     position: fixed;
     top: 0; left: 0;
@@ -43,7 +39,6 @@
     z-index: 1;
     pointer-events: none;
   }
-
   header {
     position: sticky;
     top: 0;
@@ -53,7 +48,6 @@
     border-bottom: 1px solid rgba(0, 255, 157, 0.2);
     padding: 16px 24px;
   }
-
   .header-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -63,7 +57,6 @@
     flex-wrap: wrap;
     gap: 16px;
   }
-
   .logo {
     font-size: 20px;
     font-weight: bold;
@@ -71,15 +64,8 @@
     letter-spacing: 2px;
     text-shadow: 0 0 12px rgba(0, 255, 157, 0.6);
   }
-
   .logo::before { content: '> '; color: var(--red); }
-
-  nav {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
+  nav { display: flex; gap: 10px; flex-wrap: wrap; }
   nav button {
     background: transparent;
     border: 1.5px solid rgba(0, 255, 157, 0.4);
@@ -92,21 +78,18 @@
     transition: all 0.25s ease;
     letter-spacing: 0.5px;
   }
-
   nav button:hover {
     border-color: var(--green);
     color: var(--green);
     box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
     transform: translateY(-2px);
   }
-
   nav button.active {
     background: rgba(0, 255, 157, 0.15);
     border-color: var(--green);
     color: var(--green);
     box-shadow: 0 0 22px rgba(0, 255, 157, 0.5);
   }
-
   main {
     position: relative;
     z-index: 2;
@@ -114,19 +97,12 @@
     margin: 0 auto;
     padding: 60px 24px 120px;
   }
-
-  section {
-    display: none;
-    animation: fadeIn 0.6s ease;
-  }
-
+  section { display: none; animation: fadeIn 0.6s ease; }
   section.active { display: block; }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   h1 {
     font-size: 44px;
     color: var(--green);
@@ -134,7 +110,6 @@
     text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
     letter-spacing: 3px;
   }
-
   h2 {
     font-size: 28px;
     color: var(--green);
@@ -143,21 +118,18 @@
     border-left: 4px solid var(--red);
     padding-left: 16px;
   }
-
   h3 {
     font-size: 22px;
     color: var(--text);
     margin: 20px 0 12px;
     letter-spacing: 1px;
   }
-
   p {
     font-size: 16px;
     line-height: 1.8;
     color: var(--muted);
     margin-bottom: 16px;
   }
-
   p strong { color: var(--text); font-weight: 600; }
 	  .terminal-box {
     background: rgba(10, 13, 20, 0.85);
@@ -168,7 +140,6 @@
     box-shadow: 0 0 40px rgba(0, 255, 157, 0.1);
     position: relative;
   }
-
   .terminal-box::before {
     content: '● ● ●';
     position: absolute;
@@ -179,9 +150,7 @@
     letter-spacing: 4px;
     opacity: 0.7;
   }
-
   .terminal-box .content { margin-top: 20px; }
-
   .card {
     background: rgba(10, 13, 20, 0.8);
     border: 1.5px solid rgba(0, 255, 157, 0.25);
@@ -192,7 +161,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .card::before {
     content: '';
     position: absolute;
@@ -200,21 +168,13 @@
     width: 4px; height: 100%;
     background: linear-gradient(180deg, var(--green), transparent);
   }
-
   .card:hover {
     border-color: var(--green);
     box-shadow: 0 0 35px rgba(0, 255, 157, 0.25);
     transform: translateX(6px);
   }
-
   .card.clickable { cursor: pointer; }
-
-  .card h3 {
-    color: var(--green);
-    font-size: 24px;
-    margin-bottom: 12px;
-  }
-
+  .card h3 { color: var(--green); font-size: 24px; margin-bottom: 12px; }
   .badge {
     display: inline-block;
     padding: 6px 14px;
@@ -225,31 +185,26 @@
     text-transform: uppercase;
     margin-bottom: 14px;
   }
-
   .badge.dev {
     background: rgba(255, 200, 0, 0.15);
     color: #ffc800;
     border: 1px solid rgba(255, 200, 0, 0.4);
   }
-
   .badge.soon {
     background: rgba(0, 255, 157, 0.15);
     color: var(--green);
     border: 1px solid rgba(0, 255, 157, 0.4);
   }
-
   .badge.released {
     background: rgba(0, 180, 255, 0.15);
     color: #00b4ff;
     border: 1px solid rgba(0, 180, 255, 0.4);
   }
-
   .badge.official {
     background: rgba(255, 59, 59, 0.15);
     color: var(--red);
     border: 1px solid rgba(255, 59, 59, 0.5);
   }
-
   .btn {
     display: inline-block;
     background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(0, 255, 157, 0.05));
@@ -268,7 +223,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .btn::before {
     content: '';
     position: absolute;
@@ -277,22 +231,18 @@
     background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.4), transparent);
     transition: left 0.5s ease;
   }
-
   .btn:hover::before { left: 100%; }
-
   .btn:hover {
     background: rgba(0, 255, 157, 0.25);
     box-shadow: 0 0 30px rgba(0, 255, 157, 0.6);
     transform: translateY(-2px);
   }
-
   .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
     margin: 32px 0;
   }
-
   .stat {
     background: rgba(10, 13, 20, 0.85);
     border: 1.5px solid rgba(0, 255, 157, 0.25);
@@ -301,19 +251,16 @@
     text-align: center;
     transition: all 0.3s ease;
   }
-
   .stat:hover {
     border-color: var(--green);
     box-shadow: 0 0 25px rgba(0, 255, 157, 0.3);
   }
-
   .stat .num {
     font-size: 36px;
     color: var(--green);
     font-weight: bold;
     text-shadow: 0 0 15px rgba(0, 255, 157, 0.6);
   }
-
   .stat .label {
     font-size: 13px;
     color: var(--muted);
@@ -321,7 +268,6 @@
     letter-spacing: 1px;
     text-transform: uppercase;
   }
-
   footer {
     position: relative;
     z-index: 2;
@@ -333,22 +279,17 @@
     letter-spacing: 1px;
     background: rgba(5, 6, 10, 0.9);
   }
-
   footer .highlight { color: var(--green); }
-
   .typing::after {
     content: '▊';
     color: var(--green);
     animation: blink 1s infinite;
   }
-
   @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
   }
-
   ul { list-style: none; padding: 0; }
-
   ul li {
     padding: 10px 0 10px 28px;
     color: var(--muted);
@@ -356,58 +297,14 @@
     position: relative;
     line-height: 1.6;
   }
-
   ul li::before {
     content: '▸';
     color: var(--green);
     position: absolute;
     left: 0;
     font-size: 16px;
-	}
-	  .online-counter {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(10, 13, 20, 0.85);
-    border: 1.5px solid rgba(0, 255, 157, 0.35);
-    border-radius: 12px;
-    padding: 16px 24px;
-    margin: 24px 0;
-    box-shadow: 0 0 25px rgba(0, 255, 157, 0.15);
-    width: fit-content;
   }
-
-  .online-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 12px var(--green);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .online-text {
-    color: var(--muted);
-    font-size: 14px;
-    letter-spacing: 1px;
-  }
-
-  .online-num {
-    color: var(--green);
-    font-weight: bold;
-    font-size: 18px;
-    text-shadow: 0 0 10px rgba(0, 255, 157, 0.6);
-  }
-
-  .form-group {
-    margin: 20px 0;
-  }
-
+	  .form-group { margin: 20px 0; }
   .form-group label {
     display: block;
     color: var(--green);
@@ -416,7 +313,6 @@
     margin-bottom: 8px;
     text-transform: uppercase;
   }
-
   .form-group input,
   .form-group textarea {
     width: 100%;
@@ -429,19 +325,13 @@
     font-size: 15px;
     transition: all 0.25s ease;
   }
-
   .form-group input:focus,
   .form-group textarea:focus {
     outline: none;
     border-color: var(--green);
     box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
   }
-
-  .form-group textarea {
-    resize: vertical;
-    min-height: 140px;
-  }
-
+  .form-group textarea { resize: vertical; min-height: 140px; }
   .status-msg {
     padding: 14px 20px;
     border-radius: 10px;
@@ -449,21 +339,18 @@
     font-size: 14px;
     display: none;
   }
-
   .status-msg.success {
     background: rgba(0, 255, 157, 0.15);
     border: 1.5px solid var(--green);
     color: var(--green);
     display: block;
   }
-
   .status-msg.error {
     background: rgba(255, 59, 59, 0.15);
     border: 1.5px solid var(--red);
     color: var(--red);
     display: block;
   }
-
   .modal {
     display: none;
     position: fixed;
@@ -475,9 +362,7 @@
     overflow-y: auto;
     padding: 40px 20px;
   }
-
   .modal.active { display: block; }
-
   .modal-content {
     max-width: 1000px;
     margin: 0 auto;
@@ -488,7 +373,6 @@
     box-shadow: 0 0 60px rgba(0, 255, 157, 0.4);
     position: relative;
   }
-
   .modal-close {
     position: absolute;
     top: 16px; right: 20px;
@@ -502,13 +386,11 @@
     cursor: pointer;
     transition: all 0.25s ease;
   }
-
   .modal-close:hover {
     background: var(--red);
     color: #000;
     box-shadow: 0 0 20px var(--red);
   }
-
   .code-block {
     background: #02030a;
     border: 1.5px solid rgba(0, 255, 157, 0.3);
@@ -524,7 +406,6 @@
     max-height: 500px;
     overflow-y: auto;
   }
-
   @media (max-width: 600px) {
     h1 { font-size: 28px; }
     h2 { font-size: 22px; }
@@ -536,10 +417,8 @@
 </style>
 </head>
 <body>
-
 <canvas id="matrix"></canvas>
 <div class="overlay"></div>
-
 <header>
   <div class="header-inner">
     <div class="logo">BecauseDev IT Studio</div>
@@ -553,29 +432,23 @@
     </nav>
   </div>
 </header>
-
 <main>
 	  <section id="home" class="active">
     <h1 class="typing">BecauseDev IT Studio</h1>
     <p><strong>Независимая студия разработки игр</strong> в жанре мобильного хоррора. Мы создаём оригинальные проекты с уникальной атмосферой, глубокой механикой и вниманием к деталям.</p>
     <p>Наша цель — подарить игрокам новые эмоции через качественные хоррор-проекты, созданные с душой и уважением к жанру.</p>
 
-    <div class="online-counter">
-      <div class="online-dot"></div>
-      <div class="online-text">Сейчас на сайте: <span class="online-num" id="onlineCount">1</span></div>
-    </div>
-
     <div class="terminal-box">
       <div class="content">
         <p><strong>&gt; Статус студии:</strong> <span style="color: var(--green);">Активная разработка</span></p>
-        <p><strong>&gt; В работе:</strong> <span style="color: var(--green);">Ice Scream: Life</span> и <span style="color: var(--red);">Puppet Warden</span></p>
-        <p><strong>&gt; Платформы:</strong> Android, PC</p>
-        <p><strong>&gt; Дата релиза Ice Scream: Life:</strong> <span style="color: var(--red);">15 ноября 2026</span></p>
+        <p><strong>&gt; В разработке:</strong> <span style="color: var(--green);">Granny Remake: BecauseDev</span></p>
+        <p><strong>&gt; На паузе:</strong> <span style="color: #ffc800;">Ice Scream: Life</span></p>
+        <p><strong>&gt; В планировании:</strong> <span style="color: #ffc800;">The Puppet Warden</span></p>
       </div>
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="num">2</div><div class="label">Проекта в работе</div></div>
+      <div class="stat"><div class="num">1</div><div class="label">Активный проект</div></div>
       <div class="stat"><div class="num">100%</div><div class="label">Оригинальный контент</div></div>
       <div class="stat"><div class="num">Android</div><div class="label">Целевая платформа</div></div>
       <div class="stat"><div class="num">∞</div><div class="label">Любовь к делу</div></div>
@@ -616,62 +489,58 @@
       <li><strong>Blender</strong> — для создания и редактирования 3D-моделей</li>
       <li><strong>GitHub Pages</strong> — для сайта и публикации релизов</li>
     </ul>
-
-    <h2>Планы</h2>
-    <p>Мы работаем над несколькими проектами одновременно. О ходе разработки регулярно сообщаем на нашем YouTube-канале.</p>
   </section>
-
-  <section id="projects">
+    <section id="projects">
     <h1>Наши проекты</h1>
-    <p>Актуальные проекты студии на разных стадиях разработки.</p>
+    <p>Проекты студии на разных стадиях разработки.</p>
 
     <div class="card">
-      <span class="badge dev">В разработке</span>
+      <span class="badge dev">В разработке с 11 октября</span>
+      <h3>Granny Remake: BecauseDev</h3>
+      <p><strong>Жанр:</strong> Mobile Horror / Escape</p>
+      <p><strong>Платформа:</strong> Android</p>
+      <p><strong>Статус:</strong> <span style="color: var(--green); font-weight: bold;">Активная разработка</span></p>
+      <p><strong>Дата начала:</strong> <span style="color: var(--green);">11 октября 2026</span></p>
+      <p>Наш взгляд на классический хоррор-побег. Улучшенная графика, оптимизация под слабые устройства, новая атмосфера. Главная задача — сделать качественный ремейк, который будет работать плавно даже на бюджетных телефонах.</p>
+      <p><strong>Что планируем:</strong></p>
+      <ul>
+        <li>Локация — трёхэтажный дом с подвалом и потайными ходами</li>
+        <li>Умный ИИ преследователя с реакцией на звук</li>
+        <li>Система пряток (под кроватью, в шкафу, в ящиках)</li>
+        <li>5 игровых дней для побега</li>
+        <li>Оптимизация: 60 FPS на слабых устройствах</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="badge soon">На паузе</span>
       <h3>Ice Scream: Life</h3>
       <p><strong>Жанр:</strong> Mobile First-Person Horror</p>
       <p><strong>Платформа:</strong> Android</p>
-      <p><strong>Дата релиза:</strong> <span style="color: var(--red); font-weight: bold;">15 ноября 2026</span></p>
-      <p>Хоррор-продолжение истории про Джея — подростка, который возвращается в родной район спустя три года после событий, изменивших его жизнь. Игрока ждёт атмосферное приключение с погонями, прятками и напряжёнными моментами.</p>
-      <p><strong>Что делаем сейчас:</strong></p>
-      <ul>
-        <li>Дорабатываем 3D-карту Barrio</li>
-        <li>Строим лесную локацию</li>
-        <li>Добавляем кнопки приседа, бега и взаимодействия</li>
-        <li>Прописываем ИИ персонажей и поведение Мэдлин</li>
-        <li>Работаем над звуком и анимациями</li>
-      </ul>
+      <p><strong>Статус:</strong> <span style="color: #ffc800; font-weight: bold;">Приостановлено</span></p>
+      <p>Проект временно на паузе. Мы вернёмся к нему после завершения текущей разработки. Джей и его история никуда не денутся — обещаем.</p>
     </div>
 
     <div class="card">
-      <span class="badge official">Официальный проект</span>
+      <span class="badge soon">В стадии планирования</span>
       <h3>The Puppet Warden</h3>
       <p><strong>Жанр:</strong> Psychological Horror / Stealth</p>
       <p><strong>Платформа:</strong> Android, PC</p>
-      <p><strong>Статус:</strong> <span style="color: #ffc800; font-weight: bold;">В пре-продакшене</span></p>
-      <p><strong>Дата начала разработки:</strong> После релиза Ice Scream: Life</p>
-      <p><strong>О игре:</strong></p>
-      <p>Психологический хоррор в заброшенном викторианском поместье кукольницы. Главный антагонист — <strong>Мадам Хелена</strong>, слепая старуха с феноменальным слухом и тростью с клинком. Игрок должен сбежать из поместья за <strong>пять ночей</strong>, используя звук, прятки и подручные предметы.</p>
-      <p><strong>Ключевые механики:</strong></p>
+      <p><strong>Статус:</strong> <span style="color: #ffc800; font-weight: bold;">В стадии планирования</span></p>
+      <p>Психологический хоррор в заброшенном поместье кукольницы. Главный антагонист — <strong>Мадам Хелена</strong>, слепая старуха с феноменальным слухом и тростью с клинком. Игрок должен сбежать из поместья за <strong>пять ночей</strong>, используя звук, прятки и подручные предметы.</p>
+      <p><strong>Ключевые механики (в планах):</strong></p>
       <ul>
-        <li>Слепая Хелена ориентируется на звук — каждый шорох может стать фатальным</li>
+        <li>Слепая Хелена ориентируется на звук</li>
         <li>Случайная генерация предметов каждый матч</li>
         <li>Потайные ходы внутри стен</li>
-        <li>Второстепенные угрозы — "Сломанный мальчик" Тимоти, паукообразная кукла</li>
+        <li>Второстепенные угрозы — «Сломанный мальчик», паукообразная кукла</li>
         <li>Две концовки: обычный побег и побег на катафалке</li>
       </ul>
-      <p style="color: var(--green); margin-top: 16px;">▸ О ходе разработки сообщим на нашем YouTube-канале</p>
-    </div>
-
-    <div class="card">
-      <span class="badge soon">Скоро</span>
-      <h3>Granny: Remake BecauseDev</h3>
-      <p><strong>Жанр:</strong> Mobile Horror / Escape</p>
-      <p><strong>Платформа:</strong> Android</p>
-      <p><strong>Статус:</strong> На стадии планирования</p>
-      <p>Наш взгляд на классический жанр побега из дома. Улучшенная графика, новые механики, та же атмосфера страха и погони.</p>
+      <p style="color: var(--green); margin-top: 16px;">▸ О старте разработки сообщим отдельно</p>
     </div>
   </section>
-    <section id="games">
+
+  <section id="games">
     <h1>Наши игры</h1>
     <div class="terminal-box">
       <div class="content">
@@ -684,20 +553,19 @@
       </div>
     </div>
 
-    <h2>Скоро в релизе</h2>
+    <h2>В разработке</h2>
     <div class="card">
-      <span class="badge dev">В разработке</span>
-      <h3>Ice Scream: Life — Chapter 1</h3>
-      <p>Релиз запланирован на <strong>15 ноября 2026</strong>. APK-файл будет доступен для скачивания прямо здесь.</p>
+      <span class="badge dev">В разработке с 11 октября</span>
+      <h3>Granny Remake: BecauseDev</h3>
+      <p>Дата релиза будет объявлена позже. APK-файл появится для скачивания прямо здесь.</p>
       <button class="btn" disabled style="opacity: 0.5; cursor: not-allowed;">Скоро</button>
     </div>
 
-    <h2>В разработке</h2>
+    <h2>Заморожено</h2>
     <div class="card">
-      <span class="badge official">Официальный проект</span>
-      <h3>The Puppet Warden</h3>
-      <p>Психологический хоррор в поместье кукольницы. Релиз запланирован на <strong>2027 год</strong>.</p>
-      <p style="color: var(--green); margin-top: 16px;">▸ Следите за новостями на YouTube-канале студии</p>
+      <span class="badge soon">На паузе</span>
+      <h3>Ice Scream: Life — Chapter 1</h3>
+      <p>Разработка временно приостановлена. Релиз перенесён на неопределённый срок.</p>
     </div>
   </section>
 
@@ -717,7 +585,6 @@
     </div>
 
     <h2>Доступные компоненты</h2>
-
     <div class="card clickable" onclick="openJoystickCode()">
       <span class="badge released">Open Source</span>
       <h3>Virtual Joystick</h3>
@@ -726,61 +593,40 @@
       <p>Виртуальный джойстик для мобильных игр на Godot. Поддерживает тач-управление, плавное движение стика и выдаёт вектор направления для персонажа.</p>
       <p style="color: var(--green); margin-top: 16px;">▸ Нажмите, чтобы посмотреть код</p>
     </div>
-
     <div class="card">
       <span class="badge dev">В разработке</span>
       <h3>Скоро появятся новые компоненты</h3>
       <p>Мы работаем над другими полезными инструментами для мобильной разработки на Godot.</p>
     </div>
   </section>
-
-  <section id="feedback">
+    <section id="feedback">
     <h1>Пожелание разработчику</h1>
     <p>У вас есть <strong>идея, замечание или пожелание</strong> для нашей студии? Напишите — мы читаем каждое сообщение и стараемся отвечать!</p>
 
     <div class="terminal-box">
       <div class="content">
-        <p style="color: var(--green); text-align: center;">
-          &gt; Напишите ваше пожелание
-        </p>
-        <p style="text-align: center; color: var(--muted); font-size: 14px;">
-          Все сообщения попадут напрямую разработчику. Один человек — одно сообщение в день.
-        </p>
+        <p style="color: var(--green); text-align: center;">&gt; Напишите ваше пожелание</p>
+        <p style="text-align: center; color: var(--muted); font-size: 14px;">Все сообщения попадут напрямую разработчику.</p>
       </div>
     </div>
 
     <div class="card">
       <div class="form-group">
         <label for="userName">Ваше имя (или ник)</label>
-        <input type="text" id="userName" maxlength="30" placeholder="Например: FanIceScream" />
+        <input type="text" id="userName" maxlength="30" placeholder="Например: FanGranny" />
       </div>
-
       <div class="form-group">
         <label for="userMsg">Ваше пожелание</label>
         <textarea id="userMsg" maxlength="500" placeholder="Напишите вашу идею, замечание или пожелание..."></textarea>
       </div>
-
       <div id="formStatus" class="status-msg"></div>
-
       <button type="button" class="btn" onclick="submitFeedback()">Отправить</button>
     </div>
 
-    <h2>Обратная связь</h2>
-    <p>Если вы хотите <strong>обсудить идею публично</strong> — можете написать нам на GitHub. Ваше сообщение увидят другие игроки, и мы сможем на него ответить там же.</p>
-
     <div style="text-align: center; margin: 24px 0;">
-      <a href="https://github.com/BecauseDevITStudio/BecauseDevITStudio.github.io/issues" target="_blank" class="btn">Открыть обсуждения на GitHub</a>
+      <a href="https://github.com/BecauseDevITStudio/BecauseDevITStudio.github.io/issues" target="_blank" class="btn">Обсуждения на GitHub</a>
     </div>
-
-    <h2>Наши правила</h2>
-    <ul>
-      <li>Сообщения читает лично разработчик студии</li>
-      <li>Мы отвечаем на большинство сообщений в течение недели</li>
-      <li>Самые интересные идеи могут попасть в игру!</li>
-      <li>Оскорбления и спам будут удаляться</li>
-    </ul>
   </section>
-
 </main>
 
 <div class="modal" id="joystickModal">
@@ -789,11 +635,7 @@
     <span class="badge released">Open Source</span>
     <h1>Virtual Joystick</h1>
     <p><strong>Язык:</strong> GDScript (Godot 4.7)</p>
-    <p><strong>Лицензия:</strong> MIT — используйте свободно, будем рады упоминанию BecauseDev IT Studio.</p>
-
-    <h2>Описание</h2>
-    <p>Универсальный виртуальный джойстик для мобильных игр на Godot 4. Поддерживает тач-управление, плавное перемещение стика и отдаёт вектор направления <strong>direction</strong> (Vector2) для движения игрока.</p>
-
+    <p><strong>Лицензия:</strong> MIT</p>
     <h2>Код (joystick.gd)</h2>
     <pre class="code-block">extends Control
 
@@ -836,7 +678,6 @@ func _update_stick(pos):
 	stick_pos = center + offset
 	direction = offset / max_radius
 	queue_redraw()</pre>
-
     <div style="text-align: center; margin-top: 30px;">
       <a href="https://github.com/BecauseDevITStudio/Ice-Scream-Life-Virtual-Joystick-GDScript-" target="_blank" class="btn">Открыть на GitHub</a>
     </div>
@@ -847,11 +688,10 @@ func _update_stick(pos):
   <p>© 2026 <span class="highlight">BecauseDev IT Studio</span> — Indie Horror Game Developer</p>
   <p style="margin-top: 8px;">Все игры и материалы являются оригинальной собственностью студии.</p>
 </footer>
+
 <script>
-// ============ MATRIX EFFECT ============
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
-
 let w, h, cols, drops;
 const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>[]{}/\\|=+-*&%$#@!?';
 const fontSize = 16;
@@ -862,110 +702,74 @@ function resizeCanvas() {
   cols = Math.floor(w / fontSize);
   drops = new Array(cols).fill(0).map(() => Math.random() * h);
 }
-
 function drawMatrix() {
   ctx.fillStyle = 'rgba(5, 6, 10, 0.08)';
   ctx.fillRect(0, 0, w, h);
   ctx.font = fontSize + 'px Consolas, monospace';
-
   for (let i = 0; i < cols; i++) {
     const ch = chars[Math.floor(Math.random() * chars.length)];
     const x = i * fontSize;
     const y = drops[i];
-
     ctx.fillStyle = '#00ff9d';
     ctx.shadowColor = '#00ff9d';
     ctx.shadowBlur = 12;
     ctx.fillText(ch, x, y);
-
     ctx.shadowBlur = 0;
     ctx.fillStyle = 'rgba(0, 255, 157, 0.5)';
     ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize * 2);
-
     if (y > h && Math.random() > 0.975) drops[i] = 0;
     drops[i] += fontSize * 0.6;
   }
 }
-
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 setInterval(drawMatrix, 50);
 
-// ============ NAVIGATION ============
 document.addEventListener('DOMContentLoaded', function() {
   const navButtons = document.querySelectorAll('#mainNav button');
   const sections = document.querySelectorAll('main section');
-
   navButtons.forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
       const target = btn.getAttribute('data-section');
-
       navButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       sections.forEach(s => s.classList.remove('active'));
       const targetSection = document.getElementById(target);
-      if (targetSection) {
-        targetSection.classList.add('active');
-      }
-
+      if (targetSection) targetSection.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
-
   if (navButtons.length > 0) navButtons[0].classList.add('active');
 });
 
-// ============ ONLINE COUNTER ============
-const onlineEl = document.getElementById('onlineCount');
-let baseOnline = 3;
-
-function updateOnlineCounter() {
-  const change = Math.floor(Math.random() * 5) - 2;
-  baseOnline = Math.max(2, Math.min(15, baseOnline + change));
-  onlineEl.textContent = baseOnline;
-}
-
-updateOnlineCounter();
-setInterval(updateOnlineCounter, 4000);
-
-// ============ FEEDBACK FORM ============
 function submitFeedback() {
   const name = document.getElementById('userName').value.trim();
   const msg = document.getElementById('userMsg').value.trim();
   const status = document.getElementById('formStatus');
-
   if (!name || !msg) {
     status.className = 'status-msg error';
     status.textContent = 'Пожалуйста, заполните имя и сообщение.';
     return;
   }
-
   if (msg.length < 5) {
     status.className = 'status-msg error';
     status.textContent = 'Сообщение слишком короткое.';
     return;
   }
-
   const lastSend = localStorage.getItem('lastFeedback');
   const now = Date.now();
   const dayMs = 24 * 60 * 60 * 1000;
-
   if (lastSend && (now - parseInt(lastSend)) < dayMs) {
     status.className = 'status-msg error';
     status.textContent = 'Вы уже отправляли сообщение сегодня. Попробуйте завтра!';
     return;
   }
-
   localStorage.setItem('lastFeedback', now.toString());
-
   status.className = 'status-msg success';
   status.textContent = 'Спасибо, ' + name + '! Ваше сообщение получено.';
-
   document.getElementById('userName').value = '';
   document.getElementById('userMsg').value = '';
-
   setTimeout(function() {
     const title = encodeURIComponent('Пожелание от ' + name);
     const body = encodeURIComponent(msg + '\n\n---\nОтправлено через becausedevitstudio.github.io');
@@ -973,25 +777,20 @@ function submitFeedback() {
   }, 1500);
 }
 
-// ============ MODAL ============
 function openJoystickCode() {
   document.getElementById('joystickModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
 function closeModal() {
   document.getElementById('joystickModal').classList.remove('active');
   document.body.style.overflow = '';
 }
-
 document.getElementById('joystickModal').addEventListener('click', function(e) {
   if (e.target.id === 'joystickModal') closeModal();
 });
-
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
 </script>
-
 </body>
 </html>
