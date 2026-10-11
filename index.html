@@ -65,14 +65,14 @@
     text-shadow: 0 0 12px rgba(0, 255, 157, 0.6);
   }
   .logo::before { content: '> '; color: var(--red); }
-  nav { display: flex; gap: 10px; flex-wrap: wrap; }
+  nav { display: flex; gap: 8px; flex-wrap: wrap; }
   nav button {
     background: transparent;
     border: 1.5px solid rgba(0, 255, 157, 0.4);
     color: var(--text);
-    padding: 10px 16px;
+    padding: 9px 14px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     border-radius: 8px;
     transition: all 0.25s ease;
@@ -104,14 +104,14 @@
     to { opacity: 1; transform: translateY(0); }
   }
   h1 {
-    font-size: 44px;
+    font-size: 42px;
     color: var(--green);
     margin-bottom: 24px;
     text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
     letter-spacing: 3px;
   }
   h2 {
-    font-size: 28px;
+    font-size: 26px;
     color: var(--green);
     margin: 32px 0 16px;
     letter-spacing: 2px;
@@ -200,11 +200,6 @@
     color: #00b4ff;
     border: 1px solid rgba(0, 180, 255, 0.4);
   }
-  .badge.official {
-    background: rgba(255, 59, 59, 0.15);
-    color: var(--red);
-    border: 1px solid rgba(255, 59, 59, 0.5);
-  }
   .btn {
     display: inline-block;
     background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(0, 255, 157, 0.05));
@@ -220,18 +215,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    position: relative;
-    overflow: hidden;
   }
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.4), transparent);
-    transition: left 0.5s ease;
-  }
-  .btn:hover::before { left: 100%; }
   .btn:hover {
     background: rgba(0, 255, 157, 0.25);
     box-shadow: 0 0 30px rgba(0, 255, 157, 0.6);
@@ -384,13 +368,8 @@
     width: 40px; height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.25s ease;
   }
-  .modal-close:hover {
-    background: var(--red);
-    color: #000;
-    box-shadow: 0 0 20px var(--red);
-  }
+  .modal-close:hover { background: var(--red); color: #000; }
   .code-block {
     background: #02030a;
     border: 1.5px solid rgba(0, 255, 157, 0.3);
@@ -398,7 +377,7 @@
     padding: 20px;
     margin: 20px 0;
     overflow-x: auto;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.6;
     color: #b0ffd4;
     white-space: pre;
@@ -406,13 +385,112 @@
     max-height: 500px;
     overflow-y: auto;
   }
+  .bot-card {
+    background: rgba(10, 13, 20, 0.85);
+    border: 1.5px solid rgba(0, 255, 157, 0.3);
+    border-radius: 14px;
+    padding: 28px;
+    margin: 20px 0;
+  }
+  .bot-card h3 {
+    color: var(--green);
+    font-size: 26px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .lang-btn {
+    background: rgba(0, 255, 157, 0.08);
+    border: 1.5px solid rgba(0, 255, 157, 0.4);
+    color: var(--text);
+    padding: 14px 12px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .lang-btn:hover {
+    border-color: var(--green);
+    background: rgba(0, 255, 157, 0.2);
+    color: var(--green);
+    box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
+    transform: translateY(-2px);
+  }
+  .code-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .code-actions button {
+    background: rgba(0, 255, 157, 0.15);
+    border: 1.5px solid var(--green);
+    color: var(--green);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .code-actions button:hover {
+    background: rgba(0, 255, 157, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+  }
+  .instructions {
+    background: rgba(10, 13, 20, 0.9);
+    border-left: 4px solid var(--red);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .instructions h4 {
+    color: var(--green);
+    font-size: 16px;
+    margin-bottom: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .instructions ol {
+    padding-left: 24px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  .instructions ol li { font-size: 14px; margin-bottom: 6px; }
+  .instructions code {
+    background: rgba(0, 255, 157, 0.1);
+    color: var(--green);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .warning-note {
+    background: rgba(255, 200, 0, 0.1);
+    border-left: 4px solid #ffc800;
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #ffc800;
+  }
   @media (max-width: 600px) {
-    h1 { font-size: 28px; }
-    h2 { font-size: 22px; }
-    nav button { padding: 8px 10px; font-size: 11px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 20px; }
+    nav button { padding: 7px 10px; font-size: 10px; }
     main { padding: 40px 14px 80px; }
     .modal-content { padding: 20px; }
-    .code-block { font-size: 11px; }
+    .code-block { font-size: 10px; }
   }
 </style>
 </head>
@@ -429,6 +507,7 @@
       <button type="button" data-section="games">Игры</button>
       <button type="button" data-section="opensource">Открытый код</button>
       <button type="button" data-section="feedback">Пожелания</button>
+      <button type="button" data-section="work">По работе</button>
     </nav>
   </div>
 </header>
@@ -460,10 +539,10 @@
     <p><strong>BecauseDev IT Studio</strong> — независимая студия разработки игр в жанре мобильного хоррора. Мы создаём собственные проекты, вкладывая в каждый из них уникальный сценарий, механику и атмосферу.</p>
 
     <h2>Кто мы</h2>
-    <p>Мы — команда разработчиков, увлечённых хоррор-жанром. Наши игры строятся на продуманных механиках, психологическом напряжении и внимании к деталям. Мы не копируем чужое — мы создаём своё.</p>
+    <p>Мы — команда разработчиков, увлечённых хоррор-жанром. Наши игры строятся на продуманных механиках, психологическом напряжении и внимании к деталям.</p>
 
     <h2>Наш подход</h2>
-    <p>Каждый проект начинается с <strong>идеи и сценария</strong>. Мы продумываем лор, персонажей, механику взаимодействия и уровень страха ещё до первой строки кода. Только потом приступаем к разработке.</p>
+    <p>Каждый проект начинается с <strong>идеи и сценария</strong>. Мы продумываем лор, персонажей, механику взаимодействия и уровень страха ещё до первой строки кода.</p>
 
     <h2>Чем мы занимаемся</h2>
     <ul>
@@ -471,26 +550,19 @@
       <li>Создание собственных 3D-локаций, персонажей и анимаций</li>
       <li>Написание авторских сюжетов и геймдизайна</li>
       <li>Публикация APK-файлов и релизов через официальные платформы</li>
-      <li>Развитие сообщества игроков и обмен опытом с другими разработчиками</li>
-    </ul>
-
-    <h2>Принципы</h2>
-    <ul>
-      <li><strong>Качество важнее скорости.</strong> Лучше позже, но лучше.</li>
-      <li><strong>Оригинальность.</strong> Свои идеи, свой стиль, свой сценарий.</li>
-      <li><strong>Открытость.</strong> Общаемся с игроками, публикуем код, делимся опытом.</li>
-      <li><strong>Уважение к жанру.</strong> Хоррор — это искусство, а не набор скримеров.</li>
+      <li>Разработка открытых инструментов и ботов для разработчиков</li>
     </ul>
 
     <h2>Технологии</h2>
     <ul>
       <li><strong>Godot Engine 4.7</strong> — основной игровой движок</li>
       <li><strong>GDScript</strong> — язык программирования игровой логики</li>
-      <li><strong>Blender</strong> — для создания и редактирования 3D-моделей</li>
+      <li><strong>Python, JavaScript, C#, C++</strong> — для инструментов и ботов</li>
       <li><strong>GitHub Pages</strong> — для сайта и публикации релизов</li>
     </ul>
   </section>
-    <section id="projects">
+
+  <section id="projects">
     <h1>Наши проекты</h1>
     <p>Проекты студии на разных стадиях разработки.</p>
 
@@ -500,16 +572,7 @@
       <p><strong>Жанр:</strong> Mobile Horror / Escape</p>
       <p><strong>Платформа:</strong> Android</p>
       <p><strong>Статус:</strong> <span style="color: var(--green); font-weight: bold;">Активная разработка</span></p>
-      <p><strong>Дата начала:</strong> <span style="color: var(--green);">11 октября 2026</span></p>
-      <p>Наш взгляд на классический хоррор-побег. Улучшенная графика, оптимизация под слабые устройства, новая атмосфера. Главная задача — сделать качественный ремейк, который будет работать плавно даже на бюджетных телефонах.</p>
-      <p><strong>Что планируем:</strong></p>
-      <ul>
-        <li>Локация — трёхэтажный дом с подвалом и потайными ходами</li>
-        <li>Умный ИИ преследователя с реакцией на звук</li>
-        <li>Система пряток (под кроватью, в шкафу, в ящиках)</li>
-        <li>5 игровых дней для побега</li>
-        <li>Оптимизация: 60 FPS на слабых устройствах</li>
-      </ul>
+      <p>Наш взгляд на классический хоррор-побег. Улучшенная графика, оптимизация под слабые устройства, новая атмосфера. Главная задача — качественный ремейк, работающий плавно на бюджетных телефонах.</p>
     </div>
 
     <div class="card">
@@ -518,7 +581,7 @@
       <p><strong>Жанр:</strong> Mobile First-Person Horror</p>
       <p><strong>Платформа:</strong> Android</p>
       <p><strong>Статус:</strong> <span style="color: #ffc800; font-weight: bold;">Приостановлено</span></p>
-      <p>Проект временно на паузе. Мы вернёмся к нему после завершения текущей разработки. Джей и его история никуда не денутся — обещаем.</p>
+      <p>Проект временно на паузе. Мы вернёмся к нему после завершения текущей разработки.</p>
     </div>
 
     <div class="card">
@@ -527,29 +590,15 @@
       <p><strong>Жанр:</strong> Psychological Horror / Stealth</p>
       <p><strong>Платформа:</strong> Android, PC</p>
       <p><strong>Статус:</strong> <span style="color: #ffc800; font-weight: bold;">В стадии планирования</span></p>
-      <p>Психологический хоррор в заброшенном поместье кукольницы. Главный антагонист — <strong>Мадам Хелена</strong>, слепая старуха с феноменальным слухом и тростью с клинком. Игрок должен сбежать из поместья за <strong>пять ночей</strong>, используя звук, прятки и подручные предметы.</p>
-      <p><strong>Ключевые механики (в планах):</strong></p>
-      <ul>
-        <li>Слепая Хелена ориентируется на звук</li>
-        <li>Случайная генерация предметов каждый матч</li>
-        <li>Потайные ходы внутри стен</li>
-        <li>Второстепенные угрозы — «Сломанный мальчик», паукообразная кукла</li>
-        <li>Две концовки: обычный побег и побег на катафалке</li>
-      </ul>
-      <p style="color: var(--green); margin-top: 16px;">▸ О старте разработки сообщим отдельно</p>
+      <p>Психологический хоррор в заброшенном поместье кукольницы. Главный антагонист — <strong>Мадам Хелена</strong>, слепая старуха с феноменальным слухом и тростью с клинком.</p>
     </div>
   </section>
-
-  <section id="games">
+    <section id="games">
     <h1>Наши игры</h1>
     <div class="terminal-box">
       <div class="content">
-        <p style="font-size: 18px; color: var(--green); text-align: center;">
-          &gt; Тут будут публиковаться APK-файлы наших игр!
-        </p>
-        <p style="text-align: center; color: var(--muted);">
-          Как только проект выйдет в релиз, ссылка на скачивание появится на этой странице.
-        </p>
+        <p style="font-size: 18px; color: var(--green); text-align: center;">&gt; Тут будут публиковаться APK-файлы наших игр!</p>
+        <p style="text-align: center; color: var(--muted);">Как только проект выйдет в релиз, ссылка на скачивание появится на этой странице.</p>
       </div>
     </div>
 
@@ -571,16 +620,12 @@
 
   <section id="opensource">
     <h1>Открытый код</h1>
-    <p>Мы верим в <strong>open source</strong> — делимся своими наработками с сообществом разработчиков. Всё, что мы публикуем, доступно для изучения, использования и модификации.</p>
+    <p>Мы верим в <strong>open source</strong> — делимся своими наработками с сообществом разработчиков.</p>
 
     <div class="terminal-box">
       <div class="content">
-        <p style="font-size: 18px; color: var(--green); text-align: center;">
-          &gt; Тут будут публиковаться наши коды и плагины!
-        </p>
-        <p style="text-align: center; color: var(--muted);">
-          Изучайте, используйте, улучшайте. Будем рады обратной связи и упоминанию студии.
-        </p>
+        <p style="font-size: 18px; color: var(--green); text-align: center;">&gt; Тут будут публиковаться наши коды и плагины!</p>
+        <p style="text-align: center; color: var(--muted);">Изучайте, используйте, улучшайте.</p>
       </div>
     </div>
 
@@ -593,22 +638,11 @@
       <p>Виртуальный джойстик для мобильных игр на Godot. Поддерживает тач-управление, плавное движение стика и выдаёт вектор направления для персонажа.</p>
       <p style="color: var(--green); margin-top: 16px;">▸ Нажмите, чтобы посмотреть код</p>
     </div>
-    <div class="card">
-      <span class="badge dev">В разработке</span>
-      <h3>Скоро появятся новые компоненты</h3>
-      <p>Мы работаем над другими полезными инструментами для мобильной разработки на Godot.</p>
-    </div>
   </section>
-    <section id="feedback">
-    <h1>Пожелание разработчику</h1>
-    <p>У вас есть <strong>идея, замечание или пожелание</strong> для нашей студии? Напишите — мы читаем каждое сообщение и стараемся отвечать!</p>
 
-    <div class="terminal-box">
-      <div class="content">
-        <p style="color: var(--green); text-align: center;">&gt; Напишите ваше пожелание</p>
-        <p style="text-align: center; color: var(--muted); font-size: 14px;">Все сообщения попадут напрямую разработчику.</p>
-      </div>
-    </div>
+  <section id="feedback">
+    <h1>Пожелание разработчику</h1>
+    <p>У вас есть <strong>идея, замечание или пожелание</strong>? Напишите — мы читаем каждое сообщение!</p>
 
     <div class="card">
       <div class="form-group">
@@ -627,8 +661,38 @@
       <a href="https://github.com/BecauseDevITStudio/BecauseDevITStudio.github.io/issues" target="_blank" class="btn">Обсуждения на GitHub</a>
     </div>
   </section>
-</main>
 
+  <section id="work">
+    <h1>По работе</h1>
+    <p>Мы делимся <strong>готовыми шаблонами</strong> для разработчиков. Скачивай, вставляй свой токен, запускай — бот работает. Ниже — базы для Discord и Telegram на 4 языках программирования.</p>
+
+    <div class="warning-note">
+      ⚠ Токен бота — секретный. Никогда не публикуй его. Получай у официального разработчика платформы.
+    </div>
+
+    <div class="bot-card">
+      <h3>Discord Bot</h3>
+      <p>Базовый шаблон Discord-бота с командами <strong>!ping</strong> и <strong>!about</strong>. Отвечает на «привет». Выбери язык — получишь код и инструкцию.</p>
+      <div class="lang-grid">
+        <button class="lang-btn" onclick="openBot('discord','python')">Python</button>
+        <button class="lang-btn" onclick="openBot('discord','javascript')">JavaScript</button>
+        <button class="lang-btn" onclick="openBot('discord','csharp')">C#</button>
+        <button class="lang-btn" onclick="openBot('discord','cpp')">C++</button>
+      </div>
+    </div>
+
+    <div class="bot-card">
+      <h3>Telegram Bot</h3>
+      <p>Базовый шаблон Telegram-бота с командами <strong>/start</strong> и <strong>/ping</strong>. Отвечает на «привет». Выбери язык — получишь код и инструкцию.</p>
+      <div class="lang-grid">
+        <button class="lang-btn" onclick="openBot('telegram','python')">Python</button>
+        <button class="lang-btn" onclick="openBot('telegram','javascript')">JavaScript</button>
+        <button class="lang-btn" onclick="openBot('telegram','csharp')">C#</button>
+        <button class="lang-btn" onclick="openBot('telegram','cpp')">C++</button>
+      </div>
+    </div>
+  </section>
+</main>
 <div class="modal" id="joystickModal">
   <div class="modal-content">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -637,7 +701,7 @@
     <p><strong>Язык:</strong> GDScript (Godot 4.7)</p>
     <p><strong>Лицензия:</strong> MIT</p>
     <h2>Код (joystick.gd)</h2>
-    <pre class="code-block">extends Control
+    <pre class="code-block" id="joystickCodePlaceholder">extends Control
 
 @export var max_radius = 100.0
 @export var stick_radius = 40.0
@@ -678,8 +742,28 @@ func _update_stick(pos):
 	stick_pos = center + offset
 	direction = offset / max_radius
 	queue_redraw()</pre>
-    <div style="text-align: center; margin-top: 30px;">
-      <a href="https://github.com/BecauseDevITStudio/Ice-Scream-Life-Virtual-Joystick-GDScript-" target="_blank" class="btn">Открыть на GitHub</a>
+  </div>
+</div>
+
+<div class="modal" id="botModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeBotModal()">✕</button>
+    <span class="badge released">Open Source</span>
+    <h1 id="botTitle">Discord Bot — Python</h1>
+    <p id="botDesc"></p>
+
+    <h2>Код</h2>
+    <pre class="code-block" id="botCode"></pre>
+
+    <div class="code-actions">
+      <button onclick="copyBotCode()">📋 Скопировать код</button>
+      <button onclick="downloadBotCode()">💾 Скачать файл</button>
+    </div>
+
+    <div class="instructions" id="botInstructions"></div>
+
+    <div style="text-align: center; margin-top: 24px;">
+      <p style="color: var(--muted); font-size: 13px;">Шаблон создан <strong style="color: var(--green);">BecauseDev IT Studio</strong></p>
     </div>
   </div>
 </div>
@@ -688,8 +772,8 @@ func _update_stick(pos):
   <p>© 2026 <span class="highlight">BecauseDev IT Studio</span> — Indie Horror Game Developer</p>
   <p style="margin-top: 8px;">Все игры и материалы являются оригинальной собственностью студии.</p>
 </footer>
-
 <script>
+// ============ MATRIX ============
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 let w, h, cols, drops;
@@ -725,6 +809,7 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 setInterval(drawMatrix, 50);
 
+// ============ NAVIGATION ============
 document.addEventListener('DOMContentLoaded', function() {
   const navButtons = document.querySelectorAll('#mainNav button');
   const sections = document.querySelectorAll('main section');
@@ -743,6 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (navButtons.length > 0) navButtons[0].classList.add('active');
 });
 
+// ============ FEEDBACK ============
 function submitFeedback() {
   const name = document.getElementById('userName').value.trim();
   const msg = document.getElementById('userMsg').value.trim();
@@ -777,6 +863,7 @@ function submitFeedback() {
   }, 1500);
 }
 
+// ============ MODAL JOYSTICK ============
 function openJoystickCode() {
   document.getElementById('joystickModal').classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -788,8 +875,384 @@ function closeModal() {
 document.getElementById('joystickModal').addEventListener('click', function(e) {
   if (e.target.id === 'joystickModal') closeModal();
 });
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
+
+// ============ БАЗА КОДОВ БОТОВ ============
+const botCodes = {
+  discord: {
+    python: {
+      filename: "bot_discord.py",
+      desc: "Discord-бот на Python (библиотека discord.py).",
+      req: "pip install discord.py",
+      run: "python bot_discord.py",
+      token: "discord.com/developers/applications",
+      code: `import discord
+from discord.ext import commands
+
+TOKEN = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА"
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"Бот {bot.user} запущен!")
+    print("Шаблон от BecauseDev IT Studio")
+
+@bot.command(name="ping")
+async def ping(ctx):
+    await ctx.send("Pong! Я работаю!")
+
+@bot.command(name="about")
+async def about(ctx):
+    await ctx.send("Данный бот сделан на основе шаблона BecauseDev IT Studio")
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if message.content.lower() == "привет":
+        await message.channel.send(f"Привет, {message.author.mention}!")
+    await bot.process_commands(message)
+
+bot.run(TOKEN)`
+    },
+    javascript: {
+      filename: "bot_discord.js",
+      desc: "Discord-бот на JavaScript (Node.js + discord.js).",
+      req: "npm install discord.js",
+      run: "node bot_discord.js",
+      token: "discord.com/developers/applications",
+      code: `const { Client, GatewayIntentBits } = require('discord.js');
+
+const TOKEN = 'СЮДА_ВСТАВЬ_ТОКЕН_БОТА';
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
+
+client.once('ready', () => {
+  console.log(\`Бот \${client.user.tag} запущен!\`);
+  console.log('Шаблон от BecauseDev IT Studio');
+});
+
+client.on('messageCreate', (message) => {
+  if (message.author.bot) return;
+  if (message.content === '!ping') message.reply('Pong! Я работаю!');
+  if (message.content === '!about') message.reply('Данный бот сделан на основе шаблона BecauseDev IT Studio');
+  if (message.content.toLowerCase() === 'привет') message.reply(\`Привет, \${message.author.username}!\`);
+});
+
+client.login(TOKEN);`
+    },
+    csharp: {
+      filename: "BotDiscord.cs",
+      desc: "Discord-бот на C# (Discord.Net).",
+      req: "dotnet add package Discord.Net",
+      run: "dotnet run",
+      token: "discord.com/developers/applications",
+      code: `using Discord;
+using Discord.WebSocket;
+
+class Program
+{
+    private static DiscordSocketClient _client;
+
+    static async Task Main(string[] args)
+    {
+        _client = new DiscordSocketClient(new DiscordSocketConfig
+        {
+            GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent
+        });
+
+        _client.Log += Log;
+        _client.Ready += OnReady;
+        _client.MessageReceived += OnMessage;
+
+        string token = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА";
+        await _client.LoginAsync(TokenType.Bot, token);
+        await _client.StartAsync();
+        await Task.Delay(-1);
+    }
+
+    private static Task Log(LogMessage msg)
+    {
+        Console.WriteLine(msg.ToString());
+        return Task.CompletedTask;
+    }
+
+    private static Task OnReady()
+    {
+        Console.WriteLine($"Бот {_client.CurrentUser.Username} запущен!");
+        Console.WriteLine("Шаблон от BecauseDev IT Studio");
+        return Task.CompletedTask;
+    }
+
+    private static async Task OnMessage(SocketMessage msg)
+    {
+        if (msg.Author.IsBot) return;
+        if (msg.Content == "!ping") await msg.Channel.SendMessageAsync("Pong! Я работаю!");
+        if (msg.Content == "!about") await msg.Channel.SendMessageAsync("Данный бот сделан на основе шаблона BecauseDev IT Studio");
+        if (msg.Content.ToLower() == "привет") await msg.Channel.SendMessageAsync($"Привет, {msg.Author.Username}!");
+    }
+}`
+    },
+    cpp: {
+      filename: "bot_discord.cpp",
+      desc: "Discord-бот на C++ (библиотека D++ / DPP).",
+      req: "Установи D++ (DPP) с github.com/brainboxdotcc/DPP",
+      run: "g++ bot_discord.cpp -ldpp -o bot && ./bot",
+      token: "discord.com/developers/applications",
+      code: `#include <dpp/dpp.h>
+
+int main() {
+    std::string token = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА";
+    dpp::cluster bot(token);
+
+    bot.on_log(dpp::utility::cout_logger());
+
+    bot.on_ready([&bot](const dpp::ready_t& event) {
+        std::cout << "Бот " << bot.me.username << " запущен!" << std::endl;
+        std::cout << "Шаблон от BecauseDev IT Studio" << std::endl;
+    });
+
+    bot.on_message_create([&bot](const dpp::message_create_t& event) {
+        if (event.msg.author.is_bot()) return;
+        std::string content = event.msg.content;
+
+        if (content == "!ping")
+            bot.message_create(dpp::message(event.msg.channel_id, "Pong! Я работаю!"));
+        if (content == "!about")
+            bot.message_create(dpp::message(event.msg.channel_id, "Данный бот сделан на основе шаблона BecauseDev IT Studio"));
+        if (content == "привет")
+            bot.message_create(dpp::message(event.msg.channel_id, "Привет, <@" + std::to_string(event.msg.author.id) + ">!"));
+    });
+
+    bot.start(dpp::st_wait);
+    return 0;
+}`
+    }
+  },
+  telegram: {
+    python: {
+      filename: "bot_telegram.py",
+      desc: "Telegram-бот на Python (python-telegram-bot).",
+      req: "pip install python-telegram-bot",
+      run: "python bot_telegram.py",
+      token: "@BotFather в Telegram",
+      code: `from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
+
+TOKEN = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА"
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Привет! Данный бот сделан на основе шаблона BecauseDev IT Studio")
+
+async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Pong! Я работаю!")
+
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.text.lower() == "привет":
+        await update.message.reply_text(f"Привет, {update.message.from_user.first_name}!")
+
+app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("ping", ping))
+app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+
+print("Бот запущен. Шаблон от BecauseDev IT Studio")
+app.run_polling()`
+    },
+    javascript: {
+      filename: "bot_telegram.js",
+      desc: "Telegram-бот на JavaScript (node-telegram-bot-api).",
+      req: "npm install node-telegram-bot-api",
+      run: "node bot_telegram.js",
+      token: "@BotFather в Telegram",
+      code: `const TelegramBot = require('node-telegram-bot-api');
+
+const TOKEN = 'СЮДА_ВСТАВЬ_ТОКЕН_БОТА';
+const bot = new TelegramBot(TOKEN, { polling: true });
+
+console.log('Бот запущен. Шаблон от BecauseDev IT Studio');
+
+bot.onText(/\\/start/, (msg) => {
+  bot.sendMessage(msg.chat.id, 'Привет! Данный бот сделан на основе шаблона BecauseDev IT Studio');
+});
+
+bot.onText(/\\/ping/, (msg) => {
+  bot.sendMessage(msg.chat.id, 'Pong! Я работаю!');
+});
+
+bot.on('message', (msg) => {
+  if (!msg.text || msg.text.startsWith('/')) return;
+  if (msg.text.toLowerCase() === 'привет') {
+    bot.sendMessage(msg.chat.id, \`Привет, \${msg.from.first_name}!\`);
+  }
+});`
+    },
+    csharp: {
+      filename: "BotTelegram.cs",
+      desc: "Telegram-бот на C# (Telegram.Bot).",
+      req: "dotnet add package Telegram.Bot",
+      run: "dotnet run",
+      token: "@BotFather в Telegram",
+      code: `using Telegram.Bot;
+using Telegram.Bot.Args;
+
+class Program
+{
+    private static TelegramBotClient _bot;
+
+    static async Task Main()
+    {
+        string token = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА";
+        _bot = new TelegramBotClient(token);
+
+        var me = await _bot.GetMeAsync();
+        Console.WriteLine($"Бот {me.Username} запущен!");
+        Console.WriteLine("Шаблон от BecauseDev IT Studio");
+
+        _bot.OnMessage += OnMessage;
+        _bot.StartReceiving();
+
+        await Task.Delay(-1);
+    }
+
+    private static async void OnMessage(object sender, MessageEventArgs e)
+    {
+        var msg = e.Message;
+        if (msg.Text == null) return;
+
+        if (msg.Text == "/start")
+            await _bot.SendTextMessageAsync(msg.Chat.Id, "Привет! Данный бот сделан на основе шаблона BecauseDev IT Studio");
+        if (msg.Text == "/ping")
+            await _bot.SendTextMessageAsync(msg.Chat.Id, "Pong! Я работаю!");
+        if (msg.Text.ToLower() == "привет")
+            await _bot.SendTextMessageAsync(msg.Chat.Id, $"Привет, {msg.From.FirstName}!");
+    }
+}`
+    },
+    cpp: {
+      filename: "bot_telegram.cpp",
+      desc: "Telegram-бот на C++ (библиотека tgbot-cpp).",
+      req: "Установи tgbot-cpp с github.com/reo7sp/tgbot-cpp",
+      run: "g++ bot_telegram.cpp -ltgbot -o bot && ./bot",
+      token: "@BotFather в Telegram",
+      code: `#include <tgbot/tgbot.h>
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string token = "СЮДА_ВСТАВЬ_ТОКЕН_БОТА";
+    TgBot::Bot bot(token);
+
+    bot.getEvents().onCommand("start", [&bot](TgBot::Message::Ptr message) {
+        bot.getApi().sendMessage(message->chat->id, "Привет! Данный бот сделан на основе шаблона BecauseDev IT Studio");
+    });
+
+    bot.getEvents().onCommand("ping", [&bot](TgBot::Message::Ptr message) {
+        bot.getApi().sendMessage(message->chat->id, "Pong! Я работаю!");
+    });
+
+    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
+        if (message->text.empty()) return;
+        if (message->text[0] == '/') return;
+        if (message->text == "привет") {
+            bot.getApi().sendMessage(message->chat->id, "Привет, " + message->from->firstName + "!");
+        }
+    });
+
+    try {
+        std::cout << "Бот запущен. Шаблон от BecauseDev IT Studio" << std::endl;
+        TgBot::TgLongPoll longPoll(bot);
+        while (true) longPoll.start();
+    } catch (std::exception& e) {
+        std::cerr << "Ошибка: " << e.what() << std::endl;
+    }
+    return 0;
+}`
+    }
+  }
+};
+
+// ============ BOT MODAL ============
+let currentBotCode = "";
+let currentBotFilename = "bot.txt";
+
+function openBot(platform, lang) {
+  const data = botCodes[platform][lang];
+  if (!data) return;
+
+  const platformName = platform === "discord" ? "Discord Bot" : "Telegram Bot";
+  const langName = { python: "Python", javascript: "JavaScript", csharp: "C#", cpp: "C++" }[lang] || lang;
+
+  document.getElementById("botTitle").textContent = platformName + " — " + langName;
+  document.getElementById("botDesc").textContent = data.desc;
+  document.getElementById("botCode").textContent = data.code;
+
+  const instructions = document.getElementById("botInstructions");
+  instructions.innerHTML =
+    '<h4>Как использовать</h4>' +
+    '<ol>' +
+      '<li>Скачай файл <code>' + data.filename + '</code> или скопируй код</li>' +
+      '<li>Получи токен: <code>' + data.token + '</code></li>' +
+      '<li>Вставь токен в переменную <code>TOKEN</code></li>' +
+      '<li>Установи зависимости: <code>' + data.req + '</code></li>' +
+      '<li>Запусти: <code>' + data.run + '</code></li>' +
+    '</ol>' +
+    '<p style="margin-top: 16px; color: #ffc800; font-size: 13px;">' +
+      '⚠ Бот работает только пока запущена программа. Для 24/7 — нужен сервер.' +
+    '</p>';
+
+  currentBotCode = data.code;
+  currentBotFilename = data.filename;
+
+  document.getElementById("botModal").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeBotModal() {
+  document.getElementById("botModal").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+function copyBotCode() {
+  navigator.clipboard.writeText(currentBotCode).then(() => {
+    alert("Код скопирован в буфер обмена!");
+  }).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = currentBotCode;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    alert("Код скопирован!");
+  });
+}
+
+function downloadBotCode() {
+  const blob = new Blob([currentBotCode], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = currentBotFilename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("botModal").addEventListener("click", (e) => {
+  if (e.target.id === "botModal") closeBotModal();
+});
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") { closeModal(); closeBotModal(); }
 });
 </script>
 </body>
