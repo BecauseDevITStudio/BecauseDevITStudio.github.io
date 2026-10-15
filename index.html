@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BecauseDev IT Studio</title>
-<meta name="description" content="BecauseDev IT Studio — сайты, боты, плагины">
+<meta name="description" content="BecauseDev IT Studio — сайты, боты, плагины, исходники">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -28,6 +28,7 @@ a:hover{color:var(--accent2)}
 button{font-family:inherit;cursor:pointer}
 img{max-width:100%;display:block}
 
+/* ФОН */
 .grid-bg{
   position:fixed;inset:0;z-index:-1;
   background-image:
@@ -45,10 +46,13 @@ img{max-width:100%;display:block}
 @keyframes caret{50%{border-color:transparent}}
 @keyframes pulse{50%{opacity:.3}}
 @keyframes ripple{to{transform:translate(-50%,-50%) scale(20);opacity:0}}
+@keyframes float{50%{transform:translateY(-6px)}}
 
+/* СТРАНИЦЫ */
 .page{display:none;padding:130px 40px 80px;max-width:1300px;margin:0 auto;min-height:100vh}
 .page.active{display:block;animation:pageIn .55s cubic-bezier(.2,.8,.2,1) both}
 
+/* ЗАГОЛОВКИ */
 .section-title{
   font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin-bottom:12px;text-align:center;
   background:linear-gradient(135deg,#fff 20%,var(--accent) 70%,var(--accent2));
@@ -57,6 +61,7 @@ img{max-width:100%;display:block}
 }
 .section-sub{text-align:center;color:var(--muted);max-width:700px;margin:0 auto 60px;font-size:1.05rem}
 
+/* HERO */
 .hero-content{text-align:center;min-height:75vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
 .hero-badge{
   display:inline-block;padding:8px 18px;border-radius:100px;
@@ -74,6 +79,7 @@ img{max-width:100%;display:block}
 .hero p{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:720px;margin-bottom:40px}
 .hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
 
+/* КНОПКИ */
 .btn{
   display:inline-flex;align-items:center;gap:8px;
   padding:14px 28px;border-radius:12px;font-weight:600;font-size:.95rem;
@@ -84,7 +90,14 @@ img{max-width:100%;display:block}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,224,255,.5)}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
 .btn-outline:hover{background:rgba(0,224,255,.08);border-color:var(--accent);transform:translateY(-3px);color:var(--accent)}
+.btn-download{
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  color:#051018;font-weight:700;
+  box-shadow:0 8px 30px rgba(0,255,163,.3);
+}
+.btn-download:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,255,163,.5)}
 
+/* СТАТИСТИКА */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-top:70px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 20px;text-align:center;transition:.3s}
 .stat:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,224,255,.15)}
@@ -106,6 +119,7 @@ img{max-width:100%;display:block}
   background:var(--accent3);box-shadow:0 0 10px var(--accent3);
   animation:pulse 1.5s infinite;
 }
+	/* КАРТОЧКИ */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .card{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
@@ -122,6 +136,7 @@ img{max-width:100%;display:block}
 .card h3{font-size:1.2rem;margin-bottom:10px;color:var(--text)}
 .card p{color:var(--muted);font-size:.93rem}
 
+/* TIMELINE */
 .timeline{position:relative;padding:20px 0;max-width:800px;margin:0 auto}
 .timeline::before{
   content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;
@@ -136,6 +151,7 @@ img{max-width:100%;display:block}
 .timeline-item h4{color:var(--accent);font-size:1.05rem;margin-bottom:6px;font-family:'Consolas',monospace}
 .timeline-item p{color:var(--muted);font-size:.95rem}
 
+/* КОМАНДА */
 .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:40px}
 .team-card{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
@@ -152,6 +168,7 @@ img{max-width:100%;display:block}
 .team-card .role{color:var(--accent);font-size:.85rem;font-family:'Consolas',monospace;margin-bottom:10px}
 .team-card p{color:var(--muted);font-size:.88rem}
 
+/* HEADER */
 header{
   position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;
   display:flex;justify-content:space-between;align-items:center;
@@ -170,20 +187,21 @@ header{
   -webkit-text-fill-color:var(--accent);font-size:1.05rem;
   animation:blink 1.5s infinite;
 }
-nav{display:flex;gap:4px}
+nav{display:flex;gap:2px}
 nav a{
-  color:var(--muted);font-weight:500;padding:10px 16px;
-  border-radius:10px;position:relative;font-size:.95rem;cursor:pointer;
+  color:var(--muted);font-weight:500;padding:10px 14px;
+  border-radius:10px;position:relative;font-size:.92rem;cursor:pointer;
 }
 nav a:hover{color:var(--text);background:rgba(0,224,255,.06)}
 nav a.active-link{color:var(--accent);background:rgba(0,224,255,.08)}
 nav a.active-link::after{
-  content:'';position:absolute;left:16px;right:16px;bottom:3px;
+  content:'';position:absolute;left:14px;right:14px;bottom:3px;
   height:2px;border-radius:2px;
   background:linear-gradient(90deg,var(--accent),var(--accent2));
 }
 .burger{display:none;background:none;border:none;color:var(--text);font-size:1.8rem}
 
+/* DEV TABS */
 .dev-tabs{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
 .dev-tab{
   padding:18px 40px;border-radius:14px;background:var(--card);
@@ -199,6 +217,7 @@ nav a.active-link::after{
 .dev-panel{display:none}
 .dev-panel.active{display:block}
 
+/* LANG BUTTONS */
 .lang-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
 .lang-btn{
   padding:12px 22px;border-radius:10px;background:rgba(0,224,255,.06);
@@ -209,8 +228,106 @@ nav a.active-link::after{
 .lang-btn.active{
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#051018;border-color:transparent;box-shadow:0 8px 25px rgba(0,224,255,.4);
-	  }
-	.code-wrap{margin-top:30px;background:#050810;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+	}
+	/* GAME / SOURCE CARD */
+.source-card{
+  display:grid;grid-template-columns:240px 1fr;gap:32px;
+  background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(124,92,255,.06));
+  border:2px solid rgba(0,224,255,.3);
+  border-radius:var(--radius);padding:30px;margin-top:20px;
+  position:relative;overflow:hidden;
+}
+.source-card::before{
+  content:'OFFICIAL';position:absolute;top:14px;right:-32px;
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  color:#051018;font-weight:800;font-size:.75rem;
+  padding:6px 42px;transform:rotate(35deg);
+  letter-spacing:2px;box-shadow:0 4px 20px rgba(0,255,163,.4);
+}
+.source-cover{
+  width:240px;height:240px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:6rem;position:relative;
+  background:linear-gradient(135deg,rgba(0,224,255,.2),rgba(124,92,255,.2));
+  border:2px solid var(--border);overflow:hidden;
+}
+.source-cover::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 30%,rgba(0,224,255,.3),transparent 60%);
+  animation:float 4s ease-in-out infinite;
+}
+.source-cover .emoji{position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+.source-info{display:flex;flex-direction:column;justify-content:center}
+.source-title{
+  font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:6px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.source-title .version{
+  font-size:.75rem;padding:3px 10px;border-radius:100px;
+  background:rgba(0,255,163,.15);color:var(--accent3);
+  font-family:'Consolas',monospace;font-weight:600;
+}
+.source-desc{color:var(--muted);font-size:.95rem;margin-bottom:18px;line-height:1.65}
+.source-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.source-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.source-note{font-size:.82rem;color:var(--muted);font-style:italic}
+
+/* WEEKLY */
+.weekly-hero{
+  background:linear-gradient(135deg,rgba(0,224,255,.08),rgba(124,92,255,.08));
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:32px;text-align:center;margin-bottom:50px;
+  position:relative;overflow:hidden;
+}
+.weekly-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%,rgba(0,224,255,.15),transparent 60%);
+  pointer-events:none;
+}
+.weekly-week{
+  font-family:'Consolas',monospace;font-size:.9rem;
+  color:var(--accent);margin-bottom:12px;
+  letter-spacing:2px;text-transform:uppercase;
+}
+.weekly-tip{
+  font-size:1.15rem;color:var(--text);line-height:1.6;
+  max-width:800px;margin:0 auto;
+}
+.weekly-tip strong{color:var(--accent)}
+.weekly-tip code{
+  background:#050810;padding:2px 8px;border-radius:4px;
+  font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent);
+}
+.weekly-subtitle{
+  font-size:1.4rem;font-weight:700;color:var(--text);
+  margin:50px 0 20px;display:flex;align-items:center;gap:10px;
+}
+.weekly-subtitle::before{
+  content:'';width:4px;height:24px;border-radius:2px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+}
+.weekly-updates{display:flex;flex-direction:column;gap:14px}
+.weekly-update{
+  background:var(--card);border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:12px;padding:18px 22px;transition:.3s;
+}
+.weekly-update:hover{
+  background:var(--card2);transform:translateX(4px);
+  border-left-color:var(--accent2);
+}
+.weekly-update .wu-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;flex-wrap:wrap;margin-bottom:8px;
+}
+.weekly-update .wu-title{font-weight:700;color:var(--text);font-size:1.05rem}
+.weekly-update .wu-date{
+  font-family:'Consolas',monospace;font-size:.78rem;color:var(--muted);
+}
+.weekly-update .wu-body{color:var(--muted);font-size:.93rem}
+
+/* CODE */
+.code-wrap{margin-top:30px;background:#050810;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .code-head{
   display:flex;justify-content:space-between;align-items:center;gap:12px;
   padding:12px 20px;background:rgba(0,224,255,.05);
@@ -237,6 +354,7 @@ pre code{white-space:pre}
 .token-input:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(0,224,255,.2)}
 .token-input::placeholder{color:var(--muted)}
 
+/* PLUGINS */
 .plugin-card{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:26px;margin-bottom:20px;transition:.4s;
@@ -258,6 +376,7 @@ pre code{white-space:pre}
 .plugin-code{display:none;margin-top:18px}
 .plugin-code.open{display:block}
 
+/* WISHES */
 .wish-form{max-width:720px;margin:0 auto 50px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px}
 .wish-form label{display:block;margin-bottom:8px;color:var(--muted);font-size:.88rem;font-weight:600}
 .wish-form input,.wish-form textarea{
@@ -279,12 +398,14 @@ pre code{white-space:pre}
 .comments-empty{text-align:center;padding:50px 30px;background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);color:var(--muted)}
 .comments-empty .icon{font-size:3rem;margin-bottom:12px;display:block}
 
+/* FOOTER */
 footer{text-align:center;padding:50px 20px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;margin-top:60px}
 footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 .footer-links{display:flex;justify-content:center;gap:20px;margin-top:14px;flex-wrap:wrap}
 .footer-links a{color:var(--muted);cursor:pointer}
 .footer-links a:hover{color:var(--accent)}
 
+/* TOAST */
 .toast{
   position:fixed;bottom:30px;right:30px;background:var(--card);
   border:1px solid var(--accent);color:var(--text);padding:14px 22px;
@@ -294,6 +415,10 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 }
 .toast.show{transform:translateY(0)}
 
+/* АДАПТИВ */
+@media (max-width:900px){
+  nav a{padding:8px 10px;font-size:.85rem}
+}
 @media (max-width:768px){
   header{padding:14px 20px}
   nav{
@@ -303,12 +428,18 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     transform:translateX(110%);transition:.3s;min-width:220px;
   }
   nav.open{transform:translateX(0)}
-  nav a{padding:12px 16px}
+  nav a{padding:12px 16px;font-size:.95rem}
   .burger{display:block}
   .page{padding:100px 20px 60px}
   .dev-tab{padding:14px 22px;font-size:.95rem}
   .toast{right:16px;left:16px;bottom:16px;max-width:none}
   .timeline-item{padding-left:60px}
+}
+@media (max-width:700px){
+  .source-card{grid-template-columns:1fr;text-align:center}
+  .source-cover{width:180px;height:180px;margin:0 auto;font-size:4.5rem}
+  .source-title{justify-content:center}
+  .source-tags,.source-actions{justify-content:center}
 }
 </style>
 </head>
@@ -323,6 +454,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <a data-nav="about">О нас</a>
     <a data-nav="developers">Разработчикам</a>
     <a data-nav="plugins">Плагины</a>
+    <a data-nav="weekly">Еженедельно</a>
     <a data-nav="wishes">Пожелания</a>
   </nav>
   <button class="burger" id="burger" aria-label="Меню">☰</button>
@@ -330,18 +462,18 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 <!-- ================= ГЛАВНАЯ ================= -->
 <section class="page active hero" id="home">
   <div class="hero-content">
-    <span class="hero-badge">IT Studio · Web · Bots · Plugins</span>
+    <span class="hero-badge">IT Studio · Web · Bots · Plugins · Open Source</span>
     <h1>
       Мы создаём сайты,<br>
       ботов и полезные <span class="typing" id="typing">инструменты</span>
     </h1>
     <p>
       BecauseDev IT Studio — команда разработчиков, которая любит свои проекты.
-      Публикуем плагины, готовые шаблоны ботов и делимся опытом с другими.
+      Публикуем плагины, готовые шаблоны ботов, исходники игр и делимся опытом.
     </p>
     <div class="hero-btns">
       <button class="btn btn-primary" data-nav="developers">🚀 Для разработчиков</button>
-      <button class="btn btn-outline" data-nav="about">📖 О нас</button>
+      <button class="btn btn-outline" data-nav="weekly">📅 Еженедельно</button>
     </div>
     <div class="live-badge">Студия активна · Онлайн</div>
 
@@ -351,16 +483,16 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
         <div class="stat-label">Шаблонов ботов</div>
       </div>
       <div class="stat">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Плагинов в базе</div>
+        <div class="stat-num">9</div>
+        <div class="stat-label">Плагинов и кодов</div>
       </div>
       <div class="stat">
         <div class="stat-num">6</div>
         <div class="stat-label">Языков программирования</div>
       </div>
       <div class="stat">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Платформы ботов</div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Открытый исходник игры</div>
       </div>
     </div>
   </div>
@@ -391,9 +523,9 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
       <p>Публикуем готовые плагины и сниппеты для сайтов: копирование, слайдеры, валидаторы.</p>
     </div>
     <div class="card">
-      <span class="card-icon">❤️</span>
-      <h3>Мы любим проекты</h3>
-      <p>Каждый проект — возможность сделать интернет чуточку лучше и поделиться опытом.</p>
+      <span class="card-icon">🎮</span>
+      <h3>Игровые проекты</h3>
+      <p>Разрабатываем и открыто публикуем исходники игр — твори на их основе что хочешь!</p>
     </div>
     <div class="card">
       <span class="card-icon">📚</span>
@@ -403,7 +535,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <div class="card">
       <span class="card-icon">🌍</span>
       <h3>Open Source</h3>
-      <p>Наши шаблоны и плагины открыты. Форкай, используй, дополняй — вместе мы делаем код лучше.</p>
+      <p>Наши шаблоны, плагины и игры открыты. Форкай, используй, дополняй — вместе мы делаем код лучше.</p>
     </div>
   </div>
 
@@ -421,11 +553,11 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     </div>
     <div class="timeline-item">
       <h4>2025 · Open Source</h4>
-      <p>Начали публиковать плагины и шаблоны в открытом доступе. Сообщество отозвалось — мы на верном пути.</p>
+      <p>Начали публиковать плагины, шаблоны и исходники игр в открытом доступе. Сообщество отозвалось — мы на верном пути.</p>
     </div>
     <div class="timeline-item">
       <h4>Сегодня · BecauseDev IT Studio</h4>
-      <p>Мы делаем сайты, ботов, плагины и делимся знаниями. Присоединяйся — вместе интереснее!</p>
+      <p>Мы делаем сайты, ботов, игры и делимся знаниями. Присоединяйся — вместе интереснее!</p>
     </div>
   </div>
 
@@ -454,18 +586,66 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <div class="team-card">
       <div class="avatar">🧑‍🎨</div>
       <h4>Pixel</h4>
-      <div class="role">Designer</div>
-      <p>Придумывает концепции, рисует макеты и следит за тем, чтобы всё было красиво.</p>
+      <div class="role">Designer / Game Dev</div>
+      <p>Придумывает концепции, рисует макеты и разрабатывает игровые проекты студии.</p>
     </div>
   </div>
-	</section>
-	<!-- ================= РАЗРАБОТЧИКАМ ================= -->
+</section>
+<!-- ================= РАЗРАБОТЧИКАМ ================= -->
 <section class="page" id="developers">
   <h2 class="section-title">Для разработчиков</h2>
   <p class="section-sub">
-    Готовые шаблоны ботов. Выбирай платформу, затем язык —
-    появится рабочий код с полем для токена.
+    Готовые шаблоны ботов, исходники игр и open-source проекты студии.
+    Бери, форкай, твори что хочешь.
   </p>
+
+  <!-- ===== ИСХОДНИК ИГРЫ ===== -->
+  <div class="source-card">
+    <div class="source-cover">
+      <span class="emoji">👵</span>
+    </div>
+    <div class="source-info">
+      <h3 class="source-title">
+        Исходник Granny Remake: BecauseDev
+        <span class="version">v1.0 · OFFICIAL</span>
+      </h3>
+      <p class="source-desc">
+        Официальный исходник игры <strong>Granny Remake</strong> от BecauseDev IT Studio.
+        Мы полностью выкладываем код в открытый доступ — <strong>твори что хочешь</strong>:
+        переделывай под себя, добавляй механики, делай собственную игру, учись на реальном проекте.
+      </p>
+
+      <div class="source-tags">
+        <span class="tag">🎮 Godot 4</span>
+        <span class="tag purple">📜 GDScript</span>
+        <span class="tag green">📦 385 MB</span>
+        <span class="tag">🔓 Open Source</span>
+      </div>
+
+      <div class="source-actions">
+        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev/releases/download/v1.0/granny-remake--because-dev-.zip"
+           class="btn btn-download"
+           target="_blank"
+           rel="noopener">
+          ⬇️ Скачать исходник
+        </a>
+        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev"
+           class="btn btn-outline"
+           target="_blank"
+           rel="noopener">
+          📂 GitHub репозиторий
+        </a>
+      </div>
+
+      <p class="source-note">
+        💡 Распакуй архив, открой проект в <strong>Godot Engine 4</strong> — и вперёд!
+        Никаких ограничений, делай под свою игру.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== БОТЫ ===== -->
+  <h3 class="weekly-subtitle" style="margin-top:70px;">🤖 Шаблоны ботов</h3>
 
   <div class="dev-tabs">
     <button class="dev-tab active" data-bot="telegram"><span class="emoji">✈️</span> Telegram bot</button>
@@ -510,8 +690,35 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   <h2 class="section-title">Плагины и функции</h2>
   <p class="section-sub">
     Готовые решения для сайтов: копируй, вставляй, используй.
+    Все плагины в open-source — форкай и дополняй под себя.
   </p>
   <div id="pluginsList"></div>
+</section>
+<!-- ================= ЕЖЕНЕДЕЛЬНО ================= -->
+<section class="page" id="weekly">
+  <h2 class="section-title">Еженедельно</h2>
+  <p class="section-sub">
+    Свежая подборка недели: лучшие скрипты, плагины и обновления студии.
+    Заглядывай каждую неделю — здесь всегда что-то новое.
+  </p>
+
+  <!-- Карточка недели -->
+  <div class="weekly-hero">
+    <div class="weekly-week" id="weeklyWeek">—</div>
+    <div class="weekly-tip" id="weeklyTip">Загрузка...</div>
+  </div>
+
+  <!-- Обновления недели -->
+  <h3 class="weekly-subtitle">📢 Обновления студии</h3>
+  <div class="weekly-updates" id="weeklyUpdates"></div>
+
+  <!-- Скрипты недели -->
+  <h3 class="weekly-subtitle">💎 Скрипты недели</h3>
+  <div id="weeklyCodes"></div>
+
+  <!-- Итоги недели -->
+  <h3 class="weekly-subtitle">🏆 Итоги недели</h3>
+  <div class="cards" id="weeklyResults"></div>
 </section>
 
 <!-- ================= ПОЖЕЛАНИЯ ================= -->
@@ -540,12 +747,13 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="logo">BecauseDev IT Studio</div>
-  <p>© <span id="year"></span> BecauseDev IT Studio · Разрабатываем сайты, ботов и плагины с ❤️</p>
+  <p>© <span id="year"></span> BecauseDev IT Studio · Разрабатываем сайты, ботов, игры и плагины с ❤️</p>
   <div class="footer-links">
     <a data-nav="home">Главная</a>
     <a data-nav="about">О нас</a>
     <a data-nav="developers">Разработчикам</a>
     <a data-nav="plugins">Плагины</a>
+    <a data-nav="weekly">Еженедельно</a>
     <a data-nav="wishes">Пожелания</a>
   </div>
 </footer>
@@ -560,7 +768,6 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-/* ================== ГОД В ФУТЕРЕ ================== */
 document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ================== TOAST ================== */
@@ -575,31 +782,21 @@ function showToast(text, ok = true){
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 }
 
-/* ================== НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ ================== */
+/* ================== НАВИГАЦИЯ ================== */
 const pages = $$('.page');
 
 function showPage(id){
   if(!id || !document.getElementById(id)) id = 'home';
-
   pages.forEach(p => p.classList.toggle('active', p.id === id));
-
-  $$('nav a').forEach(a => {
-    a.classList.toggle('active-link', a.dataset.nav === id);
-  });
-
+  $$('nav a').forEach(a => a.classList.toggle('active-link', a.dataset.nav === id));
   window.scrollTo({ top: 0, behavior: 'auto' });
-
   const nav = document.getElementById('nav');
   if(nav) nav.classList.remove('open');
-
-  if(location.hash.slice(1) !== id){
-    history.replaceState(null, '', '#' + id);
-  }
-
+  if(location.hash.slice(1) !== id) history.replaceState(null, '', '#' + id);
   if(id === 'wishes' && typeof renderComments === 'function') renderComments();
+  if(id === 'weekly' && typeof renderWeekly === 'function') renderWeekly();
 }
 
-/* Клики по элементам с data-nav */
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-nav]');
   if(!el) return;
@@ -607,61 +804,44 @@ document.addEventListener('click', (e) => {
   showPage(el.dataset.nav);
 });
 
-/* Кнопки браузера назад/вперёд */
 window.addEventListener('hashchange', () => {
   showPage(location.hash.slice(1) || 'home');
 });
 
-/* Бургер-меню */
 const burger = document.getElementById('burger');
 const navEl = document.getElementById('nav');
 if(burger && navEl){
   burger.addEventListener('click', () => navEl.classList.toggle('open'));
 }
 
-/* Стартовая страница */
 showPage(location.hash.slice(1) || 'home');
 
-/* ================== TYPING-ЭФФЕКТ ================== */
-const typingWords = ['инструменты', 'плагины', 'шаблоны', 'ботов', 'сайты'];
+/* ================== TYPING ================== */
+const typingWords = ['инструменты', 'плагины', 'исходники', 'ботов', 'сайты'];
 let tIdx = 0, cIdx = 0, deleting = false, tTimer = null;
 
 function typingTick(){
   const el = document.getElementById('typing');
   if(!el) return;
-
   const w = typingWords[tIdx];
   el.textContent = deleting ? w.slice(0, --cIdx) : w.slice(0, ++cIdx);
-
   let delay = deleting ? 50 : 110;
-
-  if(!deleting && cIdx === w.length){
-    deleting = true;
-    delay = 1600;
-  } else if(deleting && cIdx === 0){
-    deleting = false;
-    tIdx = (tIdx + 1) % typingWords.length;
-  }
-
+  if(!deleting && cIdx === w.length){ deleting = true; delay = 1600; }
+  else if(deleting && cIdx === 0){ deleting = false; tIdx = (tIdx + 1) % typingWords.length; }
   tTimer = setTimeout(typingTick, delay);
 }
-
 function restartTyping(){
   clearTimeout(tTimer);
   cIdx = 0;
   deleting = false;
   typingTick();
 }
-
 restartTyping();
-	/* ================== ШАБЛОНЫ БОТОВ ================== */
-const BOT_TEMPLATES = {
 
-  /* ============== TELEGRAM ============== */
+/* ================== ШАБЛОНЫ БОТОВ ================== */
+const BOT_TEMPLATES = {
   telegram: {
-    python: {
-      file: 'bot.py',
-      code:
+    python: { file: 'bot.py', code:
 `# pip install aiogram
 import asyncio
 from aiogram import Bot, Dispatcher, F
@@ -682,28 +862,20 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-`
-    },
-    js: {
-      file: 'bot.js',
-      code:
+`},
+    js: { file: 'bot.js', code:
 `// npm install node-telegram-bot-api
 const TelegramBot = require('node-telegram-bot-api');
-
 const TOKEN = "Insert the token here";
 const bot = new TelegramBot(TOKEN, { polling: true });
 
 bot.onText(/\\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, 'Привет! Бот от BecauseDev IT Studio');
 });
-
 bot.on('polling_error', console.error);
 console.log('Bot started!');
-`
-    },
-    csharp: {
-      file: 'Program.cs',
-      code:
+`},
+    csharp: { file: 'Program.cs', code:
 `// dotnet add package Telegram.Bot
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -714,8 +886,7 @@ var bot = new TelegramBotClient(TOKEN);
 using var cts = new CancellationTokenSource();
 
 bot.StartReceiving(
-    updateHandler: async (client, update, token) =>
-    {
+    updateHandler: async (client, update, token) => {
         if (update.Type == UpdateType.Message && update.Message!.Text == "/start")
             await client.SendMessage(update.Message.Chat.Id,
                 "Привет! Бот от BecauseDev IT Studio");
@@ -728,11 +899,8 @@ bot.StartReceiving(
 Console.WriteLine("Bot started!");
 Console.ReadLine();
 cts.Cancel();
-`
-    },
-    cpp: {
-      file: 'main.cpp',
-      code:
+`},
+    cpp: { file: 'main.cpp', code:
 `// CMake: find_package(CURL REQUIRED); nlohmann_json
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
@@ -749,23 +917,19 @@ static size_t wcb(void* d, size_t s, size_t n, void* u){
     ((std::string*)u)->append((char*)d, s * n);
     return s * n;
 }
-
 std::string httpGet(const std::string& url){
     CURL* c = curl_easy_init();
     std::string buf;
     curl_easy_setopt(c, CURLOPT_URL, url.c_str());
     curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, wcb);
     curl_easy_setopt(c, CURLOPT_WRITEDATA, &buf);
-    curl_easy_perform(c);
-    curl_easy_cleanup(c);
+    curl_easy_perform(c); curl_easy_cleanup(c);
     return buf;
 }
-
 int main(){
     curl_global_init(CURL_GLOBAL_DEFAULT);
     long offset = 0;
     std::cout << "Bot started!\\n";
-
     while(true){
         auto r = json::parse(httpGet(API + "getUpdates?offset=" + std::to_string(offset)));
         for(auto& u : r["result"]){
@@ -780,28 +944,19 @@ int main(){
     }
     curl_global_cleanup();
 }
-`
-    },
-    java: {
-      file: 'BecauseBot.java',
-      code:
+`},
+    java: { file: 'BecauseBot.java', code:
 `// Maven: org.telegram:telegrambots:6.9.7.1
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class BecauseBot extends TelegramLongPollingBot {
-
     private static final String TOKEN = "Insert the token here";
+    @Override public String getBotUsername() { return "BecauseDevBot"; }
+    @Override public String getBotToken()    { return TOKEN; }
 
-    @Override
-    public String getBotUsername() { return "BecauseDevBot"; }
-
-    @Override
-    public String getBotToken() { return TOKEN; }
-
-    @Override
-    public void onUpdateReceived(Update u){
+    @Override public void onUpdateReceived(Update u){
         if(u.hasMessage() && "/start".equals(u.getMessage().getText())){
             try {
                 execute(new SendMessage(
@@ -811,11 +966,8 @@ public class BecauseBot extends TelegramLongPollingBot {
         }
     }
 }
-`
-    },
-    go: {
-      file: 'main.go',
-      code:
+`},
+    go: { file: 'main.go', code:
 `// go get github.com/go-telegram-bot-api/telegram-bot-api/v5
 package main
 
@@ -833,30 +985,22 @@ func main(){
 
     u := tgbotapi.NewUpdate(0)
     u.Timeout = 60
-
     for update := range bot.GetUpdatesChan(u){
         if update.Message != nil && update.Message.Text == "/start" {
-            bot.Send(tgbotapi.NewMessage(
-                update.Message.Chat.ID,
+            bot.Send(tgbotapi.NewMessage(update.Message.Chat.ID,
                 "Привет! Бот от BecauseDev IT Studio"))
         }
     }
 }
-`
-    }
+`}
   },
-
-  /* ============== DISCORD ============== */
-  discord: {
-    python: {
-      file: 'bot.py',
-      code:
+	  discord: {
+    python: { file: 'bot.py', code:
 `# pip install discord.py
 import discord
 from discord.ext import commands
 
 TOKEN = "Insert the token here"
-
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -871,14 +1015,10 @@ async def hello(ctx):
     await ctx.send("Привет! Бот от BecauseDev IT Studio")
 
 bot.run(TOKEN)
-`
-    },
-    js: {
-      file: 'index.js',
-      code:
+`},
+    js: { file: 'index.js', code:
 `// npm install discord.js
 const { Client, GatewayIntentBits } = require('discord.js');
-
 const TOKEN = "Insert the token here";
 
 const client = new Client({
@@ -889,23 +1029,16 @@ const client = new Client({
     ]
 });
 
-client.once('ready', () => {
-    console.log(\`Bot started as \${client.user.tag}\`);
-});
-
-client.on('messageCreate', (msg) => {
+client.once('ready', () => console.log(\`Bot started as \${client.user.tag}\`));
+client.on('messageCreate', msg => {
     if (msg.author.bot) return;
-    if (msg.content === '!hello') {
+    if (msg.content === '!hello')
         msg.reply('Привет! Бот от BecauseDev IT Studio');
-    }
 });
 
 client.login(TOKEN);
-`
-    },
-    csharp: {
-      file: 'Program.cs',
-      code:
+`},
+    csharp: { file: 'Program.cs', code:
 `// dotnet add package Discord.Net
 using Discord;
 using Discord.WebSocket;
@@ -914,9 +1047,7 @@ var TOKEN = "Insert the token here";
 var client = new DiscordSocketClient();
 
 client.Log += m => { Console.WriteLine(m); return Task.CompletedTask; };
-
-client.MessageReceived += async (msg) =>
-{
+client.MessageReceived += async (msg) => {
     if (msg.Author.IsBot) return;
     if (msg.Content == "!hello")
         await msg.Channel.SendMessageAsync("Привет! Бот от BecauseDev IT Studio");
@@ -924,16 +1055,11 @@ client.MessageReceived += async (msg) =>
 
 await client.LoginAsync(TokenType.Bot, TOKEN);
 await client.StartAsync();
-
 Console.WriteLine("Bot started!");
 await Task.Delay(-1);
-`
-    },
-    cpp: {
-      file: 'main.cpp',
-      code:
-`// Рекомендуется библиотека DPP: https://github.com/brainboxdotcc/DPP
-// Ниже — минимальный REST-пример отправки сообщения.
+`},
+    cpp: { file: 'main.cpp', code:
+`// Рекомендуется DPP: https://github.com/brainboxdotcc/DPP
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -946,12 +1072,10 @@ static size_t wcb(void* d, size_t s, size_t n, void* u){
     ((std::string*)u)->append((char*)d, s * n);
     return s * n;
 }
-
 void sendMessage(const std::string& channel, const std::string& text){
     CURL* c = curl_easy_init();
     std::string resp;
     std::string url = "https://discord.com/api/v10/channels/" + channel + "/messages";
-
     json body = { {"content", text} };
     std::string bodyStr = body.dump();
 
@@ -965,22 +1089,16 @@ void sendMessage(const std::string& channel, const std::string& text){
     curl_easy_setopt(c, CURLOPT_WRITEFUNCTION, wcb);
     curl_easy_setopt(c, CURLOPT_WRITEDATA, &resp);
     curl_easy_perform(c);
-
-    curl_slist_free_all(h);
-    curl_easy_cleanup(c);
+    curl_slist_free_all(h); curl_easy_cleanup(c);
     std::cout << "Sent: " << resp << "\\n";
 }
-
 int main(){
     curl_global_init(CURL_GLOBAL_DEFAULT);
     sendMessage("YOUR_CHANNEL_ID", "Привет! Бот от BecauseDev IT Studio");
     curl_global_cleanup();
 }
-`
-    },
-    java: {
-      file: 'BecauseBot.java',
-      code:
+`},
+    java: { file: 'BecauseBot.java', code:
 `// Maven: net.dv8tion:JDA:5.0.0-beta.20
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -989,7 +1107,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class BecauseBot extends ListenerAdapter {
-
     private static final String TOKEN = "Insert the token here";
 
     public static void main(String[] args){
@@ -1000,21 +1117,15 @@ public class BecauseBot extends ListenerAdapter {
         System.out.println("Bot started!");
     }
 
-    @Override
-    public void onMessageReceived(MessageReceivedEvent e){
+    @Override public void onMessageReceived(MessageReceivedEvent e){
         Message m = e.getMessage();
         if (m.getAuthor().isBot()) return;
         if (m.getContentRaw().equals("!hello"))
-            e.getChannel()
-             .sendMessage("Привет! Бот от BecauseDev IT Studio")
-             .queue();
+            e.getChannel().sendMessage("Привет! Бот от BecauseDev IT Studio").queue();
     }
 }
-`
-    },
-    go: {
-      file: 'main.go',
-      code:
+`},
+    go: { file: 'main.go', code:
 `// go get github.com/bwmarrin/discordgo
 package main
 
@@ -1024,7 +1135,6 @@ import (
     "os"
     "os/signal"
     "syscall"
-
     "github.com/bwmarrin/discordgo"
 )
 
@@ -1040,35 +1150,28 @@ func main(){
             s.ChannelMessageSend(m.ChannelID, "Привет! Бот от BecauseDev IT Studio")
         }
     })
-
     if err := dg.Open(); err != nil { log.Fatal(err) }
     defer dg.Close()
 
     fmt.Println("Bot started!")
-
     sc := make(chan os.Signal, 1)
     signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM)
     <-sc
 }
-`
-    }
+`}
   }
 };
-	/* ================== РЕНДЕР ШАБЛОНОВ БОТОВ ================== */
+
+/* ================== РЕНДЕР ШАБЛОНОВ ================== */
 function escapeHtml(s){
-  return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function renderBotTemplate(bot, lang){
   const out = document.getElementById('output-' + bot);
   if(!out) return;
-
   const tpl = BOT_TEMPLATES[bot] && BOT_TEMPLATES[bot][lang];
   if(!tpl){ out.innerHTML = ''; return; }
-
   const botName = bot === 'telegram' ? 'Telegram Bot' : 'Discord Bot';
 
   out.innerHTML =
@@ -1087,21 +1190,17 @@ function renderBotTemplate(bot, lang){
       '</div>' +
     '</div>';
 
-  /* Кнопка «Копировать» */
   document.getElementById('copyBtn-' + bot).onclick = function(){
     navigator.clipboard.writeText(tpl.code)
       .then(function(){ showToast('Код скопирован ✅'); })
-      .catch(function(){ showToast('Не удалось скопировать', false); });
+      .catch(function(){ showToast('Ошибка копирования', false); });
   };
 
-  /* Кнопка «Подставить токен» */
   document.getElementById('useToken-' + bot).onclick = function(){
     const val = document.getElementById('token-' + bot).value.trim();
     if(!val){ showToast('Введи токен', false); return; }
-
     const newCode = tpl.code.split('Insert the token here').join(val);
     document.getElementById('code-' + bot).textContent = newCode;
-
     const btn = document.getElementById('useToken-' + bot);
     btn.textContent = '✅ Скопировать с токеном';
     btn.onclick = function(){
@@ -1113,12 +1212,10 @@ function renderBotTemplate(bot, lang){
   };
 }
 
-/* Переключение Telegram / Discord */
 $$('.dev-tab').forEach(function(tab){
   tab.addEventListener('click', function(){
     $$('.dev-tab').forEach(function(t){ t.classList.remove('active'); });
     tab.classList.add('active');
-
     const bot = tab.dataset.bot;
     $$('.dev-panel').forEach(function(p){ p.classList.remove('active'); });
     const panel = document.getElementById('panel-' + bot);
@@ -1126,31 +1223,19 @@ $$('.dev-tab').forEach(function(tab){
   });
 });
 
-/* Клик по языку — рендер шаблона */
 $$('.lang-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
     const bot  = btn.dataset.bot;
     const lang = btn.dataset.lang;
-
     $$('.lang-btn[data-bot="' + bot + '"]').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-
     renderBotTemplate(bot, lang);
   });
 });
-
-/* ================== ПЛАГИНЫ ================== */
+	/* ================== ПЛАГИНЫ ================== */
 const PLUGINS = [
-  {
-    id: 'copy',
-    icon: '📋',
-    title: 'Copy to Clipboard',
-    desc: 'Универсальный плагин для копирования текста в буфер обмена с уведомлением.',
-    tags: ['JS', 'UI', 'Утилита'],
-    tagColor: '',
-    code:
-`// HTML: <button data-copy="Текст">Копировать</button>
-document.querySelectorAll('[data-copy]').forEach(el => {
+  { id:'copy', icon:'📋', title:'Copy to Clipboard', desc:'Универсальный плагин для копирования текста в буфер обмена с уведомлением.', tags:['JS','UI'], tagColor:'',
+    code:`document.querySelectorAll('[data-copy]').forEach(el => {
   el.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(el.dataset.copy);
@@ -1159,17 +1244,9 @@ document.querySelectorAll('[data-copy]').forEach(el => {
       setTimeout(() => el.textContent = old, 1500);
     } catch (err) { console.error(err); }
   });
-});`
-  },
-  {
-    id: 'scroll',
-    icon: '🎯',
-    title: 'Smooth Scroll to Anchor',
-    desc: 'Плавный скролл к якорным ссылкам с учётом высоты фиксированной шапки.',
-    tags: ['JS', 'UX', 'Scroll'],
-    tagColor: 'purple',
-    code:
-`document.querySelectorAll('a[href^="#"]').forEach(link => {
+});` },
+  { id:'scroll', icon:'🎯', title:'Smooth Scroll to Anchor', desc:'Плавный скролл к якорным ссылкам с учётом высоты фиксированной шапки.', tags:['JS','UX'], tagColor:'purple',
+    code:`document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const id = link.getAttribute('href');
     if (id === '#') return;
@@ -1180,17 +1257,9 @@ document.querySelectorAll('[data-copy]').forEach(el => {
     const top = target.getBoundingClientRect().top + window.scrollY - headerH;
     window.scrollTo({ top, behavior: 'smooth' });
   });
-});`
-  },
-  {
-    id: 'lazy',
-    icon: '⚡',
-    title: 'Lazy Load Images',
-    desc: 'Отложенная загрузка изображений через IntersectionObserver. Экономит трафик.',
-    tags: ['JS', 'Performance'],
-    tagColor: 'green',
-    code:
-`// HTML: <img data-src="image.jpg" alt="...">
+});` },
+  { id:'lazy', icon:'⚡', title:'Lazy Load Images', desc:'Отложенная загрузка изображений через IntersectionObserver. Экономит трафик.', tags:['JS','Performance'], tagColor:'green',
+    code:`// HTML: <img data-src="image.jpg" alt="...">
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
@@ -1201,18 +1270,9 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '100px' });
 
-document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));`
-  },
-  {
-    id: 'theme',
-    icon: '🌓',
-    title: 'Dark / Light Theme Toggle',
-    desc: 'Переключатель темы с сохранением выбора и автоопределением системной темы.',
-    tags: ['JS', 'CSS', 'UI'],
-    tagColor: '',
-    code:
-`// HTML: <button id="themeToggle">🌓</button>
-(function initTheme(){
+document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));` },
+  { id:'theme', icon:'🌓', title:'Dark / Light Theme Toggle', desc:'Переключатель темы с сохранением выбора и автоопределением системной темы.', tags:['JS','CSS','UI'], tagColor:'',
+    code:`(function initTheme(){
   const saved = localStorage.getItem('theme');
   const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = saved || (prefersDark ? 'dark' : 'light');
@@ -1224,17 +1284,9 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
   localStorage.setItem('theme', next);
-});`
-  },
-  {
-    id: 'typing',
-    icon: '⌨️',
-    title: 'Typing Effect',
-    desc: 'Печатающийся текст с эффектом каретки. Отлично для hero-секции.',
-    tags: ['JS', 'Animation'],
-    tagColor: 'purple',
-    code:
-`function typeWriter(el, words, opts = {}){
+});` },
+  { id:'typing', icon:'⌨️', title:'Typing Effect', desc:'Печатающийся текст с эффектом каретки. Отлично для hero-секции.', tags:['JS','Animation'], tagColor:'purple',
+    code:`function typeWriter(el, words, opts = {}){
   const speed = opts.speed || 100;
   const pause = opts.pause || 1500;
   let wIdx = 0, cIdx = 0, deleting = false;
@@ -1248,61 +1300,46 @@ document.getElementById('themeToggle').addEventListener('click', () => {
   })();
 }
 
-typeWriter(document.querySelector('#typing'), ['сайты', 'плагины', 'боты']);`
-  },
-  {
-    id: 'progress',
-    icon: '📊',
-    title: 'Scroll Progress Bar',
-    desc: 'Полоса прогресса чтения страницы вверху экрана. Для длинных статей и лендингов.',
-    tags: ['JS', 'CSS', 'UX'],
-    tagColor: 'green',
-    code:
-`// HTML: <div id="progressBar"></div>
-// CSS:
-// #progressBar {
-//   position: fixed; top: 0; left: 0; height: 3px; width: 0;
-//   background: linear-gradient(90deg, #00e0ff, #7c5cff);
-//   z-index: 9999; transition: width .15s linear;
-// }
+typeWriter(document.querySelector('#typing'), ['сайты', 'плагины', 'боты']);` },
+  { id:'progress', icon:'📊', title:'Scroll Progress Bar', desc:'Полоса прогресса чтения страницы вверху экрана. Для длинных статей.', tags:['JS','CSS','UX'], tagColor:'green',
+    code:`// HTML: <div id="progressBar"></div>
+// CSS: position: fixed; top: 0; left: 0; height: 3px; width: 0;
+//      background: linear-gradient(90deg, #00e0ff, #7c5cff);
 
 const bar = document.getElementById('progressBar');
 window.addEventListener('scroll', () => {
   const h = document.documentElement;
   const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
   bar.style.width = (scrolled * 100) + '%';
-});`
-  }
+});` }
 ];
 
 function renderPlugins(){
   const wrap = document.getElementById('pluginsList');
   if(!wrap) return;
-
   wrap.innerHTML = PLUGINS.map(function(p){
-    return '' +
-      '<div class="plugin-card">' +
-        '<div class="plugin-head">' +
-          '<div class="plugin-title"><span class="ico">' + p.icon + '</span><span>' + p.title + '</span></div>' +
-          '<button class="plugin-toggle" data-plugin-toggle="' + p.id + '">👁 Показать код</button>' +
-        '</div>' +
-        '<div class="plugin-desc">' + p.desc + '</div>' +
-        '<div class="plugin-tags">' + p.tags.map(function(t){
-          return '<span class="tag ' + p.tagColor + '">' + t + '</span>';
-        }).join('') + '</div>' +
-        '<div class="plugin-code" id="plugin-code-' + p.id + '">' +
-          '<div class="code-wrap">' +
-            '<div class="code-head">' +
-              '<div class="info">' +
-                '<div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>' +
-                '<span>' + p.id + '.js</span>' +
-              '</div>' +
-              '<button class="copy-btn" data-copy-plugin="' + p.id + '">📋 Копировать</button>' +
+    return '<div class="plugin-card">' +
+      '<div class="plugin-head">' +
+        '<div class="plugin-title"><span class="ico">' + p.icon + '</span><span>' + p.title + '</span></div>' +
+        '<button class="plugin-toggle" data-plugin-toggle="' + p.id + '">👁 Показать код</button>' +
+      '</div>' +
+      '<div class="plugin-desc">' + p.desc + '</div>' +
+      '<div class="plugin-tags">' + p.tags.map(function(t){
+        return '<span class="tag ' + p.tagColor + '">' + t + '</span>';
+      }).join('') + '</div>' +
+      '<div class="plugin-code" id="plugin-code-' + p.id + '">' +
+        '<div class="code-wrap">' +
+          '<div class="code-head">' +
+            '<div class="info">' +
+              '<div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>' +
+              '<span>' + p.id + '.js</span>' +
             '</div>' +
-            '<pre><code>' + escapeHtml(p.code) + '</code></pre>' +
+            '<button class="copy-btn" data-copy-plugin="' + p.id + '">📋 Копировать</button>' +
           '</div>' +
+          '<pre><code>' + escapeHtml(p.code) + '</code></pre>' +
         '</div>' +
-      '</div>';
+      '</div>' +
+    '</div>';
   }).join('');
 
   $$('[data-plugin-toggle]').forEach(function(btn){
@@ -1328,8 +1365,184 @@ function renderPlugins(){
 }
 renderPlugins();
 
-/* ================== ПОЖЕЛАНИЯ (комментарии) ================== */
-const STORAGE_KEY = 'becausedev_comments_v4';
+/* ================== ЕЖЕНЕДЕЛЬНО ================== */
+const WEEKLY_TIPS = [
+  'Используй <strong>flexbox</strong> и <strong>grid</strong> — забудь про float.',
+  'Деструктуризация делает код короче: <code>const { name, age } = user;</code>',
+  '<code>Array.from()</code> превращает NodeList в массив — не теряй методы.',
+  '<strong>Держи функции маленькими</strong> — одна задача = одна функция.',
+  'Следи за <code>console.log()</code> — DevTools (F12) лучший друг.',
+  'Используй <code>try/catch</code> для асинхронного кода — избежишь падений.',
+  '<strong>Git commit</strong> часто и с понятными сообщениями.',
+  '<code>optional chaining ?.</code> спасает от Cannot read property.',
+  '<strong>Lazy loading</strong> ускоряет сайт в разы.',
+  '<code>:has()</code> в CSS — селектор родителя. Мощная штука.',
+  'Пиши код так, будто его будет читать злой маньяк.',
+  'Учись читать чужой код — это 90% работы.'
+];
+
+const WEEKLY_UPDATES = [
+  { title: '🎮 Опубликован исходник Granny Remake', date: 'сегодня', body: 'Официальный исходник игры теперь в открытом доступе. Скачивай в разделе «Разработчикам» и твори!' },
+  { title: '✨ Новая вкладка «Еженедельно»', date: 'сегодня', body: 'Каждую неделю здесь будет свежая подборка скриптов, плагинов и обновлений студии.' },
+  { title: '🧩 Добавлено 6 плагинов', date: 'на прошлой неделе', body: 'Copy to Clipboard, Smooth Scroll, Lazy Load, Theme Toggle, Typing Effect, Progress Bar.' },
+  { title: '🤖 12 шаблонов ботов готовы', date: '2 недели назад', body: 'Telegram и Discord боты на 6 языках программирования — Python, JS, C#, C++, Java, Go.' }
+];
+
+const WEEKLY_CODES = [
+  { id:'week-1', icon:'⏱', title:'Debounce', desc:'Ограничивает частоту вызова функции. Полезно для поиска и скролла.', tags:['JS','Performance'], tagColor:'green',
+    code:
+`function debounce(fn, delay = 300){
+  let timer;
+  return function(...args){
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+const onSearch = debounce((q) => console.log('Поиск:', q), 500);` },
+  { id:'week-2', icon:'🎲', title:'Random в диапазоне', desc:'Функция для случайного числа между min и max включительно.', tags:['JS','Утилита'], tagColor:'',
+    code:
+`function random(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+console.log(random(1, 100)); // например 42` },
+  { id:'week-3', icon:'🎨', title:'Hex → RGB', desc:'Конвертирует HEX-цвет в RGB для использования в JS.', tags:['JS','Утилита'], tagColor:'purple',
+    code:
+`function hexToRgb(hex){
+  const m = hex.replace('#','').match(/.{2}/g);
+  if(!m) return null;
+  const [r, g, b] = m.map(x => parseInt(x, 16));
+  return { r, g, b };
+}
+
+console.log(hexToRgb('#00e0ff'));` },
+  { id:'week-4', icon:'📅', title:'Формат даты', desc:'Красивый формат даты на русском: «15 октября 2025».', tags:['JS','Date'], tagColor:'green',
+    code:
+`function formatDateRu(date = new Date()){
+  const months = ['января','февраля','марта','апреля','мая','июня',
+                  'июля','августа','сентября','октября','ноября','декабря'];
+  return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+}` },
+  { id:'week-5', icon:'💾', title:'LocalStorage helper', desc:'Безопасная обёртка над localStorage — не падает при ошибках.', tags:['JS','Storage'], tagColor:'',
+    code:
+`const store = {
+  get(key, fallback = null){
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+    catch { return fallback; }
+  },
+  set(key, value){
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch { return false; }
+  },
+  remove(key){ localStorage.removeItem(key); }
+};` }
+];
+
+const WEEKLY_RESULTS = [
+  { icon:'🏆', title:'Топ плагин недели', desc:'Scroll Progress Bar — самая скачиваемая функция последних 7 дней.' },
+  { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake — за первую неделю собрал десятки скачиваний.' },
+  { icon:'💡', title:'Идея недели', desc:'Пользователи просят добавить раздел «Советы по Godot» — работаем над этим.' }
+];
+	/* ================== РЕНДЕР ЕЖЕНЕДЕЛЬНО ================== */
+function renderWeekly(){
+  /* Номер недели */
+  const weekEl = document.getElementById('weeklyWeek');
+  if(weekEl){
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 1);
+    const days = Math.floor((now - start) / 86400000);
+    const weekNum = Math.ceil((days + start.getDay() + 1) / 7);
+    weekEl.textContent = '📅 Неделя #' + weekNum + ' · ' + now.getFullYear();
+  }
+
+  /* Совет недели */
+  const tipEl = document.getElementById('weeklyTip');
+  if(tipEl){
+    const w = Math.floor(Date.now() / (86400000 * 7));
+    tipEl.innerHTML = WEEKLY_TIPS[w % WEEKLY_TIPS.length];
+  }
+
+  /* Обновления */
+  const updEl = document.getElementById('weeklyUpdates');
+  if(updEl){
+    updEl.innerHTML = WEEKLY_UPDATES.map(function(u){
+      return '<div class="weekly-update">' +
+        '<div class="wu-head">' +
+          '<div class="wu-title">' + u.title + '</div>' +
+          '<div class="wu-date">' + u.date + '</div>' +
+        '</div>' +
+        '<div class="wu-body">' + u.body + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* Скрипты недели */
+  const codeEl = document.getElementById('weeklyCodes');
+  if(codeEl){
+    codeEl.innerHTML = WEEKLY_CODES.map(function(p){
+      return '<div class="plugin-card">' +
+        '<div class="plugin-head">' +
+          '<div class="plugin-title"><span class="ico">' + p.icon + '</span><span>' + p.title + '</span></div>' +
+          '<button class="plugin-toggle" data-weekly-toggle="' + p.id + '">👁 Показать код</button>' +
+        '</div>' +
+        '<div class="plugin-desc">' + p.desc + '</div>' +
+        '<div class="plugin-tags">' + p.tags.map(function(t){
+          return '<span class="tag ' + p.tagColor + '">' + t + '</span>';
+        }).join('') + '</div>' +
+        '<div class="plugin-code" id="weekly-code-' + p.id + '">' +
+          '<div class="code-wrap">' +
+            '<div class="code-head">' +
+              '<div class="info">' +
+                '<div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>' +
+                '<span>' + p.id + '.js</span>' +
+              '</div>' +
+              '<button class="copy-btn" data-weekly-copy="' + p.id + '">📋 Копировать</button>' +
+            '</div>' +
+            '<pre><code>' + escapeHtml(p.code) + '</code></pre>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    $$('[data-weekly-toggle]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const id = btn.dataset.weeklyToggle;
+        const block = document.getElementById('weekly-code-' + id);
+        if(!block) return;
+        block.classList.toggle('open');
+        btn.textContent = block.classList.contains('open') ? '🙈 Скрыть код' : '👁 Показать код';
+      });
+    });
+
+    $$('[data-weekly-copy]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const id = btn.dataset.weeklyCopy;
+        const p = WEEKLY_CODES.find(function(x){ return x.id === id; });
+        if(!p) return;
+        navigator.clipboard.writeText(p.code)
+          .then(function(){ showToast('Код скопирован ✅'); })
+          .catch(function(){ showToast('Ошибка копирования', false); });
+      });
+    });
+  }
+
+  /* Итоги недели */
+  const resEl = document.getElementById('weeklyResults');
+  if(resEl){
+    resEl.innerHTML = WEEKLY_RESULTS.map(function(r){
+      return '<div class="card">' +
+        '<span class="card-icon">' + r.icon + '</span>' +
+        '<h3>' + r.title + '</h3>' +
+        '<p>' + r.desc + '</p>' +
+      '</div>';
+    }).join('');
+  }
+}
+renderWeekly();
+
+/* ================== ПОЖЕЛАНИЯ ================== */
+const STORAGE_KEY = 'becausedev_comments_v5';
 
 function loadComments(){
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -1346,11 +1559,8 @@ function formatTime(ts){
 }
 function esc(s){
   return String(s)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function renderComments(){
@@ -1368,14 +1578,13 @@ function renderComments(){
   }
 
   wrap.innerHTML = list.map(function(c){
-    return '' +
-      '<div class="comment">' +
-        '<div class="comment-head">' +
-          '<div class="comment-nick">' + esc(c.nick) + '</div>' +
-          '<div class="comment-time">' + formatTime(c.time) + '</div>' +
-        '</div>' +
-        '<div class="comment-body">' + esc(c.text) + '</div>' +
-      '</div>';
+    return '<div class="comment">' +
+      '<div class="comment-head">' +
+        '<div class="comment-nick">' + esc(c.nick) + '</div>' +
+        '<div class="comment-time">' + formatTime(c.time) + '</div>' +
+      '</div>' +
+      '<div class="comment-body">' + esc(c.text) + '</div>' +
+    '</div>';
   }).join('');
 }
 
@@ -1393,21 +1602,15 @@ if(msgInput && charCount){
 if(wishForm){
   wishForm.addEventListener('submit', function(e){
     e.preventDefault();
-
     const nick = nickInput.value.trim();
     const text = msgInput.value.trim();
 
-    if(!nick || !text){
-      showToast('Заполни ник и сообщение', false);
-      return;
-    }
+    if(!nick || !text){ showToast('Заполни ник и сообщение', false); return; }
 
     const list = loadComments();
     list.push({
       id: 'c_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
-      nick: nick,
-      text: text,
-      time: Date.now()
+      nick: nick, text: text, time: Date.now()
     });
     saveComments(list);
 
@@ -1418,34 +1621,18 @@ if(wishForm){
   });
 }
 
-/* Демо-комментарии при первом заходе */
 (function initComments(){
   if(!localStorage.getItem(STORAGE_KEY)){
     saveComments([
-      {
-        id: 'demo_1',
-        nick: 'CodeMaster',
-        text: 'Отличный сайт! Забрал Python-шаблон бота себе, спасибо!',
-        time: Date.now() - 86400000 * 2
-      },
-      {
-        id: 'demo_2',
-        nick: 'NikaDev',
-        text: 'Плагин scroll-progress топ! Уже встроила в свой блог.',
-        time: Date.now() - 3600000 * 8
-      },
-      {
-        id: 'demo_3',
-        nick: 'BecauseDev',
-        text: 'Добро пожаловать! Оставляйте пожелания и идеи.',
-        time: Date.now() - 1800000
-      }
+      { id:'demo_1', nick:'CodeMaster', text:'Исходник Granny Remake просто огонь! Скачал, уже копаюсь в коде 🔥', time: Date.now() - 86400000 * 2 },
+      { id:'demo_2', nick:'NikaDev', text:'Вкладка «Еженедельно» — топ идея. Скрипты реально полезные 💙', time: Date.now() - 3600000 * 8 },
+      { id:'demo_3', nick:'BecauseDev', text:'Добро пожаловать! Оставляйте пожелания и идеи.', time: Date.now() - 1800000 }
     ]);
   }
   renderComments();
 })();
 
-/* ================== RIPPLE-ЭФФЕКТ ================== */
+/* ================== RIPPLE ================== */
 document.addEventListener('click', function(e){
   const btn = e.target.closest('.btn, .lang-btn, .dev-tab, .plugin-toggle, .copy-btn');
   if(!btn) return;
@@ -1470,14 +1657,14 @@ document.addEventListener('click', function(e){
 /* ================== ГОРЯЧАЯ КЛАВИША «H» ================== */
 document.addEventListener('keydown', function(e){
   if(e.key.toLowerCase() === 'h' &&
-     !['INPUT', 'TEXTAREA'].includes(e.target.tagName)){
+     !['INPUT','TEXTAREA'].includes(e.target.tagName)){
     showPage('home');
   }
 });
 
 /* ================== ПРИВЕТ В КОНСОЛИ ================== */
 console.log(
-  '%c</> BecauseDev IT Studio%c\nПривет, разработчик! Нажми «H» — вернуться на главную',
+  '%c</> BecauseDev IT Studio%c\nПривет, разработчик! Нажми «H» — вернуться на главную 💙',
   'color:#00e0ff;font-size:20px;font-weight:bold;',
   'color:#8b9bb4;font-size:13px;'
 );
