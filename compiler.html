@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC+ Компилятор — BecauseDev IT Studio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0e1a;--card:#141b2d;--card2:#1a2338;--bg-code:#050810;
+  --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;--danger:#ff5f56;
+  --bc:#ff6b35;--bc2:#ff9558;
+  --text:#e6edf7;--muted:#8b9bb4;--border:rgba(0,224,255,.15);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',-apple-system,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  min-height:100vh;overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 15% 10%,rgba(124,92,255,.15),transparent 40%),
+    radial-gradient(circle at 85% 20%,rgba(0,224,255,.12),transparent 40%);
+  background-attachment:fixed;
+}
+a{color:var(--accent);text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+.grid-bg{
+  position:fixed;inset:0;z-index:-1;
+  background-image:
+    linear-gradient(rgba(0,224,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,224,255,.05) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
+}
+
+header{
+  position:sticky;top:0;z-index:100;padding:14px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,14,26,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-size:1.35rem;font-weight:800;cursor:pointer;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:10px;
+}
+.logo::before{content:'</>';font-family:monospace;-webkit-text-fill-color:var(--accent)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{
+  color:var(--muted);font-weight:500;padding:8px 16px;border-radius:10px;
+  font-size:.9rem;transition:.3s;
+}
+nav a:hover{color:var(--text);background:rgba(0,224,255,.06)}
+
+main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
+
+.hero{text-align:center;padding:60px 20px 40px}
+.hero .badge{
+  display:inline-block;padding:6px 16px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,107,53,.05);
+  color:var(--bc);font-size:.85rem;margin-bottom:20px;
+  font-family:monospace;
+}
+.hero h1{
+  font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1;
+  margin-bottom:20px;letter-spacing:-1px;
+  background:linear-gradient(135deg,#fff 0%,var(--bc) 50%,var(--bc2) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero h1 .plus{color:var(--bc2);-webkit-text-fill-color:var(--bc2);animation:blink 1.5s infinite}
+@keyframes blink{50%{opacity:.4}}
+.hero p{color:var(--muted);font-size:1.1rem;max-width:720px;margin:0 auto}
+
+.section-title{
+  font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
+  margin-bottom:16px;display:flex;align-items:center;gap:12px;
+}
+.section-title::before{
+  content:'';width:5px;height:32px;border-radius:3px;
+  background:linear-gradient(180deg,var(--bc),var(--bc2));
+}
+.section-sub{color:var(--muted);margin-bottom:30px}
+
+.section{margin-top:70px}
+.section .card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:30px;
+}
+.section .card p{margin-bottom:14px;color:var(--text)}
+.section .card p strong{color:var(--accent)}
+.section .card code{
+  background:var(--bg-code);padding:3px 8px;border-radius:6px;
+  font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent3);
+}
+
+.features{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;margin-top:24px;
+}
+.feature{
+  padding:20px;background:var(--card2);border-radius:12px;
+  border:1px solid var(--border);
+}
+.feature .f-icon{font-size:1.8rem;margin-bottom:10px;display:block}
+.feature h4{margin-bottom:6px;font-size:1rem;color:var(--text)}
+.feature p{color:var(--muted);font-size:.88rem;margin:0}
+
+.kw-table{
+  width:100%;border-collapse:collapse;
+  margin-top:16px;font-size:.9rem;
+}
+.kw-table th,.kw-table td{
+  padding:10px 14px;text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.kw-table th{
+  color:var(--bc);font-weight:600;
+  font-family:monospace;font-size:.85rem;
+}
+.kw-table td:first-child{
+  font-family:'Consolas',monospace;
+  color:var(--accent3);font-weight:600;
+}
+.kw-table tr:hover{background:rgba(255,107,53,.03)}
+  .editor-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-bottom:16px;
+}
+.editor-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;background:rgba(255,107,53,.05);
+  border-bottom:1px solid var(--border);
+}
+.editor-head .info{
+  display:flex;align-items:center;gap:14px;
+  font-family:monospace;font-size:.85rem;color:var(--muted);
+}
+.dots{display:flex;gap:6px}
+.dots span{width:12px;height:12px;border-radius:50%}
+.dots .r{background:#ff5f56}.dots .y{background:#ffbd2e}.dots .g{background:#27c93f}
+
+.editor{
+  display:flex;background:var(--bg-code);
+  height:420px;position:relative;
+}
+.line-numbers{
+  padding:16px 12px;background:rgba(255,107,53,.02);
+  color:var(--muted);font-family:'Consolas',monospace;font-size:14px;
+  line-height:1.65;text-align:right;min-width:52px;
+  user-select:none;overflow:hidden;border-right:1px solid var(--border);
+}
+#editor{
+  flex:1;padding:16px;background:transparent;color:var(--text);
+  border:none;outline:none;resize:none;
+  font-family:'Consolas',monospace;font-size:14px;line-height:1.65;
+  tab-size:2;white-space:pre;overflow-wrap:normal;overflow-x:auto;
+}
+#editor::placeholder{color:var(--muted);opacity:.6}
+
+.controls{
+  display:flex;gap:12px;flex-wrap:wrap;
+  padding:16px 20px;background:var(--card);
+  border-top:1px solid var(--border);
+}
+.btn{
+  padding:12px 24px;border-radius:10px;font-weight:600;font-size:.9rem;
+  border:none;cursor:pointer;transition:.3s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-run{
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  color:#051018;font-weight:700;
+  box-shadow:0 8px 24px rgba(0,255,163,.3);
+}
+.btn-run:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,255,163,.5)}
+.btn-clear{
+  background:transparent;color:var(--text);border:1px solid var(--border);
+}
+.btn-clear:hover{border-color:var(--danger);color:var(--danger)}
+.btn-js{
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#051018;font-weight:700;
+}
+.btn-js:hover{transform:translateY(-2px)}
+.btn-bot{
+  background:linear-gradient(135deg,var(--bc),var(--bc2));
+  color:#fff;font-weight:700;
+  box-shadow:0 8px 24px rgba(255,107,53,.35);
+}
+.btn-bot:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,53,.55)}
+
+.debug{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-top:16px;
+}
+.debug-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 20px;background:rgba(255,107,53,.05);
+  border-bottom:1px solid var(--border);
+  font-family:monospace;font-size:.85rem;color:var(--bc);
+  letter-spacing:1px;
+}
+.debug-head .status{color:var(--muted);font-size:.75rem}
+.debug-head .status.ok{color:var(--accent3)}
+.debug-head .status.err{color:var(--danger)}
+.debug-body{
+  padding:16px 20px;background:var(--bg-code);
+  font-family:'Consolas',monospace;font-size:.88rem;
+  max-height:280px;overflow-y:auto;min-height:100px;
+  white-space:pre-wrap;word-break:break-word;
+}
+.debug-line{padding:3px 0}
+.debug-line.out{color:var(--accent3)}
+.debug-line.err{color:var(--danger)}
+.debug-line.info{color:var(--muted)}
+
+.ex-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+}
+.ex-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px;cursor:pointer;
+  transition:.3s;
+}
+.ex-card:hover{
+  border-color:var(--bc);transform:translateY(-4px);
+  box-shadow:0 15px 40px rgba(255,107,53,.15);
+}
+.ex-card .ex-icon{font-size:1.8rem;margin-bottom:8px;display:block}
+.ex-card h4{margin-bottom:6px;color:var(--text);font-size:1rem}
+.ex-card p{color:var(--muted);font-size:.85rem;margin-bottom:12px}
+.ex-card .ex-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--bc);padding:6px 14px;border-radius:8px;
+  font-size:.8rem;font-weight:600;
+}
+.ex-card:hover .ex-btn{border-color:var(--bc)}
+  footer{
+  text-align:center;padding:40px 20px;
+  border-top:1px solid var(--border);color:var(--muted);
+  font-size:.85rem;margin-top:60px;
+}
+
+.toast{
+  position:fixed;bottom:30px;right:30px;
+  background:var(--card);border:1px solid var(--accent);
+  padding:14px 22px;border-radius:12px;
+  transform:translateY(200%);transition:.4s cubic-bezier(.2,.8,.2,1);
+  z-index:999;font-weight:500;max-width:320px;
+  box-shadow:0 10px 40px rgba(0,224,255,.3);
+}
+.toast.show{transform:translateY(0)}
+
+/* МОДАЛЬНОЕ ОКНО */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;max-width:520px;width:100%;
+  max-height:90vh;overflow-y:auto;
+}
+.modal h3{font-size:1.4rem;margin-bottom:8px;color:var(--text)}
+.modal .modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:20px}
+.modal label{display:block;font-size:.85rem;color:var(--muted);font-weight:600;margin:16px 0 8px}
+.modal select,.modal input{
+  width:100%;padding:12px 14px;background:var(--bg-code);
+  border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font-family:'Consolas',monospace;font-size:.9rem;outline:none;
+}
+.modal select:focus,.modal input:focus{border-color:var(--bc)}
+.modal .hint{font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic}
+.modal .modal-btns{display:flex;gap:12px;margin-top:22px}
+.modal .modal-btns .btn{flex:1;justify-content:center}
+
+@media (max-width:768px){
+  header{padding:12px 20px}
+  nav a{padding:6px 10px;font-size:.8rem}
+  main{padding:20px 14px 60px}
+  .editor{height:340px}
+  .line-numbers{font-size:12px;min-width:42px;padding:12px 8px}
+  #editor{font-size:12px;padding:12px}
+  .controls{padding:12px}
+  .btn{padding:10px 18px;font-size:.85rem}
+  .toast{right:16px;left:16px;bottom:16px;max-width:none}
+  .section .card{padding:20px}
+  .modal{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">BecauseDev IT Studio</div>
+  <nav>
+    <a href="index.html">← На сайт</a>
+    <a href="#intro">Введение</a>
+    <a href="#editor-section">Редактор</a>
+    <a href="#examples">Примеры</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+  <span class="badge">BC+ · v1.0 · BecauseDev Studio</span>
+  <h1>BC<span class="plus">+</span></h1>
+  <p>
+    Наш собственный язык программирования. Максимально простой,
+    понятный даже школьнику, и при этом мощный — от калькулятора до ботов.
+  </p>
+</section>
+
+<section class="section" id="intro">
+  <h2 class="section-title">Что такое BC+?</h2>
+  <p class="section-sub">Полное введение в наш язык</p>
+
+  <div class="card">
+    <p>
+      <strong>BC+ (БиСиПлюс)</strong> — язык программирования, созданный командой
+      BecauseDev IT Studio. Его цель — <strong>сделать программирование доступным
+      каждому</strong>. Мы убрали всю сложность и оставили только то, что нужно для
+      реальной разработки.
+    </p>
+    <p>
+      Код на BC+ пишется <strong>обычными русскими словами</strong> —
+      никаких скучных английских ключевых слов. Хочешь что-то вывести? Напиши
+      <code>сказать</code>. Хочешь создать переменную? Напиши <code>пусть</code>.
+      Всё интуитивно понятно.
+    </p>
+    <p>
+      Когда ты нажимаешь <strong>▶ Запустить</strong> — твой код на BC+ в эту же секунду
+      переводится в <strong>JavaScript</strong> и выполняется прямо в браузере.
+      А если ты напишешь код бота и нажмёшь <strong>⚡ Активировать бота</strong> —
+      он запустится в Telegram или Discord через наш прокси-сервер!
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <span class="f-icon">🇷🇺</span>
+        <h4>Русские слова</h4>
+        <p>Код читается как обычный русский текст</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">⚡</span>
+        <h4>Мгновенный запуск</h4>
+        <p>Перевод в JS прямо в браузере</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">🤖</span>
+        <h4>Боты в 1 клик</h4>
+        <p>TG и DC боты прямо с сайта</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">🎯</span>
+        <h4>Просто для всех</h4>
+        <p>Разберётся даже школьник</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h3 style="margin-bottom:14px;color:var(--bc)">📖 Ключевые слова BC+</h3>
+    <table class="kw-table">
+      <thead>
+        <tr><th>BC+</th><th>Что делает</th><th>Пример</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>сказать</td><td>Выводит текст на экран</td><td><code>сказать "Привет!"</code></td></tr>
+        <tr><td>пусть</td><td>Создаёт переменную</td><td><code>пусть x = 5</code></td></tr>
+        <tr><td>если</td><td>Условие</td><td><code>если x > 3 { ... }</code></td></tr>
+        <tr><td>иначе</td><td>Альтернатива</td><td><code>иначе { ... }</code></td></tr>
+        <tr><td>пока</td><td>Цикл пока условие верно</td><td><code>пока x > 0 { ... }</code></td></tr>
+        <tr><td>повторить N раз</td><td>Цикл N раз</td><td><code>повторить 5 раз { ... }</code></td></tr>
+        <tr><td>функция</td><td>Объявляет функцию</td><td><code>функция сумма(a, b) { ... }</code></td></tr>
+        <tr><td>вернуть</td><td>Возвращает результат</td><td><code>вернуть a + b</code></td></tr>
+        <tr><td>и / или / не</td><td>Логические операторы</td><td><code>если x > 3 и y &lt; 10</code></td></tr>
+        <tr><td>истина / ложь</td><td>Boolean значения</td><td><code>пусть ok = истина</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="section" id="editor-section">
+  <h2 class="section-title">Редактор</h2>
+  <p class="section-sub">Напиши код на BC+ и нажми «▶ Запустить» или «⚡ Активировать бота»</p>
+
+  <div class="editor-wrap">
+    <div class="editor-head">
+      <div class="info">
+        <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+        <span>main.bc+</span>
+      </div>
+      <span style="color:var(--muted);font-size:.8rem;font-family:monospace">UTF-8 · BC+</span>
+    </div>
+    <div class="editor">
+      <div class="line-numbers" id="lineNumbers">1</div>
+      <textarea id="editor" spellcheck="false" placeholder='сказать "Привет, мир!"'></textarea>
+    </div>
+    <div class="controls">
+      <button class="btn btn-run" id="runBtn">▶ Запустить</button>
+      <button class="btn btn-clear" id="clearBtn">🗑 Очистить</button>
+      <button class="btn btn-js" id="jsBtn">📋 Показать JavaScript</button>
+      <button class="btn btn-bot" id="botBtn">⚡ Активировать бота</button>
+    </div>
+  </div>
+
+  <div class="debug">
+    <div class="debug-head">
+      <span>🔧 Отладчик</span>
+      <span class="status" id="status">Готов к запуску</span>
+    </div>
+    <div class="debug-body" id="output">
+      <div class="debug-line info">// Здесь появятся результаты выполнения</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="examples">
+  <h2 class="section-title">Примеры кода</h2>
+  <p class="section-sub">Нажми на карточку — код вставится в редактор</p>
+
+  <div class="ex-grid" id="exGrid"></div>
+</section>
+
+</main>
+
+<footer>
+  <div style="margin-bottom:10px">
+    <span style="background:linear-gradient(90deg,var(--bc),var(--bc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.1rem">BecauseDev IT Studio</span>
+  </div>
+  © <span id="year"></span> BC+ · Придуман и сделан в BecauseDev IT Studio
+</footer>
+
+<div class="toast" id="toast">Готово!</div>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО АКТИВАЦИИ БОТА ===== -->
+<div class="modal-overlay" id="botModal">
+  <div class="modal">
+    <h3>⚡ Активировать бота</h3>
+    <p class="modal-sub">
+      Введи токен бота — он будет отправлен на наш прокси-сервер,
+      который активирует бота в реальном времени.
+    </p>
+
+    <label for="botPlatform">Платформа</label>
+    <select id="botPlatform">
+      <option value="telegram">✈️ Telegram</option>
+      <option value="discord">🎮 Discord</option>
+    </select>
+
+    <label for="botToken">Токен бота</label>
+    <input type="text" id="botToken" placeholder="Вставь токен из @BotFather">
+    <p class="hint" id="tokenHint">💡 Telegram: получи токен у @BotFather</p>
+
+    <label for="botChatId">ID чата / канала <span style="color:var(--muted);font-weight:400">(необязательно)</span></label>
+    <input type="text" id="botChatId" placeholder="Например: 123456789">
+
+    <div class="modal-btns">
+      <button class="btn btn-clear" id="modalCancel">Отмена</button>
+      <button class="btn btn-bot" id="modalActivate">⚡ Активировать</button>
+    </div>
+  </div>
+</div>
+<script>
+/* ============================================================
+   BC+ Компилятор — BecauseDev IT Studio
+   ============================================================ */
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const editor     = document.getElementById('editor');
+const lineNums   = document.getElementById('lineNumbers');
+const output     = document.getElementById('output');
+const statusEl   = document.getElementById('status');
+const runBtn     = document.getElementById('runBtn');
+const clearBtn   = document.getElementById('clearBtn');
+const jsBtn      = document.getElementById('jsBtn');
+const toastEl    = document.getElementById('toast');
+
+let toastTimer;
+function toast(text, ok = true){
+  toastEl.textContent = text;
+  toastEl.style.borderColor = ok ? 'var(--accent)' : 'var(--danger)';
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+}
+
+/* ============ НУМЕРАЦИЯ СТРОК ============ */
+function updateLineNumbers(){
+  const count = editor.value.split('\n').length;
+  let html = '';
+  for(let i = 1; i <= count; i++) html += i + '<br>';
+  lineNums.innerHTML = html;
+}
+editor.addEventListener('input', updateLineNumbers);
+editor.addEventListener('scroll', () => {
+  lineNums.scrollTop = editor.scrollTop;
+});
+updateLineNumbers();
+
+/* ============ ПЕРЕВОД BC+ → JS ============ */
+function replaceOps(s){
+  s = s.replace(/\bи\b/g, '&&');
+  s = s.replace(/\bили\b/g, '||');
+  s = s.replace(/\bне\s/g, '!');
+  s = s.replace(/\bистина\b/g, 'true');
+  s = s.replace(/\bложь\b/g, 'false');
+  s = s.replace(/\bноль\b/g, 'null');
+  return s;
+}
+
+function bcToJs(source){
+  const lines = source.split('\n');
+  const out = [];
+  let indent = 0;
+  const pad = () => '  '.repeat(indent);
+
+  for(let raw of lines){
+    let line = raw.trim();
+    if(!line || line.startsWith('//')) continue;
+
+    if(line === '}'){
+      indent = Math.max(0, indent - 1);
+      out.push(pad() + '}');
+      continue;
+    }
+
+    if(line === 'иначе {' || line === 'иначе{'){
+      indent = Math.max(0, indent - 1);
+      out.push(pad() + '} else {');
+      indent++;
+      continue;
+    }
+
+    if(line.startsWith('сказать ')){
+      const expr = replaceOps(line.slice(8).trim());
+      out.push(pad() + 'print(' + expr + ');');
+      continue;
+    }
+
+    if(line.startsWith('пусть ')){
+      const rest = replaceOps(line.slice(6).trim());
+      out.push(pad() + 'let ' + rest + ';');
+      continue;
+    }
+
+    if(line.startsWith('если ') && line.endsWith('{')){
+      const cond = replaceOps(line.slice(5, -1).trim());
+      out.push(pad() + 'if (' + cond + ') {');
+      indent++;
+      continue;
+    }
+
+    if(line.startsWith('пока ') && line.endsWith('{')){
+      const cond = replaceOps(line.slice(5, -1).trim());
+      out.push(pad() + 'while (' + cond + ') {');
+      indent++;
+      continue;
+    }
+
+    if(line.startsWith('повторить ') && /раз\s*\{$/.test(line)){
+      const n = replaceOps(line.replace(/^повторить\s+/, '').replace(/раз\s*\{$/, '').trim());
+      out.push(pad() + 'for (let __i = 0; __i < ' + n + '; __i++) {');
+      indent++;
+      continue;
+    }
+
+    if(line.startsWith('функция ') && line.endsWith('{')){
+      const rest = line.slice(8, -1).trim();
+      out.push(pad() + 'function ' + rest + ' {');
+      indent++;
+      continue;
+    }
+
+    if(line.startsWith('вернуть ')){
+      const expr = replaceOps(line.slice(8).trim());
+      out.push(pad() + 'return ' + expr + ';');
+      continue;
+    }
+
+    out.push(pad() + replaceOps(line) + ';');
+  }
+
+  return out.join('\n');
+}
+
+/* ============ ВСТРОЕННЫЕ ФУНКЦИИ ============ */
+function buildBuiltins(logFn){
+  return {
+    print: (...args) => logFn(args.join(' ')),
+    случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
+    корень:    (x) => Math.sqrt(x),
+    степень:   (x, y) => Math.pow(x, y),
+    длина:     (x) => Array.isArray(x) || typeof x === 'string' ? x.length : 0,
+    округлить: (x) => Math.round(x),
+    модуль:    (x) => Math.abs(x),
+    в_верхний: (s) => String(s).toUpperCase(),
+    в_нижний:  (s) => String(s).toLowerCase()
+  };
+}
+
+/* ============ ОТЛАДЧИК ============ */
+function clearOutput(){
+  output.innerHTML = '';
+}
+function logLine(text, type = 'out'){
+  const div = document.createElement('div');
+  div.className = 'debug-line ' + type;
+  div.textContent = text;
+  output.appendChild(div);
+  output.scrollTop = output.scrollHeight;
+}
+  /* ============ ЗАПУСК КОДА ============ */
+function runCode(){
+  clearOutput();
+  const code = editor.value.trim();
+  if(!code){
+    logLine('// Нечего запускать — напиши код!', 'info');
+    statusEl.textContent = 'Пустой код';
+    statusEl.className = 'status';
+    return;
+  }
+
+  let jsCode;
+  try {
+    jsCode = bcToJs(code);
+  } catch(err){
+    logLine('❌ Ошибка перевода: ' + err.message, 'err');
+    statusEl.textContent = 'Ошибка перевода';
+    statusEl.className = 'status err';
+    return;
+  }
+
+  logLine('▶ Запуск main.bc+', 'info');
+  logLine('', 'info');
+
+  const builtins = buildBuiltins((msg) => logLine(msg, 'out'));
+
+  try {
+    const fn = new Function(...Object.keys(builtins), jsCode);
+    fn(...Object.values(builtins));
+    logLine('', 'info');
+    logLine('✅ Выполнено успешно', 'info');
+    statusEl.textContent = 'Успешно ✓';
+    statusEl.className = 'status ok';
+  } catch(err){
+    logLine('', 'info');
+    logLine('❌ Ошибка выполнения:', 'err');
+    logLine('   ' + err.message, 'err');
+    statusEl.textContent = 'Ошибка ✗';
+    statusEl.className = 'status err';
+  }
+}
+
+/* ============ ПОКАЗАТЬ JS ============ */
+function showJs(){
+  const code = editor.value.trim();
+  if(!code){ toast('Напиши код сначала', false); return; }
+  const js = bcToJs(code);
+
+  clearOutput();
+  logLine('📋 Сгенерированный JavaScript:', 'info');
+  logLine('', 'info');
+  logLine(js, 'out');
+  statusEl.textContent = 'JS показан';
+  statusEl.className = 'status';
+  toast('JavaScript показан в отладчике');
+}
+
+/* ============ КНОПКИ ============ */
+runBtn.addEventListener('click', runCode);
+clearBtn.addEventListener('click', () => {
+  editor.value = '';
+  updateLineNumbers();
+  clearOutput();
+  logLine('// Отладчик очищен', 'info');
+  statusEl.textContent = 'Готов к запуску';
+  statusEl.className = 'status';
+  editor.focus();
+});
+jsBtn.addEventListener('click', showJs);
+
+/* Ctrl+Enter — запуск, Tab — отступ */
+editor.addEventListener('keydown', (e) => {
+  if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+    e.preventDefault();
+    runCode();
+  }
+  if(e.key === 'Tab'){
+    e.preventDefault();
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
+    editor.selectionStart = editor.selectionEnd = start + 2;
+    updateLineNumbers();
+  }
+});
+
+/* ============ ПРИМЕРЫ ============ */
+const EXAMPLES = [
+  {
+    icon:'👋',
+    title:'Привет, мир!',
+    desc:'Классика — первая программа каждого разработчика',
+    code:
+`сказать "Привет, мир!"
+сказать "Меня зовут BC+"
+сказать "Я умею считать:"
+сказать 2 + 2 * 10`
+  },
+  {
+    icon:'🧮',
+    title:'Калькулятор',
+    desc:'Считает арифметические операции',
+    code:
+`пусть a = 25
+пусть b = 8
+
+сказать "a = " + a
+сказать "b = " + b
+сказать "Сумма: " + (a + b)
+сказать "Разность: " + (a - b)
+сказать "Произведение: " + (a * b)
+сказать "Деление: " + (a / b)
+сказать "Остаток: " + (a % b)`
+  },
+  {
+    icon:'🔁',
+    title:'Таблица умножения',
+    desc:'Цикл пока — выводит таблицу на 5',
+    code:
+`пусть n = 5
+пусть счётчик = 1
+пока счётчик <= 10 {
+  сказать "5 x " + счётчик + " = " + (5 * счётчик)
+  пусть счётчик = счётчик + 1
+}`
+  },
+  {
+    icon:'🎲',
+    title:'Угадай число',
+    desc:'Случайное число и проверка условия',
+    code:
+`пусть секрет = случайное(1, 100)
+сказать "Я загадал число от 1 до 100"
+сказать "Твой вариант: 42"
+
+пусть вариант = 42
+
+если вариант == секрет {
+  сказать "🎉 Победа! Это точно " + секрет
+} иначе {
+  если вариант < секрет {
+    сказать "Слишком мало! Было " + секрет
+  } иначе {
+    сказать "Слишком много! Было " + секрет
+  }
+}`
+  },
+  {
+    icon:'🧠',
+    title:'Факториал',
+    desc:'Функция + цикл пока',
+    code:
+`функция факториал(n) {
+  пусть результат = 1
+  пусть i = 1
+  пока i <= n {
+    пусть результат = результат * i
+    пусть i = i + 1
+  }
+  вернуть результат
+}
+
+сказать "5! = " + факториал(5)
+сказать "7! = " + факториал(7)
+сказать "10! = " + факториал(10)`
+  },
+  {
+    icon:'🤖',
+    title:'Telegram-бот',
+    desc:'Каркас бота для активации в TG',
+    code:
+`// Это пример кода для Telegram-бота на BC+
+
+функция создать_бота(токен) {
+  сказать "🤖 Бот создан с токеном: " + токен
+  сказать "Готов обрабатывать команды!"
+}
+
+функция приветствие(имя) {
+  сказать "Привет, " + имя + "! Я бот на BC+"
+}
+
+функция ответить_на_старт() {
+  приветствие("пользователь")
+  сказать "Напиши /help чтобы узнать команды"
+}
+
+создать_бота("Insert the token here")
+ответить_на_старт()
+
+сказать ""
+сказать "⚠️ Для реального запуска:"
+сказать "1. Нажми ⚡ Активировать бота"
+сказать "2. Вставь свой токен"
+сказать "3. Бот запустится в Telegram!"`
+  }
+];
+
+function renderExamples(){
+  const grid = document.getElementById('exGrid');
+  grid.innerHTML = EXAMPLES.map((ex, i) => `
+    <div class="ex-card" data-idx="${i}">
+      <span class="ex-icon">${ex.icon}</span>
+      <h4>${ex.title}</h4>
+      <p>${ex.desc}</p>
+      <button class="ex-btn">▶ Вставить в редактор</button>
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('.ex-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = +card.dataset.idx;
+      editor.value = EXAMPLES[idx].code;
+      updateLineNumbers();
+      document.getElementById('editor-section').scrollIntoView({behavior:'smooth'});
+      toast('Пример «' + EXAMPLES[idx].title + '» загружен');
+    });
+  });
+}
+renderExamples();
+  /* ============================================================
+   АКТИВАЦИЯ БОТА через Cloudflare Worker
+   ============================================================ */
+
+const PROXY_URL = 'https://becausedev-proxy.artemkushnirev99.workers.dev';
+
+const botBtn        = document.getElementById('botBtn');
+const botModal      = document.getElementById('botModal');
+const botPlatform   = document.getElementById('botPlatform');
+const botToken      = document.getElementById('botToken');
+const botChatId     = document.getElementById('botChatId');
+const tokenHint     = document.getElementById('tokenHint');
+const modalCancel   = document.getElementById('modalCancel');
+const modalActivate = document.getElementById('modalActivate');
+
+/* Меняем подсказку при смене платформы */
+botPlatform?.addEventListener('change', () => {
+  if(botPlatform.value === 'telegram'){
+    tokenHint.textContent = '💡 Telegram: получи токен у @BotFather (команда /newbot)';
+    botToken.placeholder = '1234567890:ABCdefGHIjklMNOpqrsTUVwxyz';
+  } else {
+    tokenHint.textContent = '💡 Discord: discord.com/developers → Bot → Reset Token';
+    botToken.placeholder = 'MTIzNDU2Nzg5MDEyMzQ1Njc4.GhIjKl.XyZ...';
+  }
+});
+
+/* Открыть модальное окно */
+botBtn?.addEventListener('click', () => {
+  botModal.classList.add('open');
+  botToken.focus();
+});
+
+/* Закрыть по клику на фон */
+botModal?.addEventListener('click', (e) => {
+  if(e.target === botModal) botModal.classList.remove('open');
+});
+
+/* Отмена */
+modalCancel?.addEventListener('click', () => {
+  botModal.classList.remove('open');
+});
+
+/* ============ АКТИВАЦИЯ ============ */
+modalActivate?.addEventListener('click', async () => {
+  const platform = botPlatform.value;
+  const token = botToken.value.trim();
+  const chatId = botChatId.value.trim();
+
+  if(!token){
+    toast('Вставь токен бота', false);
+    return;
+  }
+
+  modalActivate.disabled = true;
+  modalActivate.textContent = '⏳ Отправка...';
+
+  clearOutput();
+  logLine('⚡ Активация ' + (platform === 'telegram' ? 'Telegram' : 'Discord') + ' бота', 'info');
+  logLine('📡 Отправка на прокси-сервер...', 'info');
+  logLine('', 'info');
+
+  try {
+    /* Шаг 1: Проверка токена */
+    const verifyResp = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ platform, token, action: 'verify' })
+    });
+    const verifyData = await verifyResp.json();
+
+    /* ============ TELEGRAM ============ */
+    if(platform === 'telegram'){
+      if(!verifyData.ok){
+        logLine('❌ Telegram отклонил токен', 'err');
+        logLine('   ' + (verifyData.description || 'Неверный токен'), 'err');
+        toast('Неверный токен Telegram', false);
+        resetBtn();
+        return;
+      }
+
+      const bot = verifyData.result;
+      logLine('✅ Токен принят Telegram!', 'out');
+      logLine('   🤖 Имя: ' + bot.first_name, 'out');
+      logLine('   🔗 Username: @' + bot.username, 'out');
+      logLine('   🆔 ID: ' + bot.id, 'out');
+      logLine('', 'info');
+
+      /* Шаг 2: Если есть chat_id — отправляем тестовое сообщение */
+      if(chatId){
+        logLine('📨 Отправка тестового сообщения...', 'info');
+        const sendResp = await fetch(PROXY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            platform: 'telegram',
+            token,
+            action: 'sendMessage',
+            payload: {
+              chat_id: chatId,
+              text: '🎉 Привет! Я бот, созданный на языке BC+ в BecauseDev IT Studio!'
+            }
+          })
+        });
+        const sendData = await sendResp.json();
+        if(sendData.ok){
+          logLine('✅ Сообщение отправлено в чат!', 'out');
+          logLine('   Открой Telegram и посмотри 👀', 'info');
+        } else {
+          logLine('⚠️ Не удалось отправить сообщение', 'err');
+          logLine('   ' + (sendData.description || ''), 'err');
+        }
+      } else {
+        logLine('ℹ️ Chat ID не указан — тестовое сообщение не отправлено.', 'info');
+        logLine('   Чтобы проверить, добавь ID чата в форму.', 'info');
+      }
+
+      logLine('', 'info');
+      logLine('✅ Бот успешно активирован!', 'out');
+      statusEl.textContent = 'Бот активен ✓';
+      statusEl.className = 'status ok';
+      toast('Telegram бот активирован! 🎉');
+    }
+
+    /* ============ DISCORD ============ */
+    if(platform === 'discord'){
+      if(verifyData.ok && verifyData.bot){
+        const bot = verifyData.bot;
+        logLine('✅ Токен принят Discord!', 'out');
+        logLine('   🤖 Имя: ' + bot.username, 'out');
+        logLine('   🆔 ID: ' + bot.id, 'out');
+        logLine('', 'info');
+        logLine('✅ Бот успешно подключён!', 'out');
+        statusEl.textContent = 'Бот активен ✓';
+        statusEl.className = 'status ok';
+        toast('Discord бот активирован! 🎉');
+      } else {
+        logLine('❌ Discord отклонил токен', 'err');
+        logLine('   ' + (verifyData.error || 'Invalid token'), 'err');
+        toast('Неверный токен Discord', false);
+      }
+    }
+
+    /* Закрываем модалку через 1.5 сек */
+    setTimeout(() => {
+      botModal.classList.remove('open');
+      botToken.value = '';
+      botChatId.value = '';
+    }, 1500);
+
+  } catch(err){
+    logLine('❌ Ошибка сети: ' + err.message, 'err');
+    logLine('   Проверь интернет и попробуй снова', 'err');
+    toast('Ошибка соединения', false);
+  } finally {
+    resetBtn();
+  }
+});
+
+function resetBtn(){
+  modalActivate.disabled = false;
+  modalActivate.textContent = '⚡ Активировать';
+}
+
+/* ============ СТАРТОВЫЙ КОД В РЕДАКТОРЕ ============ */
+editor.value =
+`// Добро пожаловать в BC+!
+// Напиши свой код или выбери пример ниже
+
+сказать "Привет, разработчик!"
+пусть имя = "друг"
+сказать "Привет, " + имя + "!"
+
+пусть x = 10
+пусть y = 20
+сказать x + " + " + y + " = " + (x + y)
+
+повторить 3 раз {
+  сказать "BC+ — это просто!"
+}`;
+updateLineNumbers();
+  /* ============ ПРИВЕТ В КОНСОЛИ ============ */
+console.log(
+  '%cBC+ Compiler%c — BecauseDev IT Studio\nЯзык будущего · Боты в 1 клик',
+  'color:#ff9558;font-size:20px;font-weight:bold;',
+  'color:#8b9bb4;font-size:13px;'
+);
+</script>
+</body>
+</html>
