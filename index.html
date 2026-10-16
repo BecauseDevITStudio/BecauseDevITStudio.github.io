@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BecauseDev IT Studio</title>
-<meta name="description" content="BecauseDev IT Studio — сайты, боты, плагины, исходники">
+<title>BecauseDev IT Studio — Сайты · Боты · Игры · BC+</title>
+<meta name="description" content="BecauseDev IT Studio — сайты, боты, плагины, исходники игр и язык программирования BC+">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#0a0e1a;--bg2:#0f1524;--card:#141b2d;--card2:#1a2338;
-  --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;
+  --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;--danger:#ff5f56;
   --text:#e6edf7;--muted:#8b9bb4;--border:rgba(0,224,255,.15);
   --radius:16px;
 }
@@ -44,8 +44,8 @@ img{max-width:100%;display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @keyframes caret{50%{border-color:transparent}}
 @keyframes pulse{50%{opacity:.3}}
-@keyframes ripple{to{transform:translate(-50%,-50%) scale(20);opacity:0}}
 @keyframes float{50%{transform:translateY(-6px)}}
+@keyframes ripple{to{transform:translate(-50%,-50%) scale(20);opacity:0}}
 
 .page{display:none;padding:130px 40px 80px;max-width:1300px;margin:0 auto;min-height:100vh}
 .page.active{display:block;animation:pageIn .55s cubic-bezier(.2,.8,.2,1) both}
@@ -85,12 +85,14 @@ img{max-width:100%;display:block}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,224,255,.5)}
 .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
 .btn-outline:hover{background:rgba(0,224,255,.08);border-color:var(--accent);transform:translateY(-3px);color:var(--accent)}
-.btn-download{
-  background:linear-gradient(135deg,var(--accent3),var(--accent));
-  color:#051018;font-weight:700;
-  box-shadow:0 8px 30px rgba(0,255,163,.3);
-}
+.btn-download{background:linear-gradient(135deg,var(--accent3),var(--accent));color:#051018;font-weight:700;box-shadow:0 8px 30px rgba(0,255,163,.3)}
 .btn-download:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,255,163,.5)}
+.btn-bc{
+  background:linear-gradient(135deg,#ff6b35,#ff9558);
+  color:#fff;font-weight:700;
+  box-shadow:0 8px 30px rgba(255,107,53,.35);
+}
+.btn-bc:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,107,53,.55)}
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-top:70px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 20px;text-align:center;transition:.3s}
@@ -189,6 +191,11 @@ nav a.active-link::after{
   height:2px;border-radius:2px;
   background:linear-gradient(90deg,var(--accent),var(--accent2));
 }
+nav a.highlight{
+  color:#fff;background:linear-gradient(135deg,#ff6b35,#ff9558);
+  font-weight:700;
+}
+nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,107,53,.4)}
 .burger{display:none;background:none;border:none;color:var(--text);font-size:1.8rem}
 
 .dev-tabs{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
@@ -216,9 +223,8 @@ nav a.active-link::after{
 .lang-btn.active{
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#051018;border-color:transparent;box-shadow:0 8px 25px rgba(0,224,255,.4);
-	}
-	/* SOURCE CARD */
-.source-card{
+}
+	.source-card{
   display:grid;grid-template-columns:240px 1fr;gap:32px;
   background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(124,92,255,.06));
   border:2px solid rgba(0,224,255,.3);
@@ -260,7 +266,6 @@ nav a.active-link::after{
 .source-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .source-note{font-size:.82rem;color:var(--muted);font-style:italic}
 
-/* WEEKLY */
 .weekly-hero{
   background:linear-gradient(135deg,rgba(0,224,255,.08),rgba(124,92,255,.08));
   border:1px solid var(--border);border-radius:var(--radius);
@@ -300,21 +305,15 @@ nav a.active-link::after{
   border-left:3px solid var(--accent);
   border-radius:12px;padding:18px 22px;transition:.3s;
 }
-.weekly-update:hover{
-  background:var(--card2);transform:translateX(4px);
-  border-left-color:var(--accent2);
-}
+.weekly-update:hover{background:var(--card2);transform:translateX(4px);border-left-color:var(--accent2)}
 .weekly-update .wu-head{
   display:flex;justify-content:space-between;align-items:center;
   gap:12px;flex-wrap:wrap;margin-bottom:8px;
 }
 .weekly-update .wu-title{font-weight:700;color:var(--text);font-size:1.05rem}
-.weekly-update .wu-date{
-  font-family:'Consolas',monospace;font-size:.78rem;color:var(--muted);
-}
+.weekly-update .wu-date{font-family:'Consolas',monospace;font-size:.78rem;color:var(--muted)}
 .weekly-update .wu-body{color:var(--muted);font-size:.93rem}
 
-/* CODE */
 .code-wrap{margin-top:30px;background:#050810;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .code-head{
   display:flex;justify-content:space-between;align-items:center;gap:12px;
@@ -342,7 +341,6 @@ pre code{white-space:pre}
 .token-input:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(0,224,255,.2)}
 .token-input::placeholder{color:var(--muted)}
 
-/* PLUGINS */
 .plugin-card{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:26px;margin-bottom:20px;transition:.4s;
@@ -364,7 +362,6 @@ pre code{white-space:pre}
 .plugin-code{display:none;margin-top:18px}
 .plugin-code.open{display:block}
 
-/* WISHES */
 .wish-form{max-width:720px;margin:0 auto 50px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px}
 .wish-form label{display:block;margin-bottom:8px;color:var(--muted);font-size:.88rem;font-weight:600}
 .wish-form input,.wish-form textarea{
@@ -386,14 +383,12 @@ pre code{white-space:pre}
 .comments-empty{text-align:center;padding:50px 30px;background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);color:var(--muted)}
 .comments-empty .icon{font-size:3rem;margin-bottom:12px;display:block}
 
-/* FOOTER */
 footer{text-align:center;padding:50px 20px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;margin-top:60px}
 footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 .footer-links{display:flex;justify-content:center;gap:20px;margin-top:14px;flex-wrap:wrap}
 .footer-links a{color:var(--muted);cursor:pointer}
 .footer-links a:hover{color:var(--accent)}
 
-/* TOAST */
 .toast{
   position:fixed;bottom:30px;right:30px;background:var(--card);
   border:1px solid var(--accent);color:var(--text);padding:14px 22px;
@@ -403,10 +398,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 }
 .toast.show{transform:translateY(0)}
 
-/* АДАПТИВ */
-@media (max-width:900px){
-  nav a{padding:8px 10px;font-size:.85rem}
-}
+@media (max-width:900px){nav a{padding:8px 10px;font-size:.85rem}}
 @media (max-width:768px){
   header{padding:14px 20px}
   nav{
@@ -444,23 +436,25 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <a data-nav="plugins">Плагины</a>
     <a data-nav="weekly">Еженедельно</a>
     <a data-nav="wishes">Пожелания</a>
+    <a href="compiler.html" class="highlight">⚡ BC+</a>
   </nav>
   <button class="burger" id="burger" aria-label="Меню">☰</button>
 </header>
 <!-- ================= ГЛАВНАЯ ================= -->
 <section class="page active hero" id="home">
   <div class="hero-content">
-    <span class="hero-badge">IT Studio · Web · Bots · Plugins · Open Source</span>
+    <span class="hero-badge">IT Studio · Web · Bots · Plugins · BC+</span>
     <h1>
       Мы создаём сайты,<br>
       ботов и полезные <span class="typing" id="typing">инструменты</span>
     </h1>
     <p>
       BecauseDev IT Studio — команда разработчиков, которая любит свои проекты.
-      Публикуем плагины, готовые шаблоны ботов, исходники игр и делимся опытом.
+      Публикуем плагины, шаблоны ботов, исходники игр и создали свой язык BC+.
     </p>
     <div class="hero-btns">
-      <button class="btn btn-primary" data-nav="developers">🚀 Для разработчиков</button>
+      <a href="compiler.html" class="btn btn-bc">⚡ Открыть BC+ Компилятор</a>
+      <button class="btn btn-primary" data-nav="developers">🚀 Разработчикам</button>
       <button class="btn btn-outline" data-nav="weekly">📅 Еженедельно</button>
     </div>
     <div class="live-badge">Студия активна · Онлайн</div>
@@ -471,16 +465,16 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
         <div class="stat-label">Шаблонов ботов</div>
       </div>
       <div class="stat">
-        <div class="stat-num">9</div>
-        <div class="stat-label">Плагинов и кодов</div>
-      </div>
-      <div class="stat">
         <div class="stat-num">6</div>
-        <div class="stat-label">Языков программирования</div>
+        <div class="stat-label">Плагинов в базе</div>
       </div>
       <div class="stat">
         <div class="stat-num">1</div>
-        <div class="stat-label">Открытый исходник игры</div>
+        <div class="stat-label">Свой язык BC+</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Открытый исходник</div>
       </div>
     </div>
   </div>
@@ -491,7 +485,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   <h2 class="section-title">О студии</h2>
   <p class="section-sub">
     BecauseDev IT Studio — команда энтузиастов, для которых код — это не работа,
-    а образ жизни. Мы делаем сайты, ботов, плагины и делимся всем с сообществом.
+    а образ жизни. Мы делаем сайты, ботов, игры и свой язык программирования.
   </p>
 
   <div class="cards">
@@ -511,14 +505,14 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
       <p>Публикуем готовые плагины и сниппеты для сайтов: копирование, слайдеры, валидаторы.</p>
     </div>
     <div class="card">
+      <span class="card-icon">⚡</span>
+      <h3>Язык BC+</h3>
+      <p>Наш собственный язык программирования на русском. Простой как Python, мощный как JS.</p>
+    </div>
+    <div class="card">
       <span class="card-icon">🎮</span>
       <h3>Игровые проекты</h3>
       <p>Разрабатываем и открыто публикуем исходники игр — твори на их основе что хочешь!</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📚</span>
-      <h3>Полезные советы</h3>
-      <p>Статьи, лайфхаки и разборы по web-разработке и архитектуре кода.</p>
     </div>
     <div class="card">
       <span class="card-icon">🌍</span>
@@ -541,7 +535,11 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     </div>
     <div class="timeline-item">
       <h4>2025 · Open Source</h4>
-      <p>Начали публиковать плагины, шаблоны и исходники игр в открытом доступе. Сообщество отозвалось — мы на верном пути.</p>
+      <p>Начали публиковать плагины, шаблоны и исходники игр в открытом доступе. Сообщество отозвалось.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2025 · Язык BC+</h4>
+      <p>Создали собственный язык программирования BC+ — на русском, простой и мощный для ботов и не только.</p>
     </div>
     <div class="timeline-item">
       <h4>Сегодня · BecauseDev IT Studio</h4>
@@ -628,6 +626,40 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
       <p class="source-note">
         💡 Распакуй архив, открой проект в <strong>Godot Engine 4</strong> — и вперёд!
         Никаких ограничений, делай под свою игру.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== BC+ ПРОМО ===== -->
+  <div class="source-card" style="margin-top:30px;border-color:rgba(255,107,53,.4);background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,149,88,.06))">
+    <div class="source-cover" style="background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,149,88,.2))">
+      <span class="emoji">⚡</span>
+    </div>
+    <div class="source-info">
+      <h3 class="source-title">
+        Язык BC+ <span class="version" style="background:rgba(255,107,53,.2);color:#ff9558">v1.0 · NEW</span>
+      </h3>
+      <p class="source-desc">
+        <strong>BC+ (БиСиПлюс)</strong> — наш собственный язык программирования на русском языке.
+        Пиши код обычными словами: <code>сказать</code>, <code>пусть</code>, <code>если</code>.
+        Создавай ботов, калькуляторы, игры — всё прямо в браузере!
+      </p>
+
+      <div class="source-tags">
+        <span class="tag" style="color:#ff9558;background:rgba(255,107,53,.1);border-color:rgba(255,107,53,.3)">🇷🇺 Русский синтаксис</span>
+        <span class="tag green">⚡ Мгновенный запуск</span>
+        <span class="tag purple">🤖 Боты TG/DC</span>
+        <span class="tag">✨ Легко для всех</span>
+      </div>
+
+      <div class="source-actions">
+        <a href="compiler.html" class="btn btn-bc">
+          ⚡ Открыть редактор BC+
+        </a>
+      </div>
+
+      <p class="source-note">
+        💡 Разберётся даже школьник. Напиши код — нажми Запустить — работает!
       </p>
     </div>
   </div>
@@ -731,7 +763,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="logo">BecauseDev IT Studio</div>
-  <p>© <span id="year"></span> BecauseDev IT Studio · Разрабатываем сайты, ботов, игры и плагины с ❤️</p>
+  <p>© <span id="year"></span> BecauseDev IT Studio · Разрабатываем сайты, ботов, игры и язык BC+ с ❤️</p>
   <div class="footer-links">
     <a data-nav="home">Главная</a>
     <a data-nav="about">О нас</a>
@@ -739,6 +771,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <a data-nav="plugins">Плагины</a>
     <a data-nav="weekly">Еженедельно</a>
     <a data-nav="wishes">Пожелания</a>
+    <a href="compiler.html">⚡ BC+</a>
   </div>
 </footer>
 
@@ -760,7 +793,7 @@ let toastTimer;
 function showToast(text, ok = true){
   if(!toastEl) return;
   toastEl.textContent = text;
-  toastEl.style.borderColor = ok ? 'var(--accent)' : '#ff5f56';
+  toastEl.style.borderColor = ok ? 'var(--accent)' : 'var(--danger)';
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
@@ -772,7 +805,9 @@ const pages = $$('.page');
 function showPage(id){
   if(!id || !document.getElementById(id)) id = 'home';
   pages.forEach(p => p.classList.toggle('active', p.id === id));
-  $$('nav a').forEach(a => a.classList.toggle('active-link', a.dataset.nav === id));
+  $$('nav a[data-nav]').forEach(a => {
+    a.classList.toggle('active-link', a.dataset.nav === id);
+  });
   window.scrollTo({ top: 0, behavior: 'auto' });
   const nav = document.getElementById('nav');
   if(nav) nav.classList.remove('open');
@@ -811,7 +846,10 @@ function typingTick(){
   el.textContent = deleting ? w.slice(0, --cIdx) : w.slice(0, ++cIdx);
   let delay = deleting ? 50 : 110;
   if(!deleting && cIdx === w.length){ deleting = true; delay = 1600; }
-  else if(deleting && cIdx === 0){ deleting = false; tIdx = (tIdx + 1) % typingWords.length; }
+  else if(deleting && cIdx === 0){
+    deleting = false;
+    tIdx = (tIdx + 1) % typingWords.length;
+  }
   tTimer = setTimeout(typingTick, delay);
 }
 function restartTyping(){
@@ -1366,8 +1404,8 @@ const WEEKLY_TIPS = [
 ];
 
 const WEEKLY_UPDATES = [
-  { title: '🎮 Опубликован исходник Granny Remake', date: 'сегодня', body: 'Официальный исходник игры теперь в открытом доступе. Скачивай в разделе «Разработчикам» и твори!' },
-  { title: '✨ Новая вкладка «Еженедельно»', date: 'сегодня', body: 'Каждую неделю здесь будет свежая подборка скриптов, плагинов и обновлений студии.' },
+  { title: '⚡ Запущен язык BC+', date: 'сегодня', body: 'Наш собственный язык программирования теперь доступен всем! Пиши код на русском, запускай ботов в TG и DC прямо из браузера.' },
+  { title: '🎮 Опубликован исходник Granny Remake', date: 'недавно', body: 'Официальный исходник игры в открытом доступе. Скачивай в разделе «Разработчикам» и твори!' },
   { title: '🧩 Добавлено 6 плагинов', date: 'на прошлой неделе', body: 'Copy to Clipboard, Smooth Scroll, Lazy Load, Theme Toggle, Typing Effect, Progress Bar.' },
   { title: '🤖 12 шаблонов ботов готовы', date: '2 недели назад', body: 'Telegram и Discord боты на 6 языках программирования — Python, JS, C#, C++, Java, Go.' }
 ];
@@ -1390,7 +1428,7 @@ const onSearch = debounce((q) => console.log('Поиск:', q), 500);` },
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-console.log(random(1, 100)); // например 42` },
+console.log(random(1, 100));` },
   { id:'week-3', icon:'🎨', title:'Hex → RGB', desc:'Конвертирует HEX-цвет в RGB для использования в JS.', tags:['JS','Утилита'], tagColor:'purple',
     code:
 `function hexToRgb(hex){
@@ -1424,9 +1462,9 @@ console.log(hexToRgb('#00e0ff'));` },
 ];
 
 const WEEKLY_RESULTS = [
-  { icon:'🏆', title:'Топ плагин недели', desc:'Scroll Progress Bar — самая скачиваемая функция последних 7 дней.' },
-  { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake — за первую неделю собрал десятки скачиваний.' },
-  { icon:'💡', title:'Идея недели', desc:'Пользователи просят добавить раздел «Советы по Godot» — работаем над этим.' }
+  { icon:'⚡', title:'Релиз недели', desc:'Язык BC+ — наш собственный язык программирования, запущен и работает!' },
+  { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake — продолжает собирать скачивания.' },
+  { icon:'💡', title:'Идея недели', desc:'Пользователи просят поддержку массивов в BC+ — работаем над этим.' }
 ];
 	/* ================== РЕНДЕР ЕЖЕНЕДЕЛЬНО ================== */
 function renderWeekly(){
@@ -1521,7 +1559,7 @@ function renderWeekly(){
 renderWeekly();
 
 /* ================== ПОЖЕЛАНИЯ ================== */
-const STORAGE_KEY = 'becausedev_comments_v5';
+const STORAGE_KEY = 'becausedev_comments_v6';
 
 function loadComments(){
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -1537,8 +1575,7 @@ function formatTime(ts){
          p(d.getHours()) + ':' + p(d.getMinutes());
 }
 function esc(s){
-  return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
@@ -1599,8 +1636,8 @@ if(wishForm){
 (function initComments(){
   if(!localStorage.getItem(STORAGE_KEY)){
     saveComments([
-      { id:'demo_1', nick:'CodeMaster', text:'Исходник Granny Remake просто огонь! Скачал, уже копаюсь в коде 🔥', time: Date.now() - 86400000 * 2 },
-      { id:'demo_2', nick:'NikaDev', text:'Вкладка «Еженедельно» — топ идея. Скрипты реально полезные 💙', time: Date.now() - 3600000 * 8 },
+      { id:'demo_1', nick:'CodeMaster', text:'BC+ просто огонь! Попробовал — работает как надо 🔥', time: Date.now() - 86400000 * 2 },
+      { id:'demo_2', nick:'NikaDev', text:'Вкладка «Еженедельно» — топ. Скрипты реально полезные 💙', time: Date.now() - 3600000 * 8 },
       { id:'demo_3', nick:'BecauseDev', text:'Добро пожаловать! Оставляйте пожелания и идеи.', time: Date.now() - 1800000 }
     ]);
   }
@@ -1633,9 +1670,9 @@ document.addEventListener('keydown', function(e){
   }
 });
 
-/* ================== ПРИВЕТ В КОНСОЛИ ================== */
+/* ================== КОНСОЛЬ ================== */
 console.log(
-  '%c</> BecauseDev IT Studio%c\nПривет! Нажми «H» — вернуться на главную 💙',
+  '%c</> BecauseDev IT Studio%c\nЯзык BC+ · Нажми «H» — на главную 💙',
   'color:#00e0ff;font-size:20px;font-weight:bold;',
   'color:#8b9bb4;font-size:13px;'
 );
