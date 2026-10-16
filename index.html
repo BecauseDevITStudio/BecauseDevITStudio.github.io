@@ -10,6 +10,7 @@
 :root{
   --bg:#0a0e1a;--bg2:#0f1524;--card:#141b2d;--card2:#1a2338;
   --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;--danger:#ff5f56;
+  --bc:#ff6b35;--bc2:#ff9558;
   --text:#e6edf7;--muted:#8b9bb4;--border:rgba(0,224,255,.15);
   --radius:16px;
 }
@@ -88,7 +89,7 @@ img{max-width:100%;display:block}
 .btn-download{background:linear-gradient(135deg,var(--accent3),var(--accent));color:#051018;font-weight:700;box-shadow:0 8px 30px rgba(0,255,163,.3)}
 .btn-download:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,255,163,.5)}
 .btn-bc{
-  background:linear-gradient(135deg,#ff6b35,#ff9558);
+  background:linear-gradient(135deg,var(--bc),var(--bc2));
   color:#fff;font-weight:700;
   box-shadow:0 8px 30px rgba(255,107,53,.35);
 }
@@ -192,7 +193,7 @@ nav a.active-link::after{
   background:linear-gradient(90deg,var(--accent),var(--accent2));
 }
 nav a.highlight{
-  color:#fff;background:linear-gradient(135deg,#ff6b35,#ff9558);
+  color:#fff;background:linear-gradient(135deg,var(--bc),var(--bc2));
   font-weight:700;
 }
 nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,107,53,.4)}
@@ -223,13 +224,17 @@ nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15p
 .lang-btn.active{
   background:linear-gradient(135deg,var(--accent),var(--accent2));
   color:#051018;border-color:transparent;box-shadow:0 8px 25px rgba(0,224,255,.4);
-}
+	}
 	.source-card{
   display:grid;grid-template-columns:240px 1fr;gap:32px;
   background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(124,92,255,.06));
   border:2px solid rgba(0,224,255,.3);
   border-radius:var(--radius);padding:30px;margin-top:20px;
   position:relative;overflow:hidden;
+}
+.source-card.bc-card{
+  background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,149,88,.06));
+  border-color:rgba(255,107,53,.4);
 }
 .source-card::before{
   content:'OFFICIAL';position:absolute;top:14px;right:-32px;
@@ -238,6 +243,11 @@ nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15p
   padding:6px 42px;transform:rotate(35deg);
   letter-spacing:2px;box-shadow:0 4px 20px rgba(0,255,163,.4);
 }
+.source-card.bc-card::before{
+  content:'NEW';
+  background:linear-gradient(135deg,var(--bc),var(--bc2));
+  box-shadow:0 4px 20px rgba(255,107,53,.5);
+}
 .source-cover{
   width:240px;height:240px;border-radius:16px;
   display:flex;align-items:center;justify-content:center;
@@ -245,10 +255,16 @@ nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15p
   background:linear-gradient(135deg,rgba(0,224,255,.2),rgba(124,92,255,.2));
   border:2px solid var(--border);overflow:hidden;
 }
+.bc-card .source-cover{
+  background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,149,88,.2));
+}
 .source-cover::after{
   content:'';position:absolute;inset:0;
   background:radial-gradient(circle at 30% 30%,rgba(0,224,255,.3),transparent 60%);
   animation:float 4s ease-in-out infinite;
+}
+.bc-card .source-cover::after{
+  background:radial-gradient(circle at 30% 30%,rgba(255,107,53,.35),transparent 60%);
 }
 .source-cover .emoji{position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
 .source-info{display:flex;flex-direction:column;justify-content:center}
@@ -260,6 +276,9 @@ nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15p
   font-size:.75rem;padding:3px 10px;border-radius:100px;
   background:rgba(0,255,163,.15);color:var(--accent3);
   font-family:'Consolas',monospace;font-weight:600;
+}
+.bc-card .source-title .version{
+  background:rgba(255,107,53,.2);color:var(--bc2);
 }
 .source-desc{color:var(--muted);font-size:.95rem;margin-bottom:18px;line-height:1.65}
 .source-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
@@ -354,6 +373,7 @@ pre code{white-space:pre}
 .tag{padding:4px 12px;border-radius:100px;background:rgba(0,224,255,.08);border:1px solid var(--border);color:var(--accent);font-size:.78rem;font-family:'Consolas',monospace}
 .tag.purple{color:var(--accent2);background:rgba(124,92,255,.1)}
 .tag.green{color:var(--accent3);background:rgba(0,255,163,.08)}
+.tag.orange{color:var(--bc2);background:rgba(255,107,53,.1)}
 .plugin-toggle{
   background:transparent;border:1px solid var(--border);color:var(--accent);
   padding:10px 20px;border-radius:10px;font-weight:600;transition:.3s;font-size:.88rem;
@@ -450,7 +470,8 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     </h1>
     <p>
       BecauseDev IT Studio — команда разработчиков, которая любит свои проекты.
-      Публикуем плагины, шаблоны ботов, исходники игр и создали свой язык BC+.
+      Мы создали свой язык программирования <strong style="color:var(--bc)">BC+</strong>,
+      публикуем шаблоны ботов, исходники игр и плагины.
     </p>
     <div class="hero-btns">
       <a href="compiler.html" class="btn btn-bc">⚡ Открыть BC+ Компилятор</a>
@@ -485,7 +506,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   <h2 class="section-title">О студии</h2>
   <p class="section-sub">
     BecauseDev IT Studio — команда энтузиастов, для которых код — это не работа,
-    а образ жизни. Мы делаем сайты, ботов, игры и свой язык программирования.
+    а образ жизни. Мы делаем сайты, ботов, игры и создали свой язык программирования.
   </p>
 
   <div class="cards">
@@ -507,7 +528,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <div class="card">
       <span class="card-icon">⚡</span>
       <h3>Язык BC+</h3>
-      <p>Наш собственный язык программирования на русском. Простой как Python, мощный как JS.</p>
+      <p>Наш собственный язык программирования на русском. Простой как Python, работает прямо в браузере.</p>
     </div>
     <div class="card">
       <span class="card-icon">🎮</span>
@@ -610,57 +631,125 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 
       <div class="source-actions">
         <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev/releases/download/v1.0/granny-remake--because-dev-.zip"
-           class="btn btn-download"
-           target="_blank"
-           rel="noopener">
+           class="btn btn-download" target="_blank" rel="noopener">
           ⬇️ Скачать исходник
         </a>
         <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev"
-           class="btn btn-outline"
-           target="_blank"
-           rel="noopener">
+           class="btn btn-outline" target="_blank" rel="noopener">
           📂 GitHub репозиторий
         </a>
       </div>
 
       <p class="source-note">
         💡 Распакуй архив, открой проект в <strong>Godot Engine 4</strong> — и вперёд!
-        Никаких ограничений, делай под свою игру.
       </p>
     </div>
   </div>
 
-  <!-- ===== BC+ ПРОМО ===== -->
-  <div class="source-card" style="margin-top:30px;border-color:rgba(255,107,53,.4);background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,149,88,.06))">
-    <div class="source-cover" style="background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,149,88,.2))">
+  <!-- ===== BC+ БОЛЬШАЯ КАРТОЧКА С ИСТОРИЕЙ ===== -->
+  <div class="source-card bc-card" style="margin-top:30px">
+    <div class="source-cover">
       <span class="emoji">⚡</span>
     </div>
     <div class="source-info">
       <h3 class="source-title">
-        Язык BC+ <span class="version" style="background:rgba(255,107,53,.2);color:#ff9558">v1.0 · NEW</span>
+        Язык BC+ (БиСиПлюс)
+        <span class="version">v2.0 · NEW</span>
       </h3>
       <p class="source-desc">
-        <strong>BC+ (БиСиПлюс)</strong> — наш собственный язык программирования на русском языке.
-        Пиши код обычными словами: <code>сказать</code>, <code>пусть</code>, <code>если</code>.
-        Создавай ботов, калькуляторы, игры — всё прямо в браузере!
+        Наш собственный язык программирования <strong>на русском языке</strong>.
+        Создан для новичков в IT — чтобы писать код было так же просто, как говорить.
+        Работает прямо в браузере, переводится в JavaScript и умеет запускать реальных Telegram и Discord ботов.
       </p>
 
       <div class="source-tags">
-        <span class="tag" style="color:#ff9558;background:rgba(255,107,53,.1);border-color:rgba(255,107,53,.3)">🇷🇺 Русский синтаксис</span>
+        <span class="tag orange">🇷🇺 Русский синтаксис</span>
         <span class="tag green">⚡ Мгновенный запуск</span>
         <span class="tag purple">🤖 Боты TG/DC</span>
-        <span class="tag">✨ Легко для всех</span>
+        <span class="tag">📦 Массивы и словари</span>
+        <span class="tag">🏛 Классы (ООП)</span>
+        <span class="tag">🌐 HTTP-запросы</span>
+        <span class="tag">🎨 DOM</span>
       </div>
 
       <div class="source-actions">
-        <a href="compiler.html" class="btn btn-bc">
-          ⚡ Открыть редактор BC+
-        </a>
+        <a href="compiler.html" class="btn btn-bc">⚡ Открыть редактор BC+</a>
       </div>
+    </div>
+  </div>
 
-      <p class="source-note">
-        💡 Разберётся даже школьник. Напиши код — нажми Запустить — работает!
-      </p>
+  <!-- ===== ИСТОРИЯ BC+ ===== -->
+  <h3 class="weekly-subtitle" style="margin-top:70px;">📖 История языка BC+</h3>
+  <p class="section-sub" style="text-align:left;max-width:100%;margin:0 0 30px">
+    Как мы придумали и построили свой язык программирования
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>Идея · «Язык для новичков»</h4>
+      <p>Мы заметили: люди боятся начинать программировать, потому что всё на английском. Подумали — а что если сделать язык, где код читается как обычный русский текст?</p>
+    </div>
+    <div class="timeline-item">
+      <h4>Прототип · Компилятор</h4>
+      <p>Написали транспайлер: код на BC+ переводится в JavaScript. Сначала работали только `сказать`, `пусть`, `если`. Потом добавили циклы и функции.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>v1.0 · Редактор + отладчик</h4>
+      <p>Сделали красивый редактор с нумерацией строк, отладчиком и 6 примерами программ. Любой мог открыть сайт и сразу писать код.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>v1.5 · Активация ботов</h4>
+      <p>Подключили Cloudflare Worker как прокси. Теперь юзеры пишут бота на BC+ прямо в браузере и запускают его в реальном Telegram в один клик.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>v2.0 · Серьёзные фичи (сегодня)</h4>
+      <p>Добавили массивы, словари, классы (ООП), HTTP-запросы, работу с DOM и Supabase БД. BC+ теперь умеет делать реальные программы и сайты.</p>
+    </div>
+  </div>
+
+  <!-- ===== ЧТО УМЕЕТ BC+ ===== -->
+  <h3 class="weekly-subtitle" style="margin-top:70px;">🎯 Что умеет BC+ прямо сейчас</h3>
+
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🧮</span>
+      <h3>Математика и логика</h3>
+      <p>Переменные, условия, циклы, функции, рекурсия. Всё что нужно для алгоритмов.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📦</span>
+      <h3>Массивы и словари</h3>
+      <p>Списки данных, объекты, ключи-значения. База структур данных для серьёзного кода.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏛</span>
+      <h3>Классы (ООП)</h3>
+      <p>Объектно-ориентированное программирование — как в Python и JavaScript.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌐</span>
+      <h3>HTTP-запросы</h3>
+      <p>Получение данных с любых API: погода, курсы, аниме, мемы. Всё через одну строку.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">💾</span>
+      <h3>Supabase БД</h3>
+      <p>Реальное хранение данных в облаке. Сохраняй, читай, обновляй — прямо из BC+.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎨</span>
+      <h3>Работа с DOM</h3>
+      <p>Создание элементов, стилизация, обработка кликов. Можно делать сайты на BC+.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🤖</span>
+      <h3>Активация ботов</h3>
+      <p>Напиши бота на BC+ — нажми кнопку — бот запустится в Telegram или Discord.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎁</span>
+      <h3>Готовые примеры</h3>
+      <p>6 примеров прямо в редакторе: калькулятор, игра, факториал, бот и другие.</p>
     </div>
   </div>
 
@@ -1404,10 +1493,10 @@ const WEEKLY_TIPS = [
 ];
 
 const WEEKLY_UPDATES = [
-  { title: '⚡ Запущен язык BC+', date: 'сегодня', body: 'Наш собственный язык программирования теперь доступен всем! Пиши код на русском, запускай ботов в TG и DC прямо из браузера.' },
-  { title: '🎮 Опубликован исходник Granny Remake', date: 'недавно', body: 'Официальный исходник игры в открытом доступе. Скачивай в разделе «Разработчикам» и твори!' },
+  { title: '⚡ BC+ v2.0 — большое обновление!', date: 'сегодня', body: 'Массивы, словари, классы (ООП), HTTP-запросы, работа с DOM и Supabase БД. BC+ теперь умеет делать реальные программы!' },
+  { title: '🎮 Исходник Granny Remake в открытом доступе', date: 'недавно', body: 'Скачивай исходник игры в разделе «Разработчикам» и твори!' },
   { title: '🧩 Добавлено 6 плагинов', date: 'на прошлой неделе', body: 'Copy to Clipboard, Smooth Scroll, Lazy Load, Theme Toggle, Typing Effect, Progress Bar.' },
-  { title: '🤖 12 шаблонов ботов готовы', date: '2 недели назад', body: 'Telegram и Discord боты на 6 языках программирования — Python, JS, C#, C++, Java, Go.' }
+  { title: '🤖 12 шаблонов ботов готовы', date: '2 недели назад', body: 'Telegram и Discord боты на 6 языках программирования.' }
 ];
 
 const WEEKLY_CODES = [
@@ -1462,9 +1551,9 @@ console.log(hexToRgb('#00e0ff'));` },
 ];
 
 const WEEKLY_RESULTS = [
-  { icon:'⚡', title:'Релиз недели', desc:'Язык BC+ — наш собственный язык программирования, запущен и работает!' },
-  { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake — продолжает собирать скачивания.' },
-  { icon:'💡', title:'Идея недели', desc:'Пользователи просят поддержку массивов в BC+ — работаем над этим.' }
+  { icon:'⚡', title:'Релиз недели', desc:'BC+ v2.0 — массивы, классы, HTTP, DOM и Supabase. Полноценный язык!' },
+  { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake продолжает собирать скачивания.' },
+  { icon:'💡', title:'Идея недели', desc:'Подключить ИИ (Gemini API) в BC+ — работаем над этим.' }
 ];
 	/* ================== РЕНДЕР ЕЖЕНЕДЕЛЬНО ================== */
 function renderWeekly(){
@@ -1559,7 +1648,7 @@ function renderWeekly(){
 renderWeekly();
 
 /* ================== ПОЖЕЛАНИЯ ================== */
-const STORAGE_KEY = 'becausedev_comments_v6';
+const STORAGE_KEY = 'becausedev_comments_v7';
 
 function loadComments(){
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -1636,8 +1725,8 @@ if(wishForm){
 (function initComments(){
   if(!localStorage.getItem(STORAGE_KEY)){
     saveComments([
-      { id:'demo_1', nick:'CodeMaster', text:'BC+ просто огонь! Попробовал — работает как надо 🔥', time: Date.now() - 86400000 * 2 },
-      { id:'demo_2', nick:'NikaDev', text:'Вкладка «Еженедельно» — топ. Скрипты реально полезные 💙', time: Date.now() - 3600000 * 8 },
+      { id:'demo_1', nick:'CodeMaster', text:'BC+ v2.0 это что-то! Массивы и классы зашли как надо 🔥', time: Date.now() - 86400000 * 2 },
+      { id:'demo_2', nick:'NikaDev', text:'Сделал бота на BC+, отправил себе сообщение в TG. Магия 💙', time: Date.now() - 3600000 * 8 },
       { id:'demo_3', nick:'BecauseDev', text:'Добро пожаловать! Оставляйте пожелания и идеи.', time: Date.now() - 1800000 }
     ]);
   }
@@ -1672,8 +1761,8 @@ document.addEventListener('keydown', function(e){
 
 /* ================== КОНСОЛЬ ================== */
 console.log(
-  '%c</> BecauseDev IT Studio%c\nЯзык BC+ · Нажми «H» — на главную 💙',
-  'color:#00e0ff;font-size:20px;font-weight:bold;',
+  '%c</> BecauseDev IT Studio%c\nЯзык BC+ v2.0 · Массивы, классы, HTTP, DOM, БД · Нажми «H» — на главную 💙',
+  'color:#ff9558;font-size:20px;font-weight:bold;',
   'color:#8b9bb4;font-size:13px;'
 );
 </script>
