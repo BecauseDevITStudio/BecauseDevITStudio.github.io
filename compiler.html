@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC+ Компилятор — BecauseDev IT Studio</title>
+<title>BC+ Компилятор v2.0 — BecauseDev IT Studio</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -280,6 +280,15 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
 .modal .modal-btns{display:flex;gap:12px;margin-top:22px}
 .modal .modal-btns .btn{flex:1;justify-content:center}
 
+/* DOM-КОНТЕЙНЕР */
+#bc-dom-output{
+  margin-top:20px;padding:20px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;min-height:100px;
+  display:none;
+}
+#bc-dom-output:not(:empty){display:block}
+
 @media (max-width:768px){
   header{padding:12px 20px}
   nav a{padding:6px 10px;font-size:.8rem}
@@ -311,11 +320,12 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
 
 <main>
   <section class="hero">
-  <span class="badge">BC+ · v1.0 · BecauseDev Studio</span>
+  <span class="badge">BC+ · v2.0 · BecauseDev Studio</span>
   <h1>BC<span class="plus">+</span></h1>
   <p>
     Наш собственный язык программирования. Максимально простой,
-    понятный даже школьнику, и при этом мощный — от калькулятора до ботов.
+    понятный даже школьнику, и при этом мощный — от калькулятора до ботов,
+    HTTP-запросов и работы с базами данных.
   </p>
 </section>
 
@@ -350,19 +360,29 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
         <p>Код читается как обычный русский текст</p>
       </div>
       <div class="feature">
-        <span class="f-icon">⚡</span>
-        <h4>Мгновенный запуск</h4>
-        <p>Перевод в JS прямо в браузере</p>
+        <span class="f-icon">📦</span>
+        <h4>Массивы и словари</h4>
+        <p>Списки, объекты, работа с данными</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">🏛</span>
+        <h4>Классы (ООП)</h4>
+        <p>Объектно-ориентированное программирование</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">🌐</span>
+        <h4>HTTP-запросы</h4>
+        <p>Работа с любыми API из коробки</p>
+      </div>
+      <div class="feature">
+        <span class="f-icon">🎨</span>
+        <h4>Работа с DOM</h4>
+        <p>Создание элементов прямо из BC+</p>
       </div>
       <div class="feature">
         <span class="f-icon">🤖</span>
         <h4>Боты в 1 клик</h4>
         <p>TG и DC боты прямо с сайта</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">🎯</span>
-        <h4>Просто для всех</h4>
-        <p>Разберётся даже школьник</p>
       </div>
     </div>
   </div>
@@ -384,6 +404,15 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
         <tr><td>вернуть</td><td>Возвращает результат</td><td><code>вернуть a + b</code></td></tr>
         <tr><td>и / или / не</td><td>Логические операторы</td><td><code>если x > 3 и y &lt; 10</code></td></tr>
         <tr><td>истина / ложь</td><td>Boolean значения</td><td><code>пусть ok = истина</code></td></tr>
+        <tr><td>класс</td><td>Объявление класса</td><td><code>класс Собака { ... }</code></td></tr>
+        <tr><td>новый</td><td>Создание экземпляра</td><td><code>новый Собака()</code></td></tr>
+        <tr><td>это</td><td>Ссылка на себя</td><td><code>это.имя = "Шарик"</code></td></tr>
+        <tr><td>добавить_в</td><td>Добавить в массив</td><td><code>добавить_в список 5</code></td></tr>
+        <tr><td>размер</td><td>Размер массива/словаря</td><td><code>размер список</code></td></tr>
+        <tr><td>ключи_словаря</td><td>Ключи объекта</td><td><code>ключи_словаря человек</code></td></tr>
+        <tr><td>получить URL</td><td>HTTP-запрос</td><td><code>пусть d = получить "https://..."</code></td></tr>
+        <tr><td>создать_элемент</td><td>Создать HTML-элемент</td><td><code>создать_элемент "div","Привет","id1"</code></td></tr>
+        <tr><td>стилизовать</td><td>Применить CSS</td><td><code>стилизовать "id1","color: red"</code></td></tr>
       </tbody>
     </table>
   </div>
@@ -398,7 +427,7 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
         <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
         <span>main.bc+</span>
       </div>
-      <span style="color:var(--muted);font-size:.8rem;font-family:monospace">UTF-8 · BC+</span>
+      <span style="color:var(--muted);font-size:.8rem;font-family:monospace">UTF-8 · BC+ v2.0</span>
     </div>
     <div class="editor">
       <div class="line-numbers" id="lineNumbers">1</div>
@@ -436,7 +465,7 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
   <div style="margin-bottom:10px">
     <span style="background:linear-gradient(90deg,var(--bc),var(--bc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.1rem">BecauseDev IT Studio</span>
   </div>
-  © <span id="year"></span> BC+ · Придуман и сделан в BecauseDev IT Studio
+  © <span id="year"></span> BC+ v2.0 · Придуман и сделан в BecauseDev IT Studio
 </footer>
 
 <div class="toast" id="toast">Готово!</div>
@@ -471,7 +500,7 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
 </div>
 <script>
 /* ============================================================
-   BC+ Компилятор — BecauseDev IT Studio
+   BC+ Compiler v2.0 — BecauseDev IT Studio
    ============================================================ */
 
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -507,7 +536,7 @@ editor.addEventListener('scroll', () => {
 });
 updateLineNumbers();
 
-/* ============ ПЕРЕВОД BC+ → JS ============ */
+/* ============ ЗАМЕНА ОПЕРАТОРОВ ============ */
 function replaceOps(s){
   s = s.replace(/\bи\b/g, '&&');
   s = s.replace(/\bили\b/g, '||');
@@ -515,25 +544,32 @@ function replaceOps(s){
   s = s.replace(/\bистина\b/g, 'true');
   s = s.replace(/\bложь\b/g, 'false');
   s = s.replace(/\bноль\b/g, 'null');
+  s = s.replace(/\bэто\./g, 'this.');
+  s = s.replace(/\bэто\b/g, 'this');
   return s;
 }
 
+/* ============ ПЕРЕВОД BC+ → JS ============ */
 function bcToJs(source){
   const lines = source.split('\n');
   const out = [];
   let indent = 0;
+  let inClass = 0;
   const pad = () => '  '.repeat(indent);
 
   for(let raw of lines){
     let line = raw.trim();
     if(!line || line.startsWith('//')) continue;
 
+    /* Закрытие блока */
     if(line === '}'){
       indent = Math.max(0, indent - 1);
       out.push(pad() + '}');
+      if(inClass > 0 && indent < inClass) inClass = 0;
       continue;
     }
 
+    /* иначе */
     if(line === 'иначе {' || line === 'иначе{'){
       indent = Math.max(0, indent - 1);
       out.push(pad() + '} else {');
@@ -541,18 +577,21 @@ function bcToJs(source){
       continue;
     }
 
+    /* сказать X */
     if(line.startsWith('сказать ')){
       const expr = replaceOps(line.slice(8).trim());
       out.push(pad() + 'print(' + expr + ');');
       continue;
     }
 
+    /* пусть x = Y */
     if(line.startsWith('пусть ')){
       const rest = replaceOps(line.slice(6).trim());
       out.push(pad() + 'let ' + rest + ';');
       continue;
     }
 
+    /* если УСЛ { */
     if(line.startsWith('если ') && line.endsWith('{')){
       const cond = replaceOps(line.slice(5, -1).trim());
       out.push(pad() + 'if (' + cond + ') {');
@@ -560,6 +599,7 @@ function bcToJs(source){
       continue;
     }
 
+    /* пока УСЛ { */
     if(line.startsWith('пока ') && line.endsWith('{')){
       const cond = replaceOps(line.slice(5, -1).trim());
       out.push(pad() + 'while (' + cond + ') {');
@@ -567,6 +607,7 @@ function bcToJs(source){
       continue;
     }
 
+    /* повторить N раз { */
     if(line.startsWith('повторить ') && /раз\s*\{$/.test(line)){
       const n = replaceOps(line.replace(/^повторить\s+/, '').replace(/раз\s*\{$/, '').trim());
       out.push(pad() + 'for (let __i = 0; __i < ' + n + '; __i++) {');
@@ -574,38 +615,179 @@ function bcToJs(source){
       continue;
     }
 
+    /* класс Имя { */
+    if(line.startsWith('класс ') && line.endsWith('{')){
+      const name = line.slice(6, -1).trim();
+      out.push(pad() + 'class ' + name + ' {');
+      indent++;
+      inClass = indent;
+      continue;
+    }
+
+    /* функция имя(арг) { */
     if(line.startsWith('функция ') && line.endsWith('{')){
       const rest = line.slice(8, -1).trim();
-      out.push(pad() + 'function ' + rest + ' {');
+      if(inClass > 0 && indent > inClass){
+        /* Внутри класса — метод без слова function */
+        out.push(pad() + rest + ' {');
+      } else {
+        out.push(pad() + 'function ' + rest + ' {');
+      }
       indent++;
       continue;
     }
 
+    /* вернуть X */
     if(line.startsWith('вернуть ')){
       const expr = replaceOps(line.slice(8).trim());
       out.push(pad() + 'return ' + expr + ';');
       continue;
     }
 
+    /* новый Класс() → new Класс() */
+    if(line.startsWith('новый ')){
+      out.push(pad() + replaceOps(line).replace(/^новый\s+/, 'new ') + ';');
+      continue;
+    }
+        /* ============ МАССИВЫ И СЛОВАРИ ============ */
+
+    /* добавить_в список значение */
+    if(line.startsWith('добавить_в ')){
+      const rest = replaceOps(line.slice(10).trim());
+      const parts = rest.split(/\s+/);
+      const arr = parts[0];
+      const value = parts.slice(1).join(' ');
+      out.push(pad() + arr + '.push(' + value + ');');
+      continue;
+    }
+
+    /* удалить_из список значение */
+    if(line.startsWith('удалить_из ')){
+      const rest = replaceOps(line.slice(10).trim());
+      const parts = rest.split(/\s+/);
+      const arr = parts[0];
+      const value = parts.slice(1).join(' ');
+      out.push(pad() + arr + ' = ' + arr + '.filter(__x => __x !== ' + value + ');');
+      continue;
+    }
+
+    /* ключи_словаря имя */
+    if(line.startsWith('ключи_словаря ')){
+      const name = replaceOps(line.slice(14).trim());
+      out.push(pad() + 'print(Object.keys(' + name + ').join(", "));');
+      continue;
+    }
+
+    /* значения_словаря имя */
+    if(line.startsWith('значения_словаря ')){
+      const name = replaceOps(line.slice(17).trim());
+      out.push(pad() + 'print(Object.values(' + name + ').join(", "));');
+      continue;
+    }
+
+    /* размер имя */
+    if(line.startsWith('размер ')){
+      const name = replaceOps(line.slice(7).trim());
+      out.push(pad() + 'print(Object.keys(' + name + ').length);');
+      continue;
+    }
+
+    /* ============ HTTP-ЗАПРОСЫ ============ */
+
+    /* пусть ответ = получить "url" */
+    if(line.includes(' = получить ')){
+      const idx = line.indexOf(' = получить ');
+      const left = line.slice(0, idx).trim();
+      const url = replaceOps(line.slice(idx + 11).trim());
+      const varName = left.replace(/^пусть\s+/, '').trim();
+      const needLet = left.startsWith('пусть ');
+      out.push(pad() + (needLet ? 'let ' : '') + varName + ' = await получить(' + url + ');');
+      continue;
+    }
+
+    /* получить "url" — без сохранения */
+    if(line.startsWith('получить ')){
+      const url = replaceOps(line.slice(8).trim());
+      out.push(pad() + 'await получить(' + url + ');');
+      continue;
+    }
+
+    /* отправить "url", данные */
+    if(line.startsWith('отправить ')){
+      const args = replaceOps(line.slice(10).trim());
+      out.push(pad() + 'await отправить(' + args + ');');
+      continue;
+    }
+
+    /* ============ DOM ============ */
+
+    /* создать_элемент "тип", "текст", "id" */
+    if(line.startsWith('создать_элемент ')){
+      const args = replaceOps(line.slice(16).trim());
+      out.push(pad() + 'создать_элемент(' + args + ');');
+      continue;
+    }
+
+    /* стилизовать "id", "css" */
+    if(line.startsWith('стилизовать ')){
+      const args = replaceOps(line.slice(12).trim());
+      out.push(pad() + 'стилизовать(' + args + ');');
+      continue;
+    }
+
+    /* удалить_элемент "id" */
+    if(line.startsWith('удалить_элемент ')){
+      const id = replaceOps(line.slice(16).trim());
+      out.push(pad() + 'удалить_элемент(' + id + ');');
+      continue;
+    }
+
+    /* вывести_на_страницу "id", "текст" */
+    if(line.startsWith('вывести_на_страницу ')){
+      const args = replaceOps(line.slice(19).trim());
+      out.push(pad() + 'вывести_на_страницу(' + args + ');');
+      continue;
+    }
+
+    /* ============ SUPABASE БД ============ */
+
+    /* бд_сохранить "table", данные */
+    if(line.startsWith('бд_сохранить ')){
+      const args = replaceOps(line.slice(12).trim());
+      out.push(pad() + 'await бд_сохранить(' + args + ');');
+      continue;
+    }
+
+    /* пусть данные = бд_получить "table" */
+    if(line.includes(' = бд_получить ')){
+      const idx = line.indexOf(' = бд_получить ');
+      const left = line.slice(0, idx).trim();
+      const table = line.slice(idx + 14).trim();
+      const varName = left.replace(/^пусть\s+/, '').trim();
+      const needLet = left.startsWith('пусть ');
+      out.push(pad() + (needLet ? 'let ' : '') + varName + ' = await бд_получить(' + table + ');');
+      continue;
+    }
+
+    /* бд_обновить "table", id, данные */
+    if(line.startsWith('бд_обновить ')){
+      const args = replaceOps(line.slice(11).trim());
+      out.push(pad() + 'await бд_обновить(' + args + ');');
+      continue;
+    }
+
+    /* бд_удалить "table", id */
+    if(line.startsWith('бд_удалить ')){
+      const args = replaceOps(line.slice(10).trim());
+      out.push(pad() + 'await бд_удалить(' + args + ');');
+      continue;
+    }
+
+    /* ============ ОБЫЧНОЕ ВЫРАЖЕНИЕ ============ */
     out.push(pad() + replaceOps(line) + ';');
   }
 
   return out.join('\n');
-}
-
-/* ============ ВСТРОЕННЫЕ ФУНКЦИИ ============ */
-function buildBuiltins(logFn){
-  return {
-    print: (...args) => logFn(args.join(' ')),
-    случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
-    корень:    (x) => Math.sqrt(x),
-    степень:   (x, y) => Math.pow(x, y),
-    длина:     (x) => Array.isArray(x) || typeof x === 'string' ? x.length : 0,
-    округлить: (x) => Math.round(x),
-    модуль:    (x) => Math.abs(x),
-    в_верхний: (s) => String(s).toUpperCase(),
-    в_нижний:  (s) => String(s).toLowerCase()
-  };
 }
 
 /* ============ ОТЛАДЧИК ============ */
@@ -619,8 +801,148 @@ function logLine(text, type = 'out'){
   output.appendChild(div);
   output.scrollTop = output.scrollHeight;
 }
-  /* ============ ЗАПУСК КОДА ============ */
-function runCode(){
+  /* ============ ВСТРОЕННЫЕ ФУНКЦИИ ============ */
+
+/* ⚠️ ЗАМЕНИ НА СВОИ ДАННЫЕ SUPABASE (позже) */
+const SUPABASE_URL = ''; /* например: https://xxxxx.supabase.co */
+const SUPABASE_KEY = ''; /* anon ключ из настроек Supabase */
+
+const PROXY_URL = 'https://becausedev-proxy.artemkushnirev99.workers.dev';
+
+function buildBuiltins(logFn){
+  /* Контейнер для DOM-вывода */
+  let domContainer = document.getElementById('bc-dom-output');
+  if(!domContainer){
+    domContainer = document.createElement('div');
+    domContainer.id = 'bc-dom-output';
+    const editorSection = document.getElementById('editor-section');
+    if(editorSection) editorSection.appendChild(domContainer);
+  }
+  domContainer.innerHTML = '';
+
+  return {
+    /* === БАЗОВЫЕ === */
+    print: (...args) => logFn(args.join(' ')),
+    случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
+    корень:    (x) => Math.sqrt(x),
+    степень:   (x, y) => Math.pow(x, y),
+    длина:     (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0,
+    округлить: (x) => Math.round(x),
+    модуль:    (x) => Math.abs(x),
+    в_верхний: (s) => String(s).toUpperCase(),
+    в_нижний:  (s) => String(s).toLowerCase(),
+
+    /* === HTTP === */
+    получить: async (url) => {
+      logFn('🌐 GET ' + url);
+      try {
+        const r = await fetch(url);
+        return await r.json();
+      } catch(err){
+        logFn('❌ Ошибка запроса: ' + err.message);
+        return null;
+      }
+    },
+    отправить: async (url, data) => {
+      logFn('📤 POST ' + url);
+      try {
+        const r = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        return await r.json();
+      } catch(err){
+        logFn('❌ Ошибка отправки: ' + err.message);
+        return null;
+      }
+    },
+
+    /* === DOM === */
+    создать_элемент: (type, text, id) => {
+      const el = document.createElement(type);
+      el.textContent = text || '';
+      if(id) el.id = id;
+      domContainer.appendChild(el);
+      logFn('🎨 Создан <' + type + '>' + (id ? ' #' + id : ''));
+    },
+    стилизовать: (id, css) => {
+      const el = document.getElementById(id);
+      if(el) el.style.cssText = css;
+    },
+    удалить_элемент: (id) => {
+      const el = document.getElementById(id);
+      if(el) el.remove();
+    },
+    вывести_на_страницу: (id, text) => {
+      const el = document.getElementById(id);
+      if(el) el.textContent = text;
+    },
+
+    /* === SUPABASE === */
+    бд_сохранить: async (table, data) => {
+      if(!SUPABASE_URL || !SUPABASE_KEY){
+        logFn('⚠️ Supabase не настроен — вставь URL и KEY в код');
+        return { ok: false };
+      }
+      logFn('💾 Сохранение в ' + table);
+      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation'
+        },
+        body: JSON.stringify(data)
+      });
+      return await r.json();
+    },
+    бд_получить: async (table) => {
+      if(!SUPABASE_URL || !SUPABASE_KEY){
+        logFn('⚠️ Supabase не настроен — вставь URL и KEY в код');
+        return [];
+      }
+      logFn('📖 Чтение из ' + table);
+      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?select=*', {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+      return await r.json();
+    },
+    бд_обновить: async (table, id, data) => {
+      if(!SUPABASE_URL || !SUPABASE_KEY) return { ok: false };
+      logFn('✏️ Обновление в ' + table);
+      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?id=eq.' + id, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return await r.json();
+    },
+    бд_удалить: async (table, id) => {
+      if(!SUPABASE_URL || !SUPABASE_KEY) return { ok: false };
+      logFn('🗑 Удаление из ' + table);
+      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?id=eq.' + id, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+      return { ok: r.ok };
+    }
+  };
+}
+
+/* ============ ЗАПУСК КОДА ============ */
+async function runCode(){
   clearOutput();
   const code = editor.value.trim();
   if(!code){
@@ -646,8 +968,9 @@ function runCode(){
   const builtins = buildBuiltins((msg) => logLine(msg, 'out'));
 
   try {
-    const fn = new Function(...Object.keys(builtins), jsCode);
-    fn(...Object.values(builtins));
+    const AsyncFn = Object.getPrototypeOf(async function(){}).constructor;
+    const fn = new AsyncFn(...Object.keys(builtins), jsCode);
+    await fn(...Object.values(builtins));
     logLine('', 'info');
     logLine('✅ Выполнено успешно', 'info');
     statusEl.textContent = 'Успешно ✓';
@@ -675,8 +998,7 @@ function showJs(){
   statusEl.className = 'status';
   toast('JavaScript показан в отладчике');
 }
-
-/* ============ КНОПКИ ============ */
+  /* ============ КНОПКИ ============ */
 runBtn.addEventListener('click', runCode);
 clearBtn.addEventListener('click', () => {
   editor.value = '';
@@ -718,9 +1040,69 @@ const EXAMPLES = [
 сказать 2 + 2 * 10`
   },
   {
+    icon:'📦',
+    title:'Массивы',
+    desc:'Работа со списками и циклы',
+    code:
+`пусть числа = [10, 20, 30, 40, 50]
+сказать "Размер: " + размер числа
+
+пусть i = 0
+пока i < 5 {
+  сказать "Элемент " + i + ": " + числа[i]
+  пусть i = i + 1
+}
+
+добавить_в числа 60
+сказать "После добавления: " + размер числа`
+  },
+  {
+    icon:'📖',
+    title:'Словари',
+    desc:'Хранение пар ключ-значение',
+    code:
+`пусть человек = {"имя": "Ваня", "возраст": 25, "город": "Москва"}
+
+сказать "Имя: " + человек["имя"]
+сказать "Возраст: " + человек["возраст"]
+сказать "Город: " + человек["город"]
+
+сказать "Ключи:"
+ключи_словаря человек
+сказать "Значения:"
+значения_словаря человек`
+  },
+  {
+    icon:'🏛',
+    title:'Классы (ООП)',
+    desc:'Объектно-ориентированное программирование',
+    code:
+`класс Собака {
+  функция создать(имя) {
+    пусть это.имя = имя
+    пусть это.возраст = 0
+  }
+
+  функция гавкать() {
+    сказать это.имя + " говорит: Гав!"
+  }
+
+  функция стареть() {
+    пусть это.возраст = это.возраст + 1
+    сказать это.имя + " теперь " + это.возраст + " лет"
+  }
+}
+
+пусть шарик = новый Собака("Шарик")
+шарик.гавкать()
+шарик.стареть()
+шарик.стареть()
+шарик.гавкать()`
+  },
+  {
     icon:'🧮',
     title:'Калькулятор',
-    desc:'Считает арифметические операции',
+    desc:'Арифметические операции',
     code:
 `пусть a = 25
 пусть b = 8
@@ -732,39 +1114,6 @@ const EXAMPLES = [
 сказать "Произведение: " + (a * b)
 сказать "Деление: " + (a / b)
 сказать "Остаток: " + (a % b)`
-  },
-  {
-    icon:'🔁',
-    title:'Таблица умножения',
-    desc:'Цикл пока — выводит таблицу на 5',
-    code:
-`пусть n = 5
-пусть счётчик = 1
-пока счётчик <= 10 {
-  сказать "5 x " + счётчик + " = " + (5 * счётчик)
-  пусть счётчик = счётчик + 1
-}`
-  },
-  {
-    icon:'🎲',
-    title:'Угадай число',
-    desc:'Случайное число и проверка условия',
-    code:
-`пусть секрет = случайное(1, 100)
-сказать "Я загадал число от 1 до 100"
-сказать "Твой вариант: 42"
-
-пусть вариант = 42
-
-если вариант == секрет {
-  сказать "🎉 Победа! Это точно " + секрет
-} иначе {
-  если вариант < секрет {
-    сказать "Слишком мало! Было " + секрет
-  } иначе {
-    сказать "Слишком много! Было " + секрет
-  }
-}`
   },
   {
     icon:'🧠',
@@ -784,6 +1133,35 @@ const EXAMPLES = [
 сказать "5! = " + факториал(5)
 сказать "7! = " + факториал(7)
 сказать "10! = " + факториал(10)`
+  },
+  {
+    icon:'🌐',
+    title:'HTTP-запрос',
+    desc:'Получить данные из API GitHub',
+    code:
+`сказать "Запрашиваю данные с GitHub..."
+
+пусть данные = получить "https://api.github.com/users/torvalds"
+
+сказать "Имя: " + данные.name
+сказать "Логин: " + данные.login
+сказать "Репозиториев: " + данные.public_repos
+сказать "Подписчиков: " + данные.followers`
+  },
+  {
+    icon:'🎨',
+    title:'Работа с DOM',
+    desc:'Создать HTML-элементы из BC+',
+    code:
+`сказать "Создаю элементы на странице..."
+
+создать_элемент "h1", "Привет от BC+!", "bc-title"
+стилизовать "bc-title", "color: #ff9558; font-size: 32px; text-align: center; margin-bottom: 20px;"
+
+создать_элемент "p", "Этот текст создан прямо из BC+ кода.", "bc-text"
+стилизовать "bc-text", "color: #e6edf7; text-align: center; font-size: 18px;"
+
+сказать "Готово! Элементы появились ниже."`
   },
   {
     icon:'🤖',
@@ -819,6 +1197,7 @@ const EXAMPLES = [
 
 function renderExamples(){
   const grid = document.getElementById('exGrid');
+  if(!grid) return;
   grid.innerHTML = EXAMPLES.map((ex, i) => `
     <div class="ex-card" data-idx="${i}">
       <span class="ex-icon">${ex.icon}</span>
@@ -843,8 +1222,6 @@ renderExamples();
    АКТИВАЦИЯ БОТА через Cloudflare Worker
    ============================================================ */
 
-const PROXY_URL = 'https://becausedev-proxy.artemkushnirev99.workers.dev';
-
 const botBtn        = document.getElementById('botBtn');
 const botModal      = document.getElementById('botModal');
 const botPlatform   = document.getElementById('botPlatform');
@@ -865,7 +1242,7 @@ botPlatform?.addEventListener('change', () => {
   }
 });
 
-/* Открыть модальное окно */
+/* Открыть модалку */
 botBtn?.addEventListener('click', () => {
   botModal.classList.add('open');
   botToken.focus();
@@ -926,7 +1303,7 @@ modalActivate?.addEventListener('click', async () => {
       logLine('   🆔 ID: ' + bot.id, 'out');
       logLine('', 'info');
 
-      /* Шаг 2: Если есть chat_id — отправляем тестовое сообщение */
+      /* Шаг 2: Отправка сообщения если есть chat_id */
       if(chatId){
         logLine('📨 Отправка тестового сообщения...', 'info');
         const sendResp = await fetch(PROXY_URL, {
@@ -1004,24 +1381,31 @@ function resetBtn(){
 
 /* ============ СТАРТОВЫЙ КОД В РЕДАКТОРЕ ============ */
 editor.value =
-`// Добро пожаловать в BC+!
+`// Добро пожаловать в BC+ v2.0!
 // Напиши свой код или выбери пример ниже
 
 сказать "Привет, разработчик!"
 пусть имя = "друг"
 сказать "Привет, " + имя + "!"
 
-пусть x = 10
-пусть y = 20
-сказать x + " + " + y + " = " + (x + y)
+// Массивы
+пусть числа = [10, 20, 30]
+сказать "Размер массива: " + размер числа
+сказать "Первый элемент: " + числа[0]
 
+// Словари
+пусть человек = {"имя": "Ваня", "возраст": 25}
+сказать "Имя: " + человек["имя"]
+
+// Циклы
 повторить 3 раз {
   сказать "BC+ — это просто!"
 }`;
 updateLineNumbers();
-  /* ============ ПРИВЕТ В КОНСОЛИ ============ */
+
+/* ============ ПРИВЕТ В КОНСОЛИ ============ */
 console.log(
-  '%cBC+ Compiler%c — BecauseDev IT Studio\nЯзык будущего · Боты в 1 клик',
+  '%cBC+ Compiler v2.0%c — BecauseDev IT Studio\nМассивы · Классы · HTTP · DOM · БД · Боты',
   'color:#ff9558;font-size:20px;font-weight:bold;',
   'color:#8b9bb4;font-size:13px;'
 );
