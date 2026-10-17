@@ -415,9 +415,11 @@ function bcToJs(source){
         out.push(pad() + 'for (let __i = 0; __i < ' + n + '; __i++) {'); indent++; continue;
       }
       if(line.startsWith('класс ') && line.endsWith('{')){ out.push(pad() + 'class ' + line.slice(6, -1).trim() + ' {'); indent++; inClass = indent; continue; }
-      if(line.startsWith('функция ') && line.endsWith('{')){ 
-        const rest = line.slice(8, -1).trim();
-        out.push(pad() + (inClass > 0 && indent > inClass ? '' : 'function ') + rest + ' {'); indent++; continue;
+      if(line.startsWith('функция ') && line.endsWith('{')){
+  const rest = line.slice(8, -1).trim();
+  out.push(pad() + (inClass > 0 && indent > inClass ? 'async ' : 'async function ') + rest + ' {'); 
+  indent++; 
+  continue;
       }
       if(line.startsWith('вернуть ')){ out.push(pad() + 'return ' + replaceOps(line.slice(8).trim()) + ';'); continue; }
       if(line.startsWith('новый ')){ out.push(pad() + replaceOps(line).replace(/^новый\s+/, 'new ') + ';'); continue; }
