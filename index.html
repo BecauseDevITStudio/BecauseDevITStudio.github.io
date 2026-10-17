@@ -12,11 +12,10 @@
   --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;--danger:#ff5f56;
   --bc:#ff6b35;--bc2:#ff9558;
   --text:#e6edf7;--muted:#8b9bb4;--border:rgba(0,224,255,.15);
-  --radius:16px;
 }
 html{scroll-behavior:smooth}
 body{
-  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:'Segoe UI',-apple-system,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.6;
   overflow-x:hidden;min-height:100vh;
   background-image:
@@ -29,36 +28,60 @@ a:hover{color:var(--accent2)}
 button{font-family:inherit;cursor:pointer}
 img{max-width:100%;display:block}
 
-.grid-bg{
-  position:fixed;inset:0;z-index:-1;
-  background-image:
-    linear-gradient(rgba(0,224,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,224,255,.05) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
-  -webkit-mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
-  animation:gridMove 30s linear infinite;
-}
-@keyframes gridMove{to{background-position:60px 60px}}
+/* Анимации */
 @keyframes blink{50%{opacity:.3}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pageIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes caret{50%{border-color:transparent}}
+@keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{50%{opacity:.3}}
-@keyframes float{50%{transform:translateY(-6px)}}
 @keyframes ripple{to{transform:translate(-50%,-50%) scale(20);opacity:0}}
 
-.page{display:none;padding:130px 40px 80px;max-width:1300px;margin:0 auto;min-height:100vh}
-.page.active{display:block;animation:pageIn .55s cubic-bezier(.2,.8,.2,1) both}
+/* Контейнеры страниц (SPA) */
+.page{display:none;padding:130px 40px 80px;max-width:1300px;margin:0 auto;min-height:100vh;}
+.page.active{display:block;animation:pageIn .4s ease both;}
 
+/* Шапка */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,14,26,.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-size:1.35rem;font-weight:800;cursor:pointer;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  display:flex;align-items:center;gap:10px;
+}
+.logo::before{content:'</>';font-family:monospace;-webkit-text-fill-color:var(--accent);font-size:1.05rem;animation:blink 1.5s infinite;}
+nav{display:flex;gap:2px}
+nav a{
+  color:var(--muted);font-weight:500;padding:10px 14px;
+  border-radius:10px;position:relative;font-size:.92rem;cursor:pointer;
+}
+nav a:hover{color:var(--text);background:rgba(0,224,255,.06)}
+nav a.active-link{color:var(--accent);background:rgba(0,224,255,.08)}
+nav a.active-link::after{
+  content:'';position:absolute;left:14px;right:14px;bottom:3px;
+  height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+nav a.highlight{
+  color:#fff;background:linear-gradient(135deg,var(--bc),var(--bc2));
+  font-weight:700;
+}
+nav a.highlight:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,107,53,.4)}
+.burger{display:none;background:none;border:none;color:var(--text);font-size:1.8rem}
+</style>
+</head>
+<body>
+	/* --- Общие стили секций --- */
 .section-title{
   font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin-bottom:12px;text-align:center;
   background:linear-gradient(135deg,#fff 20%,var(--accent) 70%,var(--accent2));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:-.5px;
 }
 .section-sub{text-align:center;color:var(--muted);max-width:700px;margin:0 auto 60px;font-size:1.05rem}
 
+/* --- Главный экран (Hero) --- */
 .hero-content{text-align:center;min-height:75vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
 .hero-badge{
   display:inline-block;padding:8px 18px;border-radius:100px;
@@ -72,10 +95,10 @@ img{max-width:100%;display:block}
   background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent2) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hero h1 .typing{display:inline-block;border-right:3px solid var(--accent);animation:caret 1s step-end infinite}
 .hero p{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:720px;margin-bottom:40px}
 .hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
 
+/* --- Кнопки --- */
 .btn{
   display:inline-flex;align-items:center;gap:8px;
   padding:14px 28px;border-radius:12px;font-weight:600;font-size:.95rem;
@@ -88,37 +111,13 @@ img{max-width:100%;display:block}
 .btn-outline:hover{background:rgba(0,224,255,.08);border-color:var(--accent);transform:translateY(-3px);color:var(--accent)}
 .btn-download{background:linear-gradient(135deg,var(--accent3),var(--accent));color:#051018;font-weight:700;box-shadow:0 8px 30px rgba(0,255,163,.3)}
 .btn-download:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,255,163,.5)}
-.btn-bc{
-  background:linear-gradient(135deg,var(--bc),var(--bc2));
-  color:#fff;font-weight:700;
-  box-shadow:0 8px 30px rgba(255,107,53,.35);
-}
+.btn-bc{background:linear-gradient(135deg,var(--bc),var(--bc2));color:#fff;font-weight:700;box-shadow:0 8px 30px rgba(255,107,53,.35)}
 .btn-bc:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,107,53,.55)}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-top:70px}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 20px;text-align:center;transition:.3s}
-.stat:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,224,255,.15)}
-.stat-num{
-  font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:6px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.stat-label{color:var(--muted);font-size:.9rem}
-
-.live-badge{
-  display:inline-flex;align-items:center;gap:8px;padding:6px 14px;
-  background:rgba(0,255,163,.08);border:1px solid rgba(0,255,163,.3);
-  border-radius:100px;color:var(--accent3);font-size:.8rem;
-  font-family:'Consolas',monospace;margin-top:24px;
-}
-.live-badge::before{
-  content:'';width:8px;height:8px;border-radius:50%;
-  background:var(--accent3);box-shadow:0 0 10px var(--accent3);
-  animation:pulse 1.5s infinite;
-}
-	.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+/* --- Карточки --- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
   padding:30px 26px;transition:all .4s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden;
 }
 .card::before{
@@ -132,292 +131,18 @@ img{max-width:100%;display:block}
 .card h3{font-size:1.2rem;margin-bottom:10px;color:var(--text)}
 .card p{color:var(--muted);font-size:.93rem}
 
-.timeline{position:relative;padding:20px 0;max-width:800px;margin:0 auto}
-.timeline::before{
-  content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent2),transparent);
-}
-.timeline-item{position:relative;padding:0 0 40px 70px}
-.timeline-item::before{
-  content:'';position:absolute;left:16px;top:6px;width:18px;height:18px;
-  border-radius:50%;background:var(--bg);border:3px solid var(--accent);
-  box-shadow:0 0 20px rgba(0,224,255,.6);
-}
-.timeline-item h4{color:var(--accent);font-size:1.05rem;margin-bottom:6px;font-family:'Consolas',monospace}
-.timeline-item p{color:var(--muted);font-size:.95rem}
-
-.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:40px}
-.team-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:28px 22px;text-align:center;transition:.3s;
-}
-.team-card:hover{border-color:var(--accent);transform:translateY(-6px);box-shadow:0 15px 40px rgba(0,224,255,.15)}
-.avatar{
-  width:80px;height:80px;border-radius:50%;margin:0 auto 16px;
-  display:flex;align-items:center;justify-content:center;font-size:2rem;
-  background:linear-gradient(135deg,rgba(0,224,255,.15),rgba(124,92,255,.15));
-  border:2px solid var(--border);
-}
-.team-card h4{color:var(--text);margin-bottom:4px;font-size:1.1rem}
-.team-card .role{color:var(--accent);font-size:.85rem;font-family:'Consolas',monospace;margin-bottom:10px}
-.team-card p{color:var(--muted);font-size:.88rem}
-
-header{
-  position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(10,14,26,.75);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.logo{
-  font-size:1.35rem;font-weight:800;cursor:pointer;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:-.5px;display:flex;align-items:center;gap:10px;
-}
-.logo::before{
-  content:'</>';font-family:monospace;
-  -webkit-text-fill-color:var(--accent);font-size:1.05rem;
-  animation:blink 1.5s infinite;
-}
-nav{display:flex;gap:2px}
-nav a{
-  color:var(--muted);font-weight:500;padding:10px 14px;
-  border-radius:10px;position:relative;font-size:.92rem;cursor:pointer;
-}
-nav a:hover{color:var(--text);background:rgba(0,224,255,.06)}
-nav a.active-link{color:var(--accent);background:rgba(0,224,255,.08)}
-nav a.active-link::after{
-  content:'';position:absolute;left:14px;right:14px;bottom:3px;
-  height:2px;border-radius:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-}
-nav a.highlight{
-  color:#fff;background:linear-gradient(135deg,var(--bc),var(--bc2));
-  font-weight:700;
-}
-nav a.highlight:hover{color:#fff;transform:translateY(-1px);box-shadow:0 4px 15px rgba(255,107,53,.4)}
-.burger{display:none;background:none;border:none;color:var(--text);font-size:1.8rem}
-
-.dev-tabs{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
-.dev-tab{
-  padding:18px 40px;border-radius:14px;background:var(--card);
-  border:1px solid var(--border);font-weight:600;font-size:1.05rem;
-  color:var(--text);transition:all .3s;display:flex;align-items:center;gap:10px;
-}
-.dev-tab:hover{border-color:var(--accent);transform:translateY(-3px)}
-.dev-tab.active{
-  background:linear-gradient(135deg,rgba(0,224,255,.15),rgba(124,92,255,.15));
-  border-color:var(--accent);box-shadow:0 0 30px rgba(0,224,255,.25);
-}
-.dev-tab .emoji{font-size:1.5rem}
-.dev-panel{display:none}
-.dev-panel.active{display:block}
-
-.lang-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
-.lang-btn{
-  padding:12px 22px;border-radius:10px;background:rgba(0,224,255,.06);
-  border:1px solid var(--border);color:var(--text);font-weight:600;
-  font-family:'Consolas',monospace;transition:all .3s;font-size:.95rem;
-}
-.lang-btn:hover{background:rgba(0,224,255,.15);border-color:var(--accent);transform:translateY(-3px)}
-.lang-btn.active{
+/* --- Статистика --- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;margin-top:70px;width:100%}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 20px;text-align:center;transition:.3s}
+.stat:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,224,255,.15)}
+.stat-num{
+  font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:6px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#051018;border-color:transparent;box-shadow:0 8px 25px rgba(0,224,255,.4);
-	}
-	.source-card{
-  display:grid;grid-template-columns:240px 1fr;gap:32px;
-  background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(124,92,255,.06));
-  border:2px solid rgba(0,224,255,.3);
-  border-radius:var(--radius);padding:30px;margin-top:20px;
-  position:relative;overflow:hidden;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.source-card.bc-card{
-  background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,149,88,.06));
-  border-color:rgba(255,107,53,.4);
-}
-.source-card::before{
-  content:'OFFICIAL';position:absolute;top:14px;right:-32px;
-  background:linear-gradient(135deg,var(--accent3),var(--accent));
-  color:#051018;font-weight:800;font-size:.75rem;
-  padding:6px 42px;transform:rotate(35deg);
-  letter-spacing:2px;box-shadow:0 4px 20px rgba(0,255,163,.4);
-}
-.source-card.bc-card::before{
-  content:'NEW';
-  background:linear-gradient(135deg,var(--bc),var(--bc2));
-  box-shadow:0 4px 20px rgba(255,107,53,.5);
-}
-.source-cover{
-  width:240px;height:240px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:6rem;position:relative;
-  background:linear-gradient(135deg,rgba(0,224,255,.2),rgba(124,92,255,.2));
-  border:2px solid var(--border);overflow:hidden;
-}
-.bc-card .source-cover{
-  background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,149,88,.2));
-}
-.source-cover::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 30%,rgba(0,224,255,.3),transparent 60%);
-  animation:float 4s ease-in-out infinite;
-}
-.bc-card .source-cover::after{
-  background:radial-gradient(circle at 30% 30%,rgba(255,107,53,.35),transparent 60%);
-}
-.source-cover .emoji{position:relative;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
-.source-info{display:flex;flex-direction:column;justify-content:center}
-.source-title{
-  font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:6px;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.source-title .version{
-  font-size:.75rem;padding:3px 10px;border-radius:100px;
-  background:rgba(0,255,163,.15);color:var(--accent3);
-  font-family:'Consolas',monospace;font-weight:600;
-}
-.bc-card .source-title .version{
-  background:rgba(255,107,53,.2);color:var(--bc2);
-}
-.source-desc{color:var(--muted);font-size:.95rem;margin-bottom:18px;line-height:1.65}
-.source-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.source-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.source-note{font-size:.82rem;color:var(--muted);font-style:italic}
+.stat-label{color:var(--muted);font-size:.9rem}
 
-.weekly-hero{
-  background:linear-gradient(135deg,rgba(0,224,255,.08),rgba(124,92,255,.08));
-  border:1px solid var(--border);border-radius:var(--radius);
-  padding:32px;text-align:center;margin-bottom:50px;
-  position:relative;overflow:hidden;
-}
-.weekly-hero::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 30% 20%,rgba(0,224,255,.15),transparent 60%);
-  pointer-events:none;
-}
-.weekly-week{
-  font-family:'Consolas',monospace;font-size:.9rem;
-  color:var(--accent);margin-bottom:12px;
-  letter-spacing:2px;text-transform:uppercase;
-}
-.weekly-tip{
-  font-size:1.15rem;color:var(--text);line-height:1.6;
-  max-width:800px;margin:0 auto;
-}
-.weekly-tip strong{color:var(--accent)}
-.weekly-tip code{
-  background:#050810;padding:2px 8px;border-radius:4px;
-  font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent);
-}
-.weekly-subtitle{
-  font-size:1.4rem;font-weight:700;color:var(--text);
-  margin:50px 0 20px;display:flex;align-items:center;gap:10px;
-}
-.weekly-subtitle::before{
-  content:'';width:4px;height:24px;border-radius:2px;
-  background:linear-gradient(180deg,var(--accent),var(--accent2));
-}
-.weekly-updates{display:flex;flex-direction:column;gap:14px}
-.weekly-update{
-  background:var(--card);border:1px solid var(--border);
-  border-left:3px solid var(--accent);
-  border-radius:12px;padding:18px 22px;transition:.3s;
-}
-.weekly-update:hover{background:var(--card2);transform:translateX(4px);border-left-color:var(--accent2)}
-.weekly-update .wu-head{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:12px;flex-wrap:wrap;margin-bottom:8px;
-}
-.weekly-update .wu-title{font-weight:700;color:var(--text);font-size:1.05rem}
-.weekly-update .wu-date{font-family:'Consolas',monospace;font-size:.78rem;color:var(--muted)}
-.weekly-update .wu-body{color:var(--muted);font-size:.93rem}
-
-.code-wrap{margin-top:30px;background:#050810;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.code-head{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  padding:12px 20px;background:rgba(0,224,255,.05);
-  border-bottom:1px solid var(--border);font-size:.85rem;color:var(--muted);
-  font-family:monospace;flex-wrap:wrap;
-}
-.code-head .info{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.dots{display:flex;gap:6px}
-.dots span{width:12px;height:12px;border-radius:50%;display:block}
-.dots .r{background:#ff5f56}.dots .y{background:#ffbd2e}.dots .g{background:#27c93f}
-.copy-btn{
-  background:transparent;border:1px solid var(--border);color:var(--muted);
-  padding:6px 14px;border-radius:8px;font-size:.8rem;transition:.3s;
-}
-.copy-btn:hover{color:var(--accent);border-color:var(--accent)}
-pre{padding:22px;overflow-x:auto;font-family:'Consolas','Monaco',monospace;font-size:.88rem;line-height:1.65;color:#d4e0f0;max-height:500px}
-pre code{white-space:pre}
-.token-input-wrap{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap}
-.token-input{
-  flex:1;min-width:200px;padding:12px 16px;background:#0a0e1a;
-  border:1px solid var(--border);border-radius:10px;color:var(--text);
-  font-family:'Consolas',monospace;font-size:.9rem;outline:none;transition:.3s;
-}
-.token-input:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(0,224,255,.2)}
-.token-input::placeholder{color:var(--muted)}
-
-.plugin-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:26px;margin-bottom:20px;transition:.4s;
-}
-.plugin-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,224,255,.12)}
-.plugin-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:12px}
-.plugin-title{display:flex;align-items:center;gap:12px;font-size:1.2rem;font-weight:700}
-.plugin-title .ico{font-size:1.6rem}
-.plugin-desc{color:var(--muted);font-size:.95rem;margin-bottom:16px}
-.plugin-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.tag{padding:4px 12px;border-radius:100px;background:rgba(0,224,255,.08);border:1px solid var(--border);color:var(--accent);font-size:.78rem;font-family:'Consolas',monospace}
-.tag.purple{color:var(--accent2);background:rgba(124,92,255,.1)}
-.tag.green{color:var(--accent3);background:rgba(0,255,163,.08)}
-.tag.orange{color:var(--bc2);background:rgba(255,107,53,.1)}
-.plugin-toggle{
-  background:transparent;border:1px solid var(--border);color:var(--accent);
-  padding:10px 20px;border-radius:10px;font-weight:600;transition:.3s;font-size:.88rem;
-}
-.plugin-toggle:hover{background:rgba(0,224,255,.08);border-color:var(--accent)}
-.plugin-code{display:none;margin-top:18px}
-.plugin-code.open{display:block}
-
-.wish-form{max-width:720px;margin:0 auto 50px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px}
-.wish-form label{display:block;margin-bottom:8px;color:var(--muted);font-size:.88rem;font-weight:600}
-.wish-form input,.wish-form textarea{
-  width:100%;padding:14px 16px;margin-bottom:18px;background:#0a0e1a;
-  border:1px solid var(--border);border-radius:10px;color:var(--text);
-  font-family:inherit;font-size:.95rem;outline:none;transition:.3s;resize:vertical;
-}
-.wish-form input:focus,.wish-form textarea:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(0,224,255,.2)}
-.wish-form textarea{min-height:120px}
-.char-count{font-size:.78rem;color:var(--muted);text-align:right;margin-top:-12px;margin-bottom:16px}
-.comments-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.comment{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:.3s}
-.comment:hover{border-color:rgba(0,224,255,.4)}
-.comment-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px;flex-wrap:wrap}
-.comment-nick{font-weight:700;color:var(--accent);display:flex;align-items:center;gap:8px}
-.comment-nick::before{content:'◆';color:var(--accent2)}
-.comment-time{color:var(--muted);font-size:.78rem}
-.comment-body{color:var(--text);font-size:.95rem;white-space:pre-wrap;word-break:break-word}
-.comments-empty{text-align:center;padding:50px 30px;background:var(--card);border:1px dashed var(--border);border-radius:var(--radius);color:var(--muted)}
-.comments-empty .icon{font-size:3rem;margin-bottom:12px;display:block}
-
-footer{text-align:center;padding:50px 20px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;margin-top:60px}
-footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
-.footer-links{display:flex;justify-content:center;gap:20px;margin-top:14px;flex-wrap:wrap}
-.footer-links a{color:var(--muted);cursor:pointer}
-.footer-links a:hover{color:var(--accent)}
-
-.toast{
-  position:fixed;bottom:30px;right:30px;background:var(--card);
-  border:1px solid var(--accent);color:var(--text);padding:14px 22px;
-  border-radius:12px;box-shadow:0 10px 40px rgba(0,224,255,.3);
-  transform:translateY(200%);transition:transform .4s cubic-bezier(.2,.8,.2,1);
-  z-index:999;font-weight:500;max-width:320px;
-}
-.toast.show{transform:translateY(0)}
-
+/* Адаптив шапки */
 @media (max-width:900px){nav a{padding:8px 10px;font-size:.85rem}}
 @media (max-width:768px){
   header{padding:14px 20px}
@@ -431,15 +156,6 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   nav a{padding:12px 16px;font-size:.95rem}
   .burger{display:block}
   .page{padding:100px 20px 60px}
-  .dev-tab{padding:14px 22px;font-size:.95rem}
-  .toast{right:16px;left:16px;bottom:16px;max-width:none}
-  .timeline-item{padding-left:60px}
-}
-@media (max-width:700px){
-  .source-card{grid-template-columns:1fr;text-align:center}
-  .source-cover{width:180px;height:180px;margin:0 auto;font-size:4.5rem}
-  .source-title{justify-content:center}
-  .source-tags,.source-actions{justify-content:center}
 }
 </style>
 </head>
@@ -450,7 +166,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 <header>
   <div class="logo" data-nav="home">BecauseDev IT Studio</div>
   <nav id="nav">
-    <a data-nav="home">Главная</a>
+    <a data-nav="home" class="active-link">Главная</a>
     <a data-nav="about">О нас</a>
     <a data-nav="developers">Разработчикам</a>
     <a data-nav="plugins">Плагины</a>
@@ -460,145 +176,180 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   </nav>
   <button class="burger" id="burger" aria-label="Меню">☰</button>
 </header>
-<!-- ================= ГЛАВНАЯ ================= -->
-<section class="page active hero" id="home">
-  <div class="hero-content">
-    <span class="hero-badge">IT Studio · Web · Bots · Plugins · BC+</span>
-    <h1>
-      Мы создаём сайты,<br>
-      ботов и полезные <span class="typing" id="typing">инструменты</span>
-    </h1>
-    <p>
-      BecauseDev IT Studio — команда разработчиков, которая любит свои проекты.
-      Мы создали свой язык программирования <strong style="color:var(--bc)">BC+</strong>,
-      публикуем шаблоны ботов, исходники игр и плагины.
+<style>
+/* Фиксы стилей */
+.grid-bg{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(0,224,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,224,255,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);animation:gridMove 30s linear infinite;}
+@keyframes gridMove{to{background-position:60px 60px}}
+.typing{border-right:3px solid var(--accent);animation:caret 1s step-end infinite;}
+@keyframes caret{50%{border-color:transparent}}
+</style>
+
+<main>
+  <!-- ГЛАВНАЯ -->
+  <section class="page active hero" id="home">
+    <div class="hero-content">
+      <span class="hero-badge">IT Studio · Web · Bots · Plugins · BC+</span>
+      <h1>
+        Мы создаём сайты,<br>
+        ботов и полезные <span class="typing" id="typing">инструменты</span>
+      </h1>
+      <p>
+        BecauseDev IT Studio — команда разработчиков, которая любит свои проекты.
+        Мы создали свой язык программирования <strong style="color:var(--bc)">BC+</strong>,
+        публикуем шаблоны ботов, исходники игр и плагины.
+      </p>
+      <div class="hero-btns">
+        <a href="compiler.html" class="btn btn-bc">⚡ Открыть BC+ IDE</a>
+        <button class="btn btn-primary" data-nav="developers">🚀 Разработчикам</button>
+        <button class="btn btn-outline" data-nav="weekly">📅 Еженедельно</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Шаблонов ботов</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Плагинов в базе</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Свой язык BC+</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Исходник игры</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- О НАС -->
+  <section class="page" id="about">
+    <h2 class="section-title">О студии</h2>
+    <p class="section-sub">
+      BecauseDev IT Studio — команда энтузиастов, для которых код — это не работа,
+      а образ жизни. Мы делаем сайты, ботов, игры и создали свой язык программирования.
     </p>
-    <div class="hero-btns">
-      <a href="compiler.html" class="btn btn-bc">⚡ Открыть BC+ Компилятор</a>
-      <button class="btn btn-primary" data-nav="developers">🚀 Разработчикам</button>
-      <button class="btn btn-outline" data-nav="weekly">📅 Еженедельно</button>
-    </div>
-    <div class="live-badge">Студия активна · Онлайн</div>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num">12</div>
-        <div class="stat-label">Шаблонов ботов</div>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">💻</span>
+        <h3>Разработка сайтов</h3>
+        <p>Лендинги, корпоративные сайты, веб-приложения. Чистый код, адаптивность, скорость загрузки.</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Плагинов в базе</div>
+      <div class="card">
+        <span class="card-icon">🤖</span>
+        <h3>Боты и автоматизация</h3>
+        <p>Telegram и Discord боты на Python, JavaScript, C#, C++, Java и Go. Готовые шаблоны для старта.</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">1</div>
-        <div class="stat-label">Свой язык BC+</div>
+      <div class="card">
+        <span class="card-icon">🧩</span>
+        <h3>Плагины и функции</h3>
+        <p>Публикуем готовые плагины и сниппеты для сайтов: копирование, слайдеры, валидаторы.</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">1</div>
-        <div class="stat-label">Открытый исходник</div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <h3>Язык BC+</h3>
+        <p>Наш собственный язык программирования на русском. Простой как Python, работает прямо в браузере.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🎮</span>
+        <h3>Игровые проекты</h3>
+        <p>Разрабатываем и открыто публикуем исходники игр — твори на их основе что хочешь!</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🌍</span>
+        <h3>Open Source</h3>
+        <p>Наши шаблоны, плагины и игры открыты. Форкай, используй, дополняй — вместе мы делаем код лучше.</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= О НАС ================= -->
-<section class="page" id="about">
-  <h2 class="section-title">О студии</h2>
-  <p class="section-sub">
-    BecauseDev IT Studio — команда энтузиастов, для которых код — это не работа,
-    а образ жизни. Мы делаем сайты, ботов, игры и создали свой язык программирования.
-  </p>
+    <h2 class="section-title" style="margin-top:80px;">Наша история</h2>
+    <p class="section-sub">Путь от идеи до студии, которая помогает другим разработчикам.</p>
 
-  <div class="cards">
-    <div class="card">
-      <span class="card-icon">💻</span>
-      <h3>Разработка сайтов</h3>
-      <p>Лендинги, корпоративные сайты, веб-приложения. Чистый код, адаптивность, скорость загрузки.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>2023 · Начало</h4>
+        <p>Всё началось с одного Telegram-бота для друзей. Тогда мы ещё не думали, что это перерастёт в студию.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>2024 · Первые заказы</h4>
+        <p>Сделали первые коммерческие сайты и ботов. Поняли главное: людям нужны готовые рабочие решения.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>2025 · Open Source</h4>
+        <p>Начали публиковать плагины, шаблоны и исходники игр в открытом доступе. Сообщество отозвалось.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>2025 · Язык BC+</h4>
+        <p>Создали собственный язык программирования BC+ — на русском, простой и мощный для ботов и не только.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Сегодня · BecauseDev IT Studio</h4>
+        <p>Мы делаем сайты, ботов, игры и делимся знаниями. Присоединяйся — вместе интереснее!</p>
+      </div>
     </div>
-    <div class="card">
-      <span class="card-icon">🤖</span>
-      <h3>Боты и автоматизация</h3>
-      <p>Telegram и Discord боты на Python, JavaScript, C#, C++, Java и Go. Готовые шаблоны для старта.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🧩</span>
-      <h3>Плагины и функции</h3>
-      <p>Публикуем готовые плагины и сниппеты для сайтов: копирование, слайдеры, валидаторы.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">⚡</span>
-      <h3>Язык BC+</h3>
-      <p>Наш собственный язык программирования на русском. Простой как Python, работает прямо в браузере.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🎮</span>
-      <h3>Игровые проекты</h3>
-      <p>Разрабатываем и открыто публикуем исходники игр — твори на их основе что хочешь!</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🌍</span>
-      <h3>Open Source</h3>
-      <p>Наши шаблоны, плагины и игры открыты. Форкай, используй, дополняй — вместе мы делаем код лучше.</p>
-    </div>
-  </div>
+  </section>
+</main>
+<style>
+/* Таймлайн (История) */
+.timeline{position:relative;padding:20px 0;max-width:800px;margin:0 auto}
+.timeline::before{content:'';position:absolute;left:24px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--accent2),transparent);}
+.timeline-item{position:relative;padding:0 0 40px 70px}
+.timeline-item::before{content:'';position:absolute;left:16px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);box-shadow:0 0 20px rgba(0,224,255,.6);}
+.timeline-item h4{color:var(--accent);font-size:1.05rem;margin-bottom:6px;font-family:'Consolas',monospace}
+.timeline-item p{color:var(--muted);font-size:.95rem}
 
-  <h2 class="section-title" style="margin-top:80px;">Наша история</h2>
-  <p class="section-sub">Путь от идеи до студии, которая помогает другим разработчикам.</p>
+/* Карточки проектов (Source-card) */
+.source-card{
+  display:grid;grid-template-columns:240px 1fr;gap:32px;
+  background:linear-gradient(135deg,rgba(0,224,255,.06),rgba(124,92,255,.06));
+  border:2px solid rgba(0,224,255,.3);border-radius:16px;padding:30px;margin-top:20px;
+  position:relative;overflow:hidden;
+}
+.source-card.bc-card{
+  background:linear-gradient(135deg,rgba(255,107,53,.06),rgba(255,149,88,.06));
+  border-color:rgba(255,107,53,.4);
+}
+.source-card::before{
+  content:'OFFICIAL';position:absolute;top:14px;right:-32px;
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  color:#051018;font-weight:800;font-size:.75rem;padding:6px 42px;transform:rotate(35deg);
+  letter-spacing:2px;box-shadow:0 4px 20px rgba(0,255,163,.4);
+}
+.source-card.bc-card::before{content:'NEW';background:linear-gradient(135deg,var(--bc),var(--bc2));box-shadow:0 4px 20px rgba(255,107,53,.5);}
+.source-cover{
+  width:240px;height:240px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:6rem;position:relative;background:linear-gradient(135deg,rgba(0,224,255,.2),rgba(124,92,255,.2));
+  border:2px solid var(--border);overflow:hidden;
+}
+.bc-card .source-cover{background:linear-gradient(135deg,rgba(255,107,53,.2),rgba(255,149,88,.2));}
+.source-info{display:flex;flex-direction:column;justify-content:center}
+.source-title{font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.source-title .version{font-size:.75rem;padding:3px 10px;border-radius:100px;background:rgba(0,255,163,.15);color:var(--accent3);font-family:'Consolas',monospace;font-weight:600;}
+.bc-card .source-title .version{background:rgba(255,107,53,.2);color:var(--bc2);}
+.source-desc{color:var(--muted);font-size:.95rem;margin-bottom:18px;line-height:1.65}
+.source-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.source-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.source-note{font-size:.82rem;color:var(--muted);font-style:italic}
 
-  <div class="timeline">
-    <div class="timeline-item">
-      <h4>2023 · Начало</h4>
-      <p>Всё началось с одного Telegram-бота для друзей. Тогда мы ещё не думали, что это перерастёт в студию.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>2024 · Первые заказы</h4>
-      <p>Сделали первые коммерческие сайты и ботов. Поняли главное: людям нужны готовые рабочие решения.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>2025 · Open Source</h4>
-      <p>Начали публиковать плагины, шаблоны и исходники игр в открытом доступе. Сообщество отозвалось.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>2025 · Язык BC+</h4>
-      <p>Создали собственный язык программирования BC+ — на русском, простой и мощный для ботов и не только.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>Сегодня · BecauseDev IT Studio</h4>
-      <p>Мы делаем сайты, ботов, игры и делимся знаниями. Присоединяйся — вместе интереснее!</p>
-    </div>
-  </div>
+/* Теги */
+.tag{padding:4px 12px;border-radius:100px;background:rgba(0,224,255,.08);border:1px solid var(--border);color:var(--accent);font-size:.78rem;font-family:'Consolas',monospace}
+.tag.purple{color:var(--accent2);background:rgba(124,92,255,.1)}
+.tag.green{color:var(--accent3);background:rgba(0,255,163,.08)}
+.tag.orange{color:var(--bc2);background:rgba(255,107,53,.1);border-color:rgba(255,107,53,.3)}
 
-  <h2 class="section-title" style="margin-top:80px;">Наша команда</h2>
-  <p class="section-sub">Небольшая, но очень дружная студия.</p>
+@media (max-width:700px){
+  .source-card{grid-template-columns:1fr;text-align:center}
+  .source-cover{width:180px;height:180px;margin:0 auto;font-size:4.5rem}
+  .source-title{justify-content:center}
+  .source-tags,.source-actions{justify-content:center}
+}
+</style>
 
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="avatar">👨‍💻</div>
-      <h4>BecauseDev</h4>
-      <div class="role">Founder / Full-Stack</div>
-      <p>Пишет всё: от бэкенда до анимаций. Любит чистый код и красивые интерфейсы.</p>
-    </div>
-    <div class="team-card">
-      <div class="avatar">👩‍💻</div>
-      <h4>Nika</h4>
-      <div class="role">Frontend Dev</div>
-      <p>Отвечает за UI/UX и pixel-perfect вёрстку. Обожает CSS-магию и анимации.</p>
-    </div>
-    <div class="team-card">
-      <div class="avatar">🧑‍💻</div>
-      <h4>Ghost</h4>
-      <div class="role">Bot Developer</div>
-      <p>Специалист по ботам: Telegram, Discord, автоматизация. Знает 6 языков.</p>
-    </div>
-    <div class="team-card">
-      <div class="avatar">🧑‍🎨</div>
-      <h4>Pixel</h4>
-      <div class="role">Designer / Game Dev</div>
-      <p>Придумывает концепции, рисует макеты и разрабатывает игровые проекты студии.</p>
-    </div>
-  </div>
-</section>
-<!-- ================= РАЗРАБОТЧИКАМ ================= -->
+<!-- РАЗРАБОТЧИКАМ -->
 <section class="page" id="developers">
   <h2 class="section-title">Для разработчиков</h2>
   <p class="section-sub">
@@ -606,11 +357,9 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     Бери, форкай, твори что хочешь.
   </p>
 
-  <!-- ===== ИСХОДНИК ИГРЫ ===== -->
+  <!-- Игра -->
   <div class="source-card">
-    <div class="source-cover">
-      <span class="emoji">👵</span>
-    </div>
+    <div class="source-cover"><span class="emoji">👵</span></div>
     <div class="source-info">
       <h3 class="source-title">
         Исходник Granny Remake: BecauseDev
@@ -619,151 +368,54 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
       <p class="source-desc">
         Официальный исходник игры <strong>Granny Remake</strong> от BecauseDev IT Studio.
         Мы полностью выкладываем код в открытый доступ — <strong>твори что хочешь</strong>:
-        переделывай под себя, добавляй механики, делай собственную игру, учись на реальном проекте.
+        переделывай под себя, добавляй механики, делай собственную игру.
       </p>
-
       <div class="source-tags">
         <span class="tag">🎮 Godot 4</span>
         <span class="tag purple">📜 GDScript</span>
         <span class="tag green">📦 385 MB</span>
-        <span class="tag">🔓 Open Source</span>
       </div>
-
       <div class="source-actions">
-        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev/releases/download/v1.0/granny-remake--because-dev-.zip"
-           class="btn btn-download" target="_blank" rel="noopener">
-          ⬇️ Скачать исходник
-        </a>
-        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev"
-           class="btn btn-outline" target="_blank" rel="noopener">
-          📂 GitHub репозиторий
-        </a>
+        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev/releases/download/v1.0/granny-remake--because-dev-.zip" class="btn btn-download" target="_blank" rel="noopener">⬇️ Скачать исходник</a>
+        <a href="https://github.com/BecauseDevITStudio/Granny-Remake-BecauseDev" class="btn btn-outline" target="_blank" rel="noopener">📂 GitHub репозиторий</a>
       </div>
-
-      <p class="source-note">
-        💡 Распакуй архив, открой проект в <strong>Godot Engine 4</strong> — и вперёд!
-      </p>
+      <p class="source-note">💡 Распакуй архив, открой проект в <strong>Godot Engine 4</strong> — и вперёд!</p>
     </div>
   </div>
 
-  <!-- ===== BC+ БОЛЬШАЯ КАРТОЧКА С ИСТОРИЕЙ ===== -->
+  <!-- BC+ Промо -->
   <div class="source-card bc-card" style="margin-top:30px">
-    <div class="source-cover">
-      <span class="emoji">⚡</span>
-    </div>
+    <div class="source-cover"><span class="emoji">⚡</span></div>
     <div class="source-info">
       <h3 class="source-title">
         Язык BC+ (БиСиПлюс)
-        <span class="version">v2.0 · NEW</span>
+        <span class="version">v3.0 · NEW</span>
       </h3>
       <p class="source-desc">
         Наш собственный язык программирования <strong>на русском языке</strong>.
         Создан для новичков в IT — чтобы писать код было так же просто, как говорить.
-        Работает прямо в браузере, переводится в JavaScript и умеет запускать реальных Telegram и Discord ботов.
+        Работает прямо в браузере, переводится в JavaScript, Python и умеет запускать реальных ботов.
       </p>
-
       <div class="source-tags">
         <span class="tag orange">🇷🇺 Русский синтаксис</span>
         <span class="tag green">⚡ Мгновенный запуск</span>
-        <span class="tag purple">🤖 Боты TG/DC</span>
-        <span class="tag">📦 Массивы и словари</span>
-        <span class="tag">🏛 Классы (ООП)</span>
-        <span class="tag">🌐 HTTP-запросы</span>
-        <span class="tag">🎨 DOM</span>
+        <span class="tag purple">🤖 AI Помощник</span>
+        <span class="tag">📦 Массивы и ООП</span>
       </div>
-
       <div class="source-actions">
         <a href="compiler.html" class="btn btn-bc">⚡ Открыть редактор BC+</a>
       </div>
     </div>
   </div>
 
-  <!-- ===== ИСТОРИЯ BC+ ===== -->
-  <h3 class="weekly-subtitle" style="margin-top:70px;">📖 История языка BC+</h3>
-  <p class="section-sub" style="text-align:left;max-width:100%;margin:0 0 30px">
-    Как мы придумали и построили свой язык программирования
-  </p>
-
-  <div class="timeline">
-    <div class="timeline-item">
-      <h4>Идея · «Язык для новичков»</h4>
-      <p>Мы заметили: люди боятся начинать программировать, потому что всё на английском. Подумали — а что если сделать язык, где код читается как обычный русский текст?</p>
-    </div>
-    <div class="timeline-item">
-      <h4>Прототип · Компилятор</h4>
-      <p>Написали транспайлер: код на BC+ переводится в JavaScript. Сначала работали только `сказать`, `пусть`, `если`. Потом добавили циклы и функции.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>v1.0 · Редактор + отладчик</h4>
-      <p>Сделали красивый редактор с нумерацией строк, отладчиком и 6 примерами программ. Любой мог открыть сайт и сразу писать код.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>v1.5 · Активация ботов</h4>
-      <p>Подключили Cloudflare Worker как прокси. Теперь юзеры пишут бота на BC+ прямо в браузере и запускают его в реальном Telegram в один клик.</p>
-    </div>
-    <div class="timeline-item">
-      <h4>v2.0 · Серьёзные фичи (сегодня)</h4>
-      <p>Добавили массивы, словари, классы (ООП), HTTP-запросы, работу с DOM и Supabase БД. BC+ теперь умеет делать реальные программы и сайты.</p>
-    </div>
-  </div>
-
-  <!-- ===== ЧТО УМЕЕТ BC+ ===== -->
-  <h3 class="weekly-subtitle" style="margin-top:70px;">🎯 Что умеет BC+ прямо сейчас</h3>
-
-  <div class="cards">
-    <div class="card">
-      <span class="card-icon">🧮</span>
-      <h3>Математика и логика</h3>
-      <p>Переменные, условия, циклы, функции, рекурсия. Всё что нужно для алгоритмов.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📦</span>
-      <h3>Массивы и словари</h3>
-      <p>Списки данных, объекты, ключи-значения. База структур данных для серьёзного кода.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🏛</span>
-      <h3>Классы (ООП)</h3>
-      <p>Объектно-ориентированное программирование — как в Python и JavaScript.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🌐</span>
-      <h3>HTTP-запросы</h3>
-      <p>Получение данных с любых API: погода, курсы, аниме, мемы. Всё через одну строку.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">💾</span>
-      <h3>Supabase БД</h3>
-      <p>Реальное хранение данных в облаке. Сохраняй, читай, обновляй — прямо из BC+.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🎨</span>
-      <h3>Работа с DOM</h3>
-      <p>Создание элементов, стилизация, обработка кликов. Можно делать сайты на BC+.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🤖</span>
-      <h3>Активация ботов</h3>
-      <p>Напиши бота на BC+ — нажми кнопку — бот запустится в Telegram или Discord.</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🎁</span>
-      <h3>Готовые примеры</h3>
-      <p>6 примеров прямо в редакторе: калькулятор, игра, факториал, бот и другие.</p>
-    </div>
-  </div>
-
-  <!-- ===== БОТЫ ===== -->
-  <h3 class="weekly-subtitle" style="margin-top:70px;">🤖 Шаблоны ботов</h3>
-
+  <!-- Боты -->
+  <h3 class="section-title" style="font-size:1.8rem;margin-top:70px;">🤖 Шаблоны ботов</h3>
   <div class="dev-tabs">
-    <button class="dev-tab active" data-bot="telegram"><span class="emoji">✈️</span> Telegram bot</button>
-    <button class="dev-tab" data-bot="discord"><span class="emoji">🎮</span> Discord bot</button>
+    <button class="dev-tab active" data-bot="telegram">✈️ Telegram bot</button>
+    <button class="dev-tab" data-bot="discord">🎮 Discord bot</button>
   </div>
-
   <div class="dev-panel active" id="panel-telegram">
     <div class="card" style="text-align:center;">
-      <h3 style="margin-bottom:8px;">🤖 Telegram Bot шаблоны</h3>
       <p>Выбери язык — ниже появится готовый шаблон. Введи токен от @BotFather.</p>
       <div class="lang-buttons">
         <button class="lang-btn" data-bot="telegram" data-lang="python">Python</button>
@@ -776,10 +428,8 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     </div>
     <div id="output-telegram"></div>
   </div>
-
   <div class="dev-panel" id="panel-discord">
     <div class="card" style="text-align:center;">
-      <h3 style="margin-bottom:8px;">🎮 Discord Bot шаблоны</h3>
       <p>Выбери язык — ниже появится готовый шаблон. Введи токен из Developer Portal.</p>
       <div class="lang-buttons">
         <button class="lang-btn" data-bot="discord" data-lang="python">Python</button>
@@ -793,23 +443,87 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
     <div id="output-discord"></div>
   </div>
 </section>
+<style>
+/* Плагины и Код */
+.plugin-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:20px;transition:.4s;}
+.plugin-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 15px 40px rgba(0,224,255,.12);}
+.plugin-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:12px;}
+.plugin-title{display:flex;align-items:center;gap:12px;font-size:1.2rem;font-weight:700;}
+.plugin-title .ico{font-size:1.6rem;}
+.plugin-desc{color:var(--muted);font-size:.95rem;margin-bottom:16px;}
+.plugin-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.plugin-toggle{background:transparent;border:1px solid var(--border);color:var(--accent);padding:10px 20px;border-radius:10px;font-weight:600;transition:.3s;font-size:.88rem;cursor:pointer;}
+.plugin-toggle:hover{background:rgba(0,224,255,.08);border-color:var(--accent);}
+.plugin-code{display:none;margin-top:18px;}
+.plugin-code.open{display:block;}
+.code-wrap{margin-top:10px;background:#050810;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.code-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 20px;background:rgba(0,224,255,.05);border-bottom:1px solid var(--border);font-size:.85rem;color:var(--muted);font-family:monospace;flex-wrap:wrap;}
+.code-head .info{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.dots{display:flex;gap:6px;}
+.dots span{width:12px;height:12px;border-radius:50%;display:block;}
+.dots .r{background:#ff5f56}.dots .y{background:#ffbd2e}.dots .g{background:#27c93f}
+.copy-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;font-size:.8rem;transition:.3s;cursor:pointer;}
+.copy-btn:hover{color:var(--accent);border-color:var(--accent);}
+pre{padding:22px;overflow-x:auto;font-family:'Consolas',monospace;font-size:.88rem;line-height:1.65;color:#d4e0f0;max-height:500px;}
+pre code{white-space:pre;}
 
-<!-- ================= ПЛАГИНЫ ================= -->
+/* Еженедельно */
+.weekly-hero{background:linear-gradient(135deg,rgba(0,224,255,.08),rgba(124,92,255,.08));border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;margin-bottom:50px;position:relative;overflow:hidden;}
+.weekly-week{font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent);margin-bottom:12px;letter-spacing:2px;text-transform:uppercase;}
+.weekly-tip{font-size:1.15rem;color:var(--text);line-height:1.6;max-width:800px;margin:0 auto;}
+.weekly-tip strong{color:var(--accent);}
+.weekly-tip code{background:#050810;padding:2px 8px;border-radius:4px;font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent);}
+.weekly-subtitle{font-size:1.4rem;font-weight:700;color:var(--text);margin:50px 0 20px;display:flex;align-items:center;gap:10px;}
+.weekly-subtitle::before{content:'';width:4px;height:24px;border-radius:2px;background:linear-gradient(180deg,var(--accent),var(--accent2));}
+.weekly-updates{display:flex;flex-direction:column;gap:14px;}
+.weekly-update{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:18px 22px;transition:.3s;}
+.weekly-update:hover{background:var(--card2);transform:translateX(4px);border-left-color:var(--accent2);}
+.weekly-update .wu-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+.weekly-update .wu-title{font-weight:700;color:var(--text);font-size:1.05rem;}
+.weekly-update .wu-date{font-family:'Consolas',monospace;font-size:.78rem;color:var(--muted);}
+.weekly-update .wu-body{color:var(--muted);font-size:.93rem;}
+
+/* Пожелания */
+.wish-form{max-width:720px;margin:0 auto 50px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;}
+.wish-form label{display:block;margin-bottom:8px;color:var(--muted);font-size:.88rem;font-weight:600;}
+.wish-form input,.wish-form textarea{width:100%;padding:14px 16px;margin-bottom:18px;background:#0a0e1a;border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:.95rem;outline:none;transition:.3s;resize:vertical;}
+.wish-form input:focus,.wish-form textarea:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(0,224,255,.2);}
+.wish-form textarea{min-height:120px;}
+.char-count{font-size:.78rem;color:var(--muted);text-align:right;margin-top:-12px;margin-bottom:16px;}
+.comments-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:16px;}
+.comment{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;transition:.3s;}
+.comment:hover{border-color:rgba(0,224,255,.4);}
+.comment-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px;flex-wrap:wrap;}
+.comment-nick{font-weight:700;color:var(--accent);display:flex;align-items:center;gap:8px;}
+.comment-nick::before{content:'◆';color:var(--accent2);}
+.comment-time{color:var(--muted);font-size:.78rem;}
+.comment-body{color:var(--text);font-size:.95rem;white-space:pre-wrap;word-break:break-word;}
+.comments-empty{text-align:center;padding:50px 30px;background:var(--card);border:1px dashed var(--border);border-radius:16px;color:var(--muted);}
+.comments-empty .icon{font-size:3rem;margin-bottom:12px;display:block;}
+
+/* Футер */
+footer{text-align:center;padding:50px 20px 40px;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;margin-top:60px;}
+footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem;}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-top:14px;flex-wrap:wrap;}
+.footer-links a{color:var(--muted);cursor:pointer;}
+.footer-links a:hover{color:var(--accent);}
+
+/* Toast */
+.toast{position:fixed;bottom:30px;right:30px;background:var(--card);border:1px solid var(--accent);color:var(--text);padding:14px 22px;border-radius:12px;box-shadow:0 10px 40px rgba(0,224,255,.3);transform:translateY(200%);transition:transform .4s cubic-bezier(.2,.8,.2,1);z-index:999;font-weight:500;max-width:320px;}
+.toast.show{transform:translateY(0);}
+</style>
+
+<!-- ПЛАГИНЫ -->
 <section class="page" id="plugins">
   <h2 class="section-title">Плагины и функции</h2>
-  <p class="section-sub">
-    Готовые решения для сайтов: копируй, вставляй, используй.
-    Все плагины в open-source — форкай и дополняй под себя.
-  </p>
+  <p class="section-sub">Готовые решения для сайтов: копируй, вставляй, используй.</p>
   <div id="pluginsList"></div>
 </section>
-<!-- ================= ЕЖЕНЕДЕЛЬНО ================= -->
+
+<!-- ЕЖЕНЕДЕЛЬНО -->
 <section class="page" id="weekly">
   <h2 class="section-title">Еженедельно</h2>
-  <p class="section-sub">
-    Свежая подборка недели: лучшие скрипты, плагины и обновления студии.
-    Заглядывай каждую неделю — здесь всегда что-то новое.
-  </p>
+  <p class="section-sub">Свежая подборка недели: лучшие скрипты, плагины и обновления студии.</p>
 
   <div class="weekly-hero">
     <div class="weekly-week" id="weeklyWeek">—</div>
@@ -826,32 +540,26 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
   <div class="cards" id="weeklyResults"></div>
 </section>
 
-<!-- ================= ПОЖЕЛАНИЯ ================= -->
+<!-- ПОЖЕЛАНИЯ -->
 <section class="page" id="wishes">
   <h2 class="section-title">Пожелания</h2>
-  <p class="section-sub">
-    Оставь отзыв, идею или пожелание. Сообщения сохраняются в твоём браузере.
-  </p>
+  <p class="section-sub">Оставь отзыв, идею или пожелание. Сообщения сохраняются в твоём браузере.</p>
 
   <form class="wish-form" id="wishForm">
     <label for="nickInput">Твой ник</label>
     <input type="text" id="nickInput" placeholder="Например: CodeMaster" maxlength="30" required>
-
     <label for="msgInput">Сообщение</label>
     <textarea id="msgInput" placeholder="Напиши своё пожелание..." maxlength="500" required></textarea>
     <div class="char-count"><span id="charCount">0</span> / 500</div>
-
-    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
-      🚀 Отправить пожелание
-    </button>
+    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">🚀 Отправить пожелание</button>
   </form>
 
   <div class="comments-list" id="commentsList"></div>
 </section>
 
-<!-- ================= FOOTER ================= -->
+<!-- ФУТЕР -->
 <footer>
-  <div class="logo">BecauseDev IT Studio</div>
+  <div class="logo" data-nav="home">BecauseDev IT Studio</div>
   <p>© <span id="year"></span> BecauseDev IT Studio · Разрабатываем сайты, ботов, игры и язык BC+ с ❤️</p>
   <div class="footer-links">
     <a data-nav="home">Главная</a>
@@ -867,7 +575,7 @@ footer .logo{justify-content:center;margin-bottom:14px;font-size:1.3rem}
 <div class="toast" id="toast">Готово!</div>
 <script>
 /* ============================================================
-   BecauseDev IT Studio — main script
+   BecauseDev IT Studio — main script (v3.0)
    ============================================================ */
 
 /* ================== УТИЛИТЫ ================== */
@@ -876,7 +584,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ================== TOAST ================== */
+/* ================== TOAST (УВЕДОМЛЕНИЯ) ================== */
 const toastEl = document.getElementById('toast');
 let toastTimer;
 function showToast(text, ok = true){
@@ -888,23 +596,36 @@ function showToast(text, ok = true){
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
 }
 
-/* ================== НАВИГАЦИЯ ================== */
+/* ================== НАВИГАЦИЯ (SPA) ================== */
 const pages = $$('.page');
 
 function showPage(id){
   if(!id || !document.getElementById(id)) id = 'home';
+  
+  // Скрываем все страницы, показываем нужную
   pages.forEach(p => p.classList.toggle('active', p.id === id));
+  
+  // Обновляем активные ссылки в меню
   $$('nav a[data-nav]').forEach(a => {
     a.classList.toggle('active-link', a.dataset.nav === id);
   });
+  
+  // Скролл наверх
   window.scrollTo({ top: 0, behavior: 'auto' });
+  
+  // Закрываем мобильное меню
   const nav = document.getElementById('nav');
   if(nav) nav.classList.remove('open');
+  
+  // Обновляем хэш в URL
   if(location.hash.slice(1) !== id) history.replaceState(null, '', '#' + id);
+  
+  // Перерисовываем контент при переходе (если нужно)
   if(id === 'wishes' && typeof renderComments === 'function') renderComments();
   if(id === 'weekly' && typeof renderWeekly === 'function') renderWeekly();
 }
 
+/* Клики по элементам с data-nav */
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-nav]');
   if(!el) return;
@@ -912,19 +633,22 @@ document.addEventListener('click', (e) => {
   showPage(el.dataset.nav);
 });
 
+/* Кнопки браузера назад/вперед */
 window.addEventListener('hashchange', () => {
   showPage(location.hash.slice(1) || 'home');
 });
 
+/* Бургер-меню */
 const burger = document.getElementById('burger');
 const navEl = document.getElementById('nav');
 if(burger && navEl){
   burger.addEventListener('click', () => navEl.classList.toggle('open'));
 }
 
+/* Инициализация страницы при загрузке */
 showPage(location.hash.slice(1) || 'home');
 
-/* ================== TYPING ================== */
+/* ================== TYPING ЭФФЕКТ ================== */
 const typingWords = ['инструменты', 'плагины', 'исходники', 'ботов', 'сайты'];
 let tIdx = 0, cIdx = 0, deleting = false, tTimer = null;
 
@@ -932,15 +656,22 @@ function typingTick(){
   const el = document.getElementById('typing');
   if(!el) return;
   const w = typingWords[tIdx];
+  
   el.textContent = deleting ? w.slice(0, --cIdx) : w.slice(0, ++cIdx);
+  
   let delay = deleting ? 50 : 110;
-  if(!deleting && cIdx === w.length){ deleting = true; delay = 1600; }
-  else if(deleting && cIdx === 0){
+  
+  if(!deleting && cIdx === w.length){ 
+    deleting = true; 
+    delay = 1600; 
+  } else if(deleting && cIdx === 0){
     deleting = false;
     tIdx = (tIdx + 1) % typingWords.length;
   }
+  
   tTimer = setTimeout(typingTick, delay);
 }
+
 function restartTyping(){
   clearTimeout(tTimer);
   cIdx = 0;
@@ -948,7 +679,7 @@ function restartTyping(){
   typingTick();
 }
 restartTyping();
-
+</script>
 /* ================== ШАБЛОНЫ БОТОВ ================== */
 const BOT_TEMPLATES = {
   telegram: {
@@ -1105,7 +836,7 @@ func main(){
 }
 `}
   },
-	  discord: {
+					  discord: {
     python: { file: 'bot.py', code:
 `# pip install discord.py
 import discord
@@ -1281,8 +1012,10 @@ function escapeHtml(s){
 function renderBotTemplate(bot, lang){
   const out = document.getElementById('output-' + bot);
   if(!out) return;
+  
   const tpl = BOT_TEMPLATES[bot] && BOT_TEMPLATES[bot][lang];
   if(!tpl){ out.innerHTML = ''; return; }
+  
   const botName = bot === 'telegram' ? 'Telegram Bot' : 'Discord Bot';
 
   out.innerHTML =
@@ -1295,9 +1028,9 @@ function renderBotTemplate(bot, lang){
         '<button class="copy-btn" id="copyBtn-' + bot + '">📋 Копировать</button>' +
       '</div>' +
       '<pre><code id="code-' + bot + '">' + escapeHtml(tpl.code) + '</code></pre>' +
-      '<div class="token-input-wrap">' +
-        '<input class="token-input" id="token-' + bot + '" type="text" placeholder="Insert the token here">' +
-        '<button class="btn btn-primary" id="useToken-' + bot + '">🔑 Подставить токен</button>' +
+      '<div class="token-input-wrap" style="padding:16px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap;">' +
+        '<input class="token-input" id="token-' + bot + '" type="text" placeholder="Insert the token here" style="flex:1;min-width:200px;padding:12px 16px;background:#0a0e1a;border:1px solid var(--border);border-radius:10px;color:var(--text);outline:none;font-family:monospace;">' +
+        '<button class="btn btn-primary" id="useToken-' + bot + '" style="padding:12px 24px;font-weight:bold;">🔑 Подставить токен</button>' +
       '</div>' +
     '</div>';
 
@@ -1310,8 +1043,10 @@ function renderBotTemplate(bot, lang){
   document.getElementById('useToken-' + bot).onclick = function(){
     const val = document.getElementById('token-' + bot).value.trim();
     if(!val){ showToast('Введи токен', false); return; }
+    
     const newCode = tpl.code.split('Insert the token here').join(val);
     document.getElementById('code-' + bot).textContent = newCode;
+    
     const btn = document.getElementById('useToken-' + bot);
     btn.textContent = '✅ Скопировать с токеном';
     btn.onclick = function(){
@@ -1323,6 +1058,7 @@ function renderBotTemplate(bot, lang){
   };
 }
 
+/* Переключение вкладок (Telegram / Discord) */
 $$('.dev-tab').forEach(function(tab){
   tab.addEventListener('click', function(){
     $$('.dev-tab').forEach(function(t){ t.classList.remove('active'); });
@@ -1334,6 +1070,7 @@ $$('.dev-tab').forEach(function(tab){
   });
 });
 
+/* Клик по языку программирования */
 $$('.lang-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
     const bot  = btn.dataset.bot;
@@ -1343,7 +1080,7 @@ $$('.lang-btn').forEach(function(btn){
     renderBotTemplate(bot, lang);
   });
 });
-	/* ================== ПЛАГИНЫ ================== */
+		/* ================== ПЛАГИНЫ ================== */
 const PLUGINS = [
   { id:'copy', icon:'📋', title:'Copy to Clipboard', desc:'Универсальный плагин для копирования текста в буфер обмена с уведомлением.', tags:['JS','UI'], tagColor:'',
     code:`document.querySelectorAll('[data-copy]').forEach(el => {
@@ -1487,16 +1224,14 @@ const WEEKLY_TIPS = [
   '<strong>Git commit</strong> часто и с понятными сообщениями.',
   '<code>optional chaining ?.</code> спасает от Cannot read property.',
   '<strong>Lazy loading</strong> ускоряет сайт в разы.',
-  '<code>:has()</code> в CSS — селектор родителя. Мощная штука.',
   'Пиши код так, будто его будет читать злой маньяк.',
   'Учись читать чужой код — это 90% работы.'
 ];
 
 const WEEKLY_UPDATES = [
-  { title: '⚡ BC+ v2.0 — большое обновление!', date: 'сегодня', body: 'Массивы, словари, классы (ООП), HTTP-запросы, работа с DOM и Supabase БД. BC+ теперь умеет делать реальные программы!' },
+  { title: '⚡ Обновление BC+ v3.0 (AI Edition)', date: 'сегодня', body: 'Добавлен ИИ-помощник на базе Gemini, перевод в Python и подсветка ошибок!' },
   { title: '🎮 Исходник Granny Remake в открытом доступе', date: 'недавно', body: 'Скачивай исходник игры в разделе «Разработчикам» и твори!' },
-  { title: '🧩 Добавлено 6 плагинов', date: 'на прошлой неделе', body: 'Copy to Clipboard, Smooth Scroll, Lazy Load, Theme Toggle, Typing Effect, Progress Bar.' },
-  { title: '🤖 12 шаблонов ботов готовы', date: '2 недели назад', body: 'Telegram и Discord боты на 6 языках программирования.' }
+  { title: '🧩 Добавлено 6 плагинов', date: 'на прошлой неделе', body: 'Copy to Clipboard, Smooth Scroll, Lazy Load, Theme Toggle, Typing Effect, Progress Bar.' }
 ];
 
 const WEEKLY_CODES = [
@@ -1508,16 +1243,12 @@ const WEEKLY_CODES = [
     clearTimeout(timer);
     timer = setTimeout(() => fn.apply(this, args), delay);
   };
-}
-
-const onSearch = debounce((q) => console.log('Поиск:', q), 500);` },
+}` },
   { id:'week-2', icon:'🎲', title:'Random в диапазоне', desc:'Функция для случайного числа между min и max включительно.', tags:['JS','Утилита'], tagColor:'',
     code:
 `function random(min, max){
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-console.log(random(1, 100));` },
+}` },
   { id:'week-3', icon:'🎨', title:'Hex → RGB', desc:'Конвертирует HEX-цвет в RGB для использования в JS.', tags:['JS','Утилита'], tagColor:'purple',
     code:
 `function hexToRgb(hex){
@@ -1525,17 +1256,8 @@ console.log(random(1, 100));` },
   if(!m) return null;
   const [r, g, b] = m.map(x => parseInt(x, 16));
   return { r, g, b };
-}
-
-console.log(hexToRgb('#00e0ff'));` },
-  { id:'week-4', icon:'📅', title:'Формат даты', desc:'Красивый формат даты на русском: «15 октября 2025».', tags:['JS','Date'], tagColor:'green',
-    code:
-`function formatDateRu(date = new Date()){
-  const months = ['января','февраля','марта','апреля','мая','июня',
-                  'июля','августа','сентября','октября','ноября','декабря'];
-  return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }` },
-  { id:'week-5', icon:'💾', title:'LocalStorage helper', desc:'Безопасная обёртка над localStorage — не падает при ошибках.', tags:['JS','Storage'], tagColor:'',
+  { id:'week-4', icon:'💾', title:'LocalStorage helper', desc:'Безопасная обёртка над localStorage — не падает при ошибках.', tags:['JS','Storage'], tagColor:'',
     code:
 `const store = {
   get(key, fallback = null){
@@ -1545,17 +1267,16 @@ console.log(hexToRgb('#00e0ff'));` },
   set(key, value){
     try { localStorage.setItem(key, JSON.stringify(value)); return true; }
     catch { return false; }
-  },
-  remove(key){ localStorage.removeItem(key); }
+  }
 };` }
 ];
 
 const WEEKLY_RESULTS = [
-  { icon:'⚡', title:'Релиз недели', desc:'BC+ v2.0 — массивы, классы, HTTP, DOM и Supabase. Полноценный язык!' },
+  { icon:'⚡', title:'Релиз недели', desc:'BC+ v3.0 — ИИ-помощник, перевод в Python и подсветка ошибок!' },
   { icon:'🔥', title:'Хит недели', desc:'Исходник Granny Remake продолжает собирать скачивания.' },
-  { icon:'💡', title:'Идея недели', desc:'Подключить ИИ (Gemini API) в BC+ — работаем над этим.' }
+  { icon:'💡', title:'Идея недели', desc:'Подключить базу данных (Supabase) для статей на сайте.' }
 ];
-	/* ================== РЕНДЕР ЕЖЕНЕДЕЛЬНО ================== */
+
 function renderWeekly(){
   const weekEl = document.getElementById('weeklyWeek');
   if(weekEl){
@@ -1576,10 +1297,7 @@ function renderWeekly(){
   if(updEl){
     updEl.innerHTML = WEEKLY_UPDATES.map(function(u){
       return '<div class="weekly-update">' +
-        '<div class="wu-head">' +
-          '<div class="wu-title">' + u.title + '</div>' +
-          '<div class="wu-date">' + u.date + '</div>' +
-        '</div>' +
+        '<div class="wu-head"><div class="wu-title">' + u.title + '</div><div class="wu-date">' + u.date + '</div></div>' +
         '<div class="wu-body">' + u.body + '</div>' +
       '</div>';
     }).join('');
@@ -1600,10 +1318,7 @@ function renderWeekly(){
         '<div class="plugin-code" id="weekly-code-' + p.id + '">' +
           '<div class="code-wrap">' +
             '<div class="code-head">' +
-              '<div class="info">' +
-                '<div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>' +
-                '<span>' + p.id + '.js</span>' +
-              '</div>' +
+              '<div class="info"><div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div><span>' + p.id + '.js</span></div>' +
               '<button class="copy-btn" data-weekly-copy="' + p.id + '">📋 Копировать</button>' +
             '</div>' +
             '<pre><code>' + escapeHtml(p.code) + '</code></pre>' +
@@ -1614,8 +1329,7 @@ function renderWeekly(){
 
     $$('[data-weekly-toggle]').forEach(function(btn){
       btn.addEventListener('click', function(){
-        const id = btn.dataset.weeklyToggle;
-        const block = document.getElementById('weekly-code-' + id);
+        const block = document.getElementById('weekly-code-' + btn.dataset.weeklyToggle);
         if(!block) return;
         block.classList.toggle('open');
         btn.textContent = block.classList.contains('open') ? '🙈 Скрыть код' : '👁 Показать код';
@@ -1624,12 +1338,9 @@ function renderWeekly(){
 
     $$('[data-weekly-copy]').forEach(function(btn){
       btn.addEventListener('click', function(){
-        const id = btn.dataset.weeklyCopy;
-        const p = WEEKLY_CODES.find(function(x){ return x.id === id; });
+        const p = WEEKLY_CODES.find(function(x){ return x.id === btn.dataset.weeklyCopy; });
         if(!p) return;
-        navigator.clipboard.writeText(p.code)
-          .then(function(){ showToast('Код скопирован ✅'); })
-          .catch(function(){ showToast('Ошибка копирования', false); });
+        navigator.clipboard.writeText(p.code).then(function(){ showToast('Код скопирован ✅'); });
       });
     });
   }
@@ -1637,18 +1348,12 @@ function renderWeekly(){
   const resEl = document.getElementById('weeklyResults');
   if(resEl){
     resEl.innerHTML = WEEKLY_RESULTS.map(function(r){
-      return '<div class="card">' +
-        '<span class="card-icon">' + r.icon + '</span>' +
-        '<h3>' + r.title + '</h3>' +
-        '<p>' + r.desc + '</p>' +
-      '</div>';
+      return '<div class="card"><span class="card-icon">' + r.icon + '</span><h3>' + r.title + '</h3><p>' + r.desc + '</p></div>';
     }).join('');
   }
 }
-renderWeekly();
-
-/* ================== ПОЖЕЛАНИЯ ================== */
-const STORAGE_KEY = 'becausedev_comments_v7';
+		/* ================== ПОЖЕЛАНИЯ (КОММЕНТАРИИ) ================== */
+const STORAGE_KEY = 'becausedev_comments_v8';
 
 function loadComments(){
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
@@ -1722,10 +1427,11 @@ if(wishForm){
   });
 }
 
+/* Демо-комментарии при первом заходе */
 (function initComments(){
   if(!localStorage.getItem(STORAGE_KEY)){
     saveComments([
-      { id:'demo_1', nick:'CodeMaster', text:'BC+ v2.0 это что-то! Массивы и классы зашли как надо 🔥', time: Date.now() - 86400000 * 2 },
+      { id:'demo_1', nick:'CodeMaster', text:'BC+ v3.0 это просто космос! ИИ реально помогает писать код 🔥', time: Date.now() - 86400000 * 2 },
       { id:'demo_2', nick:'NikaDev', text:'Сделал бота на BC+, отправил себе сообщение в TG. Магия 💙', time: Date.now() - 3600000 * 8 },
       { id:'demo_3', nick:'BecauseDev', text:'Добро пожаловать! Оставляйте пожелания и идеи.', time: Date.now() - 1800000 }
     ]);
@@ -1733,12 +1439,14 @@ if(wishForm){
   renderComments();
 })();
 
-/* ================== RIPPLE ================== */
+/* ================== RIPPLE-ЭФФЕКТ НА КНОПКАХ ================== */
 document.addEventListener('click', function(e){
   const btn = e.target.closest('.btn, .lang-btn, .dev-tab, .plugin-toggle, .copy-btn');
   if(!btn) return;
+  
   const rect = btn.getBoundingClientRect();
   const ripple = document.createElement('span');
+  
   ripple.style.cssText =
     'position:absolute;left:' + (e.clientX - rect.left) + 'px;' +
     'top:' + (e.clientY - rect.top) + 'px;' +
@@ -1746,6 +1454,7 @@ document.addEventListener('click', function(e){
     'background:rgba(255,255,255,.4);' +
     'transform:translate(-50%,-50%) scale(0);' +
     'pointer-events:none;animation:ripple .6s ease-out';
+    
   btn.style.position = 'relative';
   btn.style.overflow = 'hidden';
   btn.appendChild(ripple);
@@ -1761,8 +1470,8 @@ document.addEventListener('keydown', function(e){
 
 /* ================== КОНСОЛЬ ================== */
 console.log(
-  '%c</> BecauseDev IT Studio%c\nЯзык BC+ v2.0 · Массивы, классы, HTTP, DOM, БД · Нажми «H» — на главную 💙',
-  'color:#ff9558;font-size:20px;font-weight:bold;',
+  '%c</> BecauseDev IT Studio%c\nСайт готов! Переходи в BC+ IDE v3.0 💙',
+  'color:#00e0ff;font-size:20px;font-weight:bold;',
   'color:#8b9bb4;font-size:13px;'
 );
 </script>
