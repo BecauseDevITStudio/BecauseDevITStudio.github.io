@@ -374,12 +374,13 @@ function bcToJs(source){
     try {
       if(line === '}'){ indent = Math.max(0, indent - 1); out.push(pad() + '}'); if(inClass > 0 && indent < inClass) inClass = 0; continue; }
       
-      if(line.startsWith('} иначе') || line === 'иначе {' || line === 'иначе{'){
+            if(line.startsWith('} иначе') || line === 'иначе {' || line === 'иначе{'){
         if(out.length && out[out.length - 1].trim() === '}') out.pop();
-        else if(line.startsWith('} иначе')) indent = Math.max(0, indent - 1);
         indent = Math.max(0, indent - 1);
-        out.push(pad() + '} else {'); indent++; continue;
-      }
+        out.push(pad() + '} else {');
+        indent++;
+        continue;
+            }
 
       if(line.startsWith('сказать ')){ out.push(pad() + 'print(' + replaceOps(line.slice(8).trim()) + ');'); continue; }
       if(line.startsWith('ии ') || line.startsWith('спросить_ии ')){ 
