@@ -382,8 +382,16 @@ function bcToJs(source){
         continue;
       }
 
+            // Если строка начинается с "} иначе"
+      if(line.startsWith('} иначе')){
+        indent = Math.max(0, indent - 1);
+        out.push(pad() + '} else {');
+        indent++;
+        continue;
+      }
+
+      // Если просто "иначе"
       if(line.startsWith('иначе')){
-        if(line.startsWith('} иначе')) indent = Math.max(0, indent - 1);
         out.push(pad() + '} else {');
         indent++;
         continue;
