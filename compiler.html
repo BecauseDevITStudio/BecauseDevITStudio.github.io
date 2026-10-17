@@ -372,15 +372,22 @@ function bcToJs(source){
     if(!line || line.startsWith('//')) continue;
 
     try {
-      if(line === '}'){ indent = Math.max(0, indent - 1); out.push(pad() + '}'); if(inClass > 0 && indent < inClass) inClass = 0; continue; }
-      
-            if(line.startsWith('} иначе') || line === 'иначе {' || line === 'иначе{'){
-        if(out.length && out[out.length - 1].trim() === '}') out.pop();
+            if(line === '}'){
         indent = Math.max(0, indent - 1);
+        const nextLine = (i + 1 < lines.length) ? lines[i + 1].trim() : '';
+        if(!nextLine.startsWith('иначе')){
+          out.push(pad() + '}');
+          if(inClass > 0 && indent < inClass) inClass = 0;
+        }
+        continue;
+      }
+
+      if(line.startsWith('иначе')){
+        if(line.startsWith('} иначе')) indent = Math.max(0, indent - 1);
         out.push(pad() + '} else {');
         indent++;
         continue;
-            }
+      }
 
       if(line.startsWith('сказать ')){ out.push(pad() + 'print(' + replaceOps(line.slice(8).trim()) + ');'); continue; }
       if(line.startsWith('ии ') || line.startsWith('спросить_ии ')){ 
