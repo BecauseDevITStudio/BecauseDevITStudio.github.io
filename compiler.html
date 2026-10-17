@@ -3,186 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC+ Компилятор v2.1 — BecauseDev IT Studio</title>
+<title>BC+ IDE v3.0 — BecauseDev IT Studio</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#0a0e1a;--card:#141b2d;--card2:#1a2338;--bg-code:#050810;
   --accent:#00e0ff;--accent2:#7c5cff;--accent3:#00ffa3;--danger:#ff5f56;
-  --bc:#ff6b35;--bc2:#ff9558;
+  --bc:#ff6b35;--bc2:#ff9558;--ai:#a855f7;
   --text:#e6edf7;--muted:#8b9bb4;--border:rgba(0,224,255,.15);
 }
-html{scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Segoe UI',-apple-system,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.6;
-  min-height:100vh;overflow-x:hidden;
-  background-image:
-    radial-gradient(circle at 15% 10%,rgba(124,92,255,.15),transparent 40%),
-    radial-gradient(circle at 85% 20%,rgba(0,224,255,.12),transparent 40%);
+  height:100vh;overflow:hidden;display:flex;flex-direction:column;
+  background-image:radial-gradient(circle at 15% 10%,rgba(124,92,255,.15),transparent 40%),
+                   radial-gradient(circle at 85% 20%,rgba(0,224,255,.12),transparent 40%);
   background-attachment:fixed;
 }
-a{color:var(--accent);text-decoration:none}
+a{color:var(--accent);text-decoration:none;transition:.3s}
 button{font-family:inherit;cursor:pointer}
 
-.grid-bg{
-  position:fixed;inset:0;z-index:-1;
-  background-image:
-    linear-gradient(rgba(0,224,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,224,255,.05) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
-  -webkit-mask-image:radial-gradient(ellipse at center,black 40%,transparent 80%);
-}
-
+/* Шапка */
 header{
-  position:sticky;top:0;z-index:100;padding:14px 40px;
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(10,14,26,.85);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
+  padding:10px 20px;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,14,26,.95);border-bottom:1px solid var(--border);flex-shrink:0;z-index:10;
 }
-.logo{
-  font-size:1.35rem;font-weight:800;cursor:pointer;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  display:flex;align-items:center;gap:10px;
-}
-.logo::before{content:'</>';font-family:monospace;-webkit-text-fill-color:var(--accent)}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav a{
-  color:var(--muted);font-weight:500;padding:8px 16px;border-radius:10px;
-  font-size:.9rem;transition:.3s;
-}
-nav a:hover{color:var(--text);background:rgba(0,224,255,.06)}
+.logo{font-size:1.2rem;font-weight:800;color:var(--accent);display:flex;align-items:center;gap:8px;}
+.logo span{color:var(--bc);font-family:monospace;}
 
-main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
+/* Вкладки */
+.tabs{display:flex;gap:10px}
+.tab-btn{
+  background:transparent;border:none;color:var(--muted);font-weight:600;
+  padding:8px 16px;border-radius:8px;cursor:pointer;transition:.3s;font-size:.9rem;
+}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,.05);}
+.tab-btn.active{color:var(--accent);background:rgba(0,224,255,.1);}
 
-.hero{text-align:center;padding:60px 20px 40px}
-.hero .badge{
-  display:inline-block;padding:6px 16px;border-radius:100px;
-  border:1px solid var(--border);background:rgba(255,107,53,.05);
-  color:var(--bc);font-size:.85rem;margin-bottom:20px;
-  font-family:monospace;
-}
-.hero h1{
-  font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1;
-  margin-bottom:20px;letter-spacing:-1px;
-  background:linear-gradient(135deg,#fff 0%,var(--bc) 50%,var(--bc2) 100%);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hero h1 .plus{color:var(--bc2);-webkit-text-fill-color:var(--bc2);animation:blink 1.5s infinite}
-@keyframes blink{50%{opacity:.4}}
-.hero p{color:var(--muted);font-size:1.1rem;max-width:720px;margin:0 auto}
+/* Рабочая область */
+.workspace{display:flex;flex:1;overflow:hidden;}
+.view{display:none;width:100%;height:100%;}
+.view.active{display:flex;}
 
-.section-title{
-  font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;
-  margin-bottom:16px;display:flex;align-items:center;gap:12px;
-}
-.section-title::before{
-  content:'';width:5px;height:32px;border-radius:3px;
-  background:linear-gradient(180deg,var(--bc),var(--bc2));
-}
-.section-sub{color:var(--muted);margin-bottom:30px}
+/* Панели */
+.editor-panel{flex:1;display:flex;flex-direction:column;border-right:1px solid var(--border);min-width:0;background:var(--card);}
+.side-panel{width:420px;display:flex;flex-direction:column;background:var(--card);flex-shrink:0;}
 
-.section{margin-top:70px}
-.section .card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:30px;
-}
-.section .card p{margin-bottom:14px;color:var(--text)}
-.section .card p strong{color:var(--accent)}
-.section .card code{
-  background:var(--bg-code);padding:3px 8px;border-radius:6px;
-  font-family:'Consolas',monospace;font-size:.9rem;color:var(--accent3);
-}
+/* Блок ИИ */
+.ai-panel{flex:1;display:flex;flex-direction:column;border-bottom:1px solid var(--border);min-height:0;}
+.ai-head{background:rgba(168,85,247,.1);color:var(--ai);padding:12px 16px;font-weight:bold;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(168,85,247,.2);}
+.ai-chat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;}
+.msg{padding:12px 16px;border-radius:12px;font-size:.9rem;line-height:1.5;max-width:90%;word-wrap:break-word;}
+.msg.bot{background:var(--bg-code);border:1px solid var(--ai);color:var(--text);align-self:flex-start;border-bottom-left-radius:2px;}
+.msg.user{background:rgba(168,85,247,.2);color:#fff;align-self:flex-end;border-bottom-right-radius:2px;}
+.msg pre{background:#000;padding:10px;border-radius:8px;overflow-x:auto;margin:8px 0;font-family:monospace;font-size:.8rem;border:1px solid var(--border);}
+.msg code{background:#000;padding:2px 4px;border-radius:4px;font-family:monospace;color:var(--accent3);}
+.ai-input-box{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--card);}
+.ai-input{flex:1;background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:#fff;outline:none;resize:none;font-family:inherit;font-size:.9rem;}
+.ai-input:focus{border-color:var(--ai);}
+.ai-send{background:var(--ai);color:#fff;border:none;border-radius:8px;padding:0 16px;font-weight:bold;cursor:pointer;transition:.2s;}
+.ai-send:hover{background:#9333ea;}
 
-.features{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:16px;margin-top:24px;
+/* Блок Отладчика */
+.console-panel{height:220px;display:flex;flex-direction:column;flex-shrink:0;}
+.console-head{padding:10px 16px;background:rgba(255,107,53,.05);border-bottom:1px solid var(--border);font-size:.85rem;color:var(--bc);display:flex;justify-content:space-between;font-family:monospace;}
+.console-body{flex:1;background:var(--bg-code);padding:12px 16px;overflow-y:auto;font-family:monospace;font-size:.85rem;white-space:pre-wrap;line-height:1.5;}
+.log-err{color:var(--danger);}
+.log-ok{color:var(--accent3);}
+.log-info{color:var(--muted);}
+</style>
+/* ============ РЕДАКТОР ============ */
+.editor-topbar{
+  padding:12px 16px;background:rgba(0,224,255,.05);border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;font-family:monospace;font-size:.85rem;color:var(--muted);
 }
-.feature{
-  padding:20px;background:var(--card2);border-radius:12px;
-  border:1px solid var(--border);
+.controls{display:flex;gap:10px;flex-wrap:wrap;padding:10px 16px;background:var(--card2);border-bottom:1px solid var(--border);}
+.btn{
+  padding:10px 20px;border-radius:8px;font-weight:600;font-size:.85rem;
+  border:none;cursor:pointer;transition:.3s;display:inline-flex;align-items:center;gap:6px;
 }
-.feature .f-icon{font-size:1.8rem;margin-bottom:10px;display:block}
-.feature h4{margin-bottom:6px;font-size:1rem;color:var(--text)}
-.feature p{color:var(--muted);font-size:.88rem;margin:0}
+.btn-run{background:linear-gradient(135deg,var(--accent3),var(--accent));color:#051018;box-shadow:0 4px 15px rgba(0,255,163,.3);}
+.btn-run:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,255,163,.5);}
+.btn-clear{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-clear:hover{border-color:var(--danger);color:var(--danger);}
+.btn-js{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#051018;}
+.btn-py{background:linear-gradient(135deg,#3776ab,#ffd343);color:#fff;}
+.btn-bot{background:linear-gradient(135deg,var(--bc),var(--bc2));color:#fff;box-shadow:0 4px 15px rgba(255,107,53,.3);}
 
-.kw-table{
-  width:100%;border-collapse:collapse;
-  margin-top:16px;font-size:.9rem;
-}
-.kw-table th,.kw-table td{
-  padding:10px 14px;text-align:left;
-  border-bottom:1px solid var(--border);
-}
-.kw-table th{
-  color:var(--bc);font-weight:600;
-  font-family:monospace;font-size:.85rem;
-}
-.kw-table td:first-child{
-  font-family:'Consolas',monospace;
-  color:var(--accent3);font-weight:600;
-}
-.kw-table tr:hover{background:rgba(255,107,53,.03)}
-  .editor-wrap{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;overflow:hidden;margin-bottom:16px;
-}
-.editor-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 20px;background:rgba(255,107,53,.05);
-  border-bottom:1px solid var(--border);
-}
-.editor-head .info{
-  display:flex;align-items:center;gap:14px;
-  font-family:monospace;font-size:.85rem;color:var(--muted);
-}
-.dots{display:flex;gap:6px}
-.dots span{width:12px;height:12px;border-radius:50%}
-.dots .r{background:#ff5f56}.dots .y{background:#ffbd2e}.dots .g{background:#27c93f}
-
-/* ============ РЕДАКТОР С ПОДСВЕТКОЙ ============ */
-.editor{
-  display:flex;background:var(--bg-code);
-  height:480px;position:relative;
-}
+/* Редактор с подсветкой */
+.editor-wrap{display:flex;flex:1;position:relative;overflow:hidden;}
 .line-numbers{
-  padding:16px 12px;background:rgba(255,107,53,.02);
-  color:var(--muted);font-family:'Consolas',monospace;font-size:14px;
-  line-height:1.65;text-align:right;min-width:52px;
-  user-select:none;overflow:hidden;border-right:1px solid var(--border);
+  padding:16px 12px;background:rgba(0,224,255,.02);color:var(--muted);
+  font-family:'Consolas',monospace;font-size:14px;line-height:1.65;text-align:right;
+  min-width:50px;user-select:none;overflow:hidden;border-right:1px solid var(--border);
 }
-.code-area{
-  position:relative;flex:1;overflow:hidden;
+.code-area{position:relative;flex:1;overflow:hidden;}
+.highlight, #editor{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  padding:16px;margin:0;border:none;font-family:'Consolas','Monaco',monospace;
+  font-size:14px;line-height:1.65;white-space:pre;tab-size:2;background:transparent;
+  overflow:auto;word-wrap:normal;
 }
-.highlight,
-#editor{
-  position:absolute;top:0;left:0;
-  width:100%;height:100%;
-  padding:16px;margin:0;border:none;
-  font-family:'Consolas','Monaco',monospace;
-  font-size:14px;line-height:1.65;
-  white-space:pre;tab-size:2;
-  background:transparent;
-  overflow:auto;
-  word-wrap:normal;
-}
-.highlight{
-  color:var(--text);
-  pointer-events:none;
-  z-index:1;
-  user-select:none;
-}
-#editor{
-  color:transparent;
-  caret-color:var(--text);
-  background:transparent;
-  resize:none;outline:none;
-  z-index:2;
-}
+.highlight{color:var(--text);pointer-events:none;z-index:1;user-select:none;}
+#editor{color:transparent;caret-color:var(--text);z-index:2;resize:none;outline:none;}
 #editor::selection{background:rgba(0,224,255,.25);color:transparent;}
-#editor::placeholder{color:var(--muted);opacity:.6;}
 
 /* Цвета токенов */
 .c-comment{color:#6a9955;font-style:italic}
@@ -194,426 +118,248 @@ main{max-width:1300px;margin:0 auto;padding:40px 20px 80px}
 .c-operator{color:#d4a0ff}
 .c-func{color:#dcdcaa}
 
-/* ============ КНОПКИ ============ */
-.controls{
-  display:flex;gap:12px;flex-wrap:wrap;
-  padding:16px 20px;background:var(--card);
-  border-top:1px solid var(--border);
-}
-.btn{
-  padding:12px 24px;border-radius:10px;font-weight:600;font-size:.9rem;
-  border:none;cursor:pointer;transition:.3s;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.btn-run{
-  background:linear-gradient(135deg,var(--accent3),var(--accent));
-  color:#051018;font-weight:700;
-  box-shadow:0 8px 24px rgba(0,255,163,.3);
-}
-.btn-run:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,255,163,.5)}
-.btn-clear{
-  background:transparent;color:var(--text);border:1px solid var(--border);
-}
-.btn-clear:hover{border-color:var(--danger);color:var(--danger)}
-.btn-js{
-  background:linear-gradient(135deg,var(--accent2),var(--accent));
-  color:#051018;font-weight:700;
-}
-.btn-js:hover{transform:translateY(-2px)}
-.btn-bot{
-  background:linear-gradient(135deg,var(--bc),var(--bc2));
-  color:#fff;font-weight:700;
-  box-shadow:0 8px 24px rgba(255,107,53,.35);
-}
-.btn-bot:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,53,.55)}
-
-/* ============ ОТЛАДЧИК ============ */
-.debug{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;overflow:hidden;margin-top:16px;
-}
-.debug-head{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 20px;background:rgba(255,107,53,.05);
-  border-bottom:1px solid var(--border);
-  font-family:monospace;font-size:.85rem;color:var(--bc);
-  letter-spacing:1px;
-}
-.debug-head .status{color:var(--muted);font-size:.75rem}
-.debug-head .status.ok{color:var(--accent3)}
-.debug-head .status.err{color:var(--danger)}
-.debug-body{
-  padding:16px 20px;background:var(--bg-code);
-  font-family:'Consolas',monospace;font-size:.88rem;
-  max-height:320px;overflow-y:auto;min-height:100px;
-  white-space:pre-wrap;word-break:break-word;
-}
-.debug-line{padding:3px 0}
-.debug-line.out{color:var(--accent3)}
-.debug-line.err{color:var(--danger)}
-.debug-line.warn{color:#ffbd2e}
-.debug-line.info{color:var(--muted)}
-
-/* ============ ПРИМЕРЫ ============ */
-.ex-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:16px;
-}
-.ex-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:20px;cursor:pointer;
-  transition:.3s;
-}
-.ex-card:hover{
-  border-color:var(--bc);transform:translateY(-4px);
-  box-shadow:0 15px 40px rgba(255,107,53,.15);
-}
-.ex-card .ex-icon{font-size:1.8rem;margin-bottom:8px;display:block}
-.ex-card h4{margin-bottom:6px;color:var(--text);font-size:1rem}
-.ex-card p{color:var(--muted);font-size:.85rem;margin-bottom:12px}
-.ex-card .ex-btn{
-  background:transparent;border:1px solid var(--border);
-  color:var(--bc);padding:6px 14px;border-radius:8px;
-  font-size:.8rem;font-weight:600;
-}
-.ex-card:hover .ex-btn{border-color:var(--bc)}
-  footer{
-  text-align:center;padding:40px 20px;
-  border-top:1px solid var(--border);color:var(--muted);
-  font-size:.85rem;margin-top:60px;
+/* Ошибочные строки */
+.line-error{
+  color:var(--danger)!important;font-weight:bold;
+  background:rgba(255,95,86,.15);border-radius:4px;cursor:help;
 }
 
-.toast{
-  position:fixed;bottom:30px;right:30px;
-  background:var(--card);border:1px solid var(--accent);
-  padding:14px 22px;border-radius:12px;
-  transform:translateY(200%);transition:.4s cubic-bezier(.2,.8,.2,1);
-  z-index:999;font-weight:500;max-width:320px;
-  box-shadow:0 10px 40px rgba(0,224,255,.3);
+/* ============ ДОКУМЕНТАЦИЯ ============ */
+.docs-container{
+  width:100%;height:100%;overflow-y:auto;padding:40px 60px;
+  background:var(--bg);color:var(--text);
 }
-.toast.show{transform:translateY(0)}
+.docs-inner{max-width:900px;margin:0 auto;}
+.docs-inner h1{font-size:2.5rem;margin-bottom:20px;background:linear-gradient(135deg,#fff,var(--accent));-webkit-background-clip:text;color:transparent;}
+.docs-inner h2{font-size:1.8rem;margin:40px 0 16px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:8px;}
+.docs-inner h3{font-size:1.3rem;margin:24px 0 12px;color:var(--accent3);}
+.docs-inner p, .docs-inner li{font-size:1rem;color:var(--muted);margin-bottom:12px;line-height:1.7;}
+.docs-inner code{background:var(--bg-code);padding:2px 6px;border-radius:4px;font-family:monospace;color:var(--bc2);border:1px solid var(--border);}
+.docs-inner pre{background:var(--bg-code);padding:16px;border-radius:10px;overflow-x:auto;border:1px solid var(--border);margin:16px 0;}
+.docs-inner pre code{background:transparent;padding:0;border:none;color:var(--text);}
+.docs-inner ul{padding-left:24px;margin-bottom:16px;}
 
-/* МОДАЛЬНОЕ ОКНО */
-.modal-overlay{
-  position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
-.modal-overlay.open{display:flex}
-.modal{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:28px;max-width:520px;width:100%;
-  max-height:90vh;overflow-y:auto;
-}
-.modal h3{font-size:1.4rem;margin-bottom:8px;color:var(--text)}
-.modal .modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:20px}
-.modal label{display:block;font-size:.85rem;color:var(--muted);font-weight:600;margin:16px 0 8px}
-.modal select,.modal input{
-  width:100%;padding:12px 14px;background:var(--bg-code);
-  border:1px solid var(--border);border-radius:10px;
-  color:var(--text);font-family:'Consolas',monospace;font-size:.9rem;outline:none;
-}
-.modal select:focus,.modal input:focus{border-color:var(--bc)}
-.modal .hint{font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic}
-.modal .modal-btns{display:flex;gap:12px;margin-top:22px}
-.modal .modal-btns .btn{flex:1;justify-content:center}
+/* ============ МОДАЛКИ ============ */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.modal h3{font-size:1.4rem;margin-bottom:8px;color:var(--text);}
+.modal .modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:20px;}
+.modal label{display:block;font-size:.85rem;color:var(--muted);font-weight:600;margin:16px 0 8px;}
+.modal select, .modal input{width:100%;padding:12px 14px;background:var(--bg-code);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:monospace;font-size:.9rem;outline:none;}
+.modal select:focus, .modal input:focus{border-color:var(--bc);}
+.modal .hint{font-size:.78rem;color:var(--muted);margin-top:6px;font-style:italic;}
+.modal-btns{display:flex;gap:12px;margin-top:24px;}
+.modal-btns .btn{flex:1;justify-content:center;padding:12px;}
 
-/* DOM-КОНТЕЙНЕР */
-#bc-dom-output{
-  margin-top:20px;padding:20px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;min-height:100px;
-  display:none;
-}
-#bc-dom-output:not(:empty){display:block}
-
-@media (max-width:768px){
-  header{padding:12px 20px}
-  nav a{padding:6px 10px;font-size:.8rem}
-  main{padding:20px 14px 60px}
-  .editor{height:380px}
-  .line-numbers{font-size:12px;min-width:42px;padding:12px 8px}
-  .highlight,#editor{font-size:12px;padding:12px;line-height:1.6}
-  .controls{padding:12px}
-  .btn{padding:10px 18px;font-size:.85rem}
-  .toast{right:16px;left:16px;bottom:16px;max-width:none}
-  .section .card{padding:20px}
-  .modal{padding:20px}
+/* ============ АДАПТИВ ============ */
+@media (max-width:900px){
+  .workspace{flex-direction:column;}
+  .editor-panel{border-right:none;border-bottom:1px solid var(--border);height:60vh;}
+  .side-panel{width:100%;height:40vh;}
+  .docs-container{padding:20px;}
+  .controls{padding:8px;}
+  .btn{padding:8px 12px;font-size:.75rem;}
 }
 </style>
 </head>
 <body>
-
-<div class="grid-bg"></div>
-
-<header>
-  <div class="logo" onclick="location.href='index.html'">BecauseDev IT Studio</div>
-  <nav>
-    <a href="index.html">← На сайт</a>
-    <a href="#intro">Введение</a>
-    <a href="#editor-section">Редактор</a>
-    <a href="#examples">Примеры</a>
-  </nav>
+  <header>
+  <div class="logo"><span>&lt;/&gt;</span> BC+ IDE <span>v3.0</span></div>
+  <div class="tabs">
+    <button class="tab-btn active" id="tabIde" onclick="switchTab('ide')">💻 Компилятор</button>
+    <button class="tab-btn" id="tabDocs" onclick="switchTab('docs')">📚 Правила языка</button>
+  </div>
+  <a href="index.html" style="font-size:.85rem;color:var(--muted);">← На сайт</a>
 </header>
 
-<main>
-  <section class="hero">
-  <span class="badge">BC+ · v2.1 · BecauseDev Studio</span>
-  <h1>BC<span class="plus">+</span></h1>
-  <p>
-    Наш собственный язык программирования. Максимально простой,
-    понятный даже школьнику, и при этом мощный — от калькулятора до ботов,
-    HTTP-запросов и работы с базами данных.
-  </p>
-</section>
+<div class="workspace">
+  <!-- ================= ВКЛАДКА: IDE ================= -->
+  <div id="view-ide" class="view active">
+    
+    <!-- ЛЕВАЯ ПАНЕЛЬ (РЕДАКТОР) -->
+    <div class="editor-panel">
+      <div class="editor-topbar">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="color:#ff5f56;">●</span><span style="color:#ffbd2e;">●</span><span style="color:#27c93f;">●</span>
+          <span style="margin-left:10px;">main.bc+</span>
+        </div>
+        <span>BC+ v3.0 · UTF-8</span>
+      </div>
+      
+      <div class="controls">
+        <button class="btn btn-run" id="runBtn">▶ Запустить</button>
+        <button class="btn btn-clear" id="clearBtn">🗑 Очистить</button>
+        <button class="btn btn-js" id="jsBtn">📋 JS</button>
+        <button class="btn btn-py" id="pyBtn">🐍 Python</button>
+        <button class="btn btn-bot" id="botBtn">⚡ Бот</button>
+      </div>
 
-<section class="section" id="intro">
-  <h2 class="section-title">Что такое BC+?</h2>
-  <p class="section-sub">Полное введение в наш язык</p>
+      <div class="editor-wrap">
+        <div class="line-numbers" id="lineNumbers">1</div>
+        <div class="code-area">
+          <pre class="highlight" id="highlight" aria-hidden="true"></pre>
+          <textarea id="editor" spellcheck="false" placeholder="сказать 'Привет, мир!'"></textarea>
+        </div>
+      </div>
+    </div>
 
-  <div class="card">
-    <p>
-      <strong>BC+ (БиСиПлюс)</strong> — язык программирования, созданный командой
-      BecauseDev IT Studio. Его цель — <strong>сделать программирование доступным
-      каждому</strong>. Мы убрали всю сложность и оставили только то, что нужно
-      для реальной разработки.
-    </p>
-    <p>
-      Код на BC+ пишется <strong>обычными русскими словами</strong> —
-      никаких скучных английских ключевых слов. Хочешь что-то вывести? Напиши
-      <code>сказать</code>. Хочешь создать переменную? Напиши <code>пусть</code>.
-      Всё интуитивно понятно.
-    </p>
-    <p>
-      Когда ты нажимаешь <strong>▶ Запустить</strong> — твой код на BC+ в эту же секунду
-      переводится в <strong>JavaScript</strong> и выполняется прямо в браузере.
-      А если ты напишешь код бота и нажмёшь <strong>⚡ Активировать бота</strong> —
-      он запустится в Telegram или Discord через наш прокси-сервер!
-    </p>
+    <!-- ПРАВАЯ ПАНЕЛЬ (ИИ И КОНСОЛЬ) -->
+    <div class="side-panel">
+      
+      <!-- Чат с ИИ -->
+      <div class="ai-panel">
+        <div class="ai-head">
+          <span>🤖 BC+ AI Помощник</span>
+          <span style="font-size:.7rem; opacity:0.7;">Gemini 2.5</span>
+        </div>
+        <div class="ai-chat" id="aiChat">
+          <div class="msg bot">Привет! Я ИИ-помощник BC+. Напиши, что нужно сделать (например: «сделай калькулятор»), и я сгенерирую код или объясню ошибку.</div>
+        </div>
+        <div class="ai-input-box">
+          <textarea class="ai-input" id="aiInput" rows="1" placeholder="Спроси ИИ..."></textarea>
+          <button class="ai-send" id="aiSendBtn">▶</button>
+        </div>
+      </div>
+      
+      <!-- Отладчик -->
+      <div class="console-panel">
+        <div class="console-head">
+          <span>🔧 Отладчик</span>
+          <span id="statusText" style="color:var(--muted);">Готов к запуску</span>
+        </div>
+        <div class="console-body" id="consoleOutput">
+          <span class="log-info">// Здесь появятся результаты...</span>
+        </div>
+      </div>
 
-    <div class="features">
-      <div class="feature">
-        <span class="f-icon">🇷🇺</span>
-        <h4>Русские слова</h4>
-        <p>Код читается как обычный русский текст</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">🎨</span>
-        <h4>Подсветка синтаксиса</h4>
-        <p>Как в VS Code — код цветной и понятный</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">📦</span>
-        <h4>Массивы и словари</h4>
-        <p>Списки, объекты, работа с данными</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">🏛</span>
-        <h4>Классы (ООП)</h4>
-        <p>Объектно-ориентированное программирование</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">🌐</span>
-        <h4>HTTP-запросы</h4>
-        <p>Работа с любыми API из коробки</p>
-      </div>
-      <div class="feature">
-        <span class="f-icon">🤖</span>
-        <h4>Боты в 1 клик</h4>
-        <p>TG и DC боты прямо с сайта</p>
-      </div>
     </div>
   </div>
 
-  <div class="card" style="margin-top:20px">
-    <h3 style="margin-bottom:14px;color:var(--bc)">📖 Ключевые слова BC+</h3>
-    <table class="kw-table">
-      <thead>
-        <tr><th>BC+</th><th>Что делает</th><th>Пример</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>сказать</td><td>Выводит текст на экран</td><td><code>сказать "Привет!"</code></td></tr>
-        <tr><td>пусть</td><td>Создаёт переменную</td><td><code>пусть x = 5</code></td></tr>
-        <tr><td>если ... то</td><td>Условие</td><td><code>если x > 3 то { ... }</code></td></tr>
-        <tr><td>иначе</td><td>Альтернатива</td><td><code>иначе { ... }</code></td></tr>
-        <tr><td>пока ... то</td><td>Цикл пока условие верно</td><td><code>пока x > 0 то { ... }</code></td></tr>
-        <tr><td>повторить N раз</td><td>Цикл N раз</td><td><code>повторить 5 раз { ... }</code></td></tr>
-        <tr><td>функция</td><td>Объявляет функцию</td><td><code>функция сумма(a, b) { ... }</code></td></tr>
-        <tr><td>вернуть</td><td>Возвращает результат</td><td><code>вернуть a + b</code></td></tr>
-        <tr><td>и / или / не</td><td>Логические операторы</td><td><code>если x > 3 и y &lt; 10 то</code></td></tr>
-        <tr><td>истина / ложь</td><td>Boolean значения</td><td><code>пусть ok = истина</code></td></tr>
-        <tr><td>класс</td><td>Объявление класса</td><td><code>класс Собака { ... }</code></td></tr>
-        <tr><td>новый</td><td>Создание экземпляра</td><td><code>новый Собака()</code></td></tr>
-        <tr><td>это</td><td>Ссылка на себя</td><td><code>это.имя = "Шарик"</code></td></tr>
-        <tr><td>добавить_в</td><td>Добавить в массив</td><td><code>добавить_в список 5</code></td></tr>
-        <tr><td>размер</td><td>Размер массива/словаря</td><td><code>размер список</code></td></tr>
-        <tr><td>ключи_словаря</td><td>Ключи объекта</td><td><code>ключи_словаря человек</code></td></tr>
-        <tr><td>получить URL</td><td>HTTP-запрос</td><td><code>пусть d = получить "https://..."</code></td></tr>
-        <tr><td>создать_элемент</td><td>Создать HTML-элемент</td><td><code>создать_элемент "div","Привет","id1"</code></td></tr>
-        <tr><td>стилизовать</td><td>Применить CSS</td><td><code>стилизовать "id1","color: red"</code></td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-  
-</main>
-<section class="section" id="editor-section">
-  <h2 class="section-title">Редактор</h2>
-  <p class="section-sub">Напиши код на BC+ и нажми «▶ Запустить» или «⚡ Активировать бота»</p>
-
-  <div class="editor-wrap">
-    <div class="editor-head">
-      <div class="info">
-        <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
-        <span>main.bc+</span>
-      </div>
-      <span style="color:var(--muted);font-size:.8rem;font-family:monospace">UTF-8 · BC+ v2.1</span>
-    </div>
-    <div class="editor">
-      <div class="line-numbers" id="lineNumbers">1</div>
-      <div class="code-area">
-        <pre class="highlight" id="highlight" aria-hidden="true"></pre>
-        <textarea id="editor" spellcheck="false" placeholder='сказать "Привет, мир!"'></textarea>
+  <!-- ================= ВКЛАДКА: ДОКУМЕНТАЦИЯ ================= -->
+  <div id="view-docs" class="view" style="display:none;">
+    <div class="docs-container">
+      <div class="docs-inner" id="docsContent">
+        <!-- Сюда вставим документацию в 6 части -->
+        <h1>Загрузка документации...</h1>
       </div>
     </div>
-    <div class="controls">
-      <button class="btn btn-run" id="runBtn">▶ Запустить</button>
-      <button class="btn btn-clear" id="clearBtn">🗑 Очистить</button>
-      <button class="btn btn-js" id="jsBtn">📋 Показать JavaScript</button>
-      <button class="btn btn-bot" id="botBtn">⚡ Активировать бота</button>
-    </div>
   </div>
+</div>
 
-  <div class="debug">
-    <div class="debug-head">
-      <span>🔧 Отладчик</span>
-      <span class="status" id="status">Готов к запуску</span>
-    </div>
-    <div class="debug-body" id="output">
-      <div class="debug-line info">// Здесь появятся результаты выполнения</div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="examples">
-  <h2 class="section-title">Примеры кода</h2>
-  <p class="section-sub">Нажми на карточку — код вставится в редактор</p>
-
-  <div class="ex-grid" id="exGrid"></div>
-</section>
-
-</main>
-
-<footer>
-  <div style="margin-bottom:10px">
-    <span style="background:linear-gradient(90deg,var(--bc),var(--bc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.1rem">BecauseDev IT Studio</span>
-  </div>
-  © <span id="year"></span> BC+ v2.1 · Придуман и сделан в BecauseDev IT Studio
-</footer>
-
-<div class="toast" id="toast">Готово!</div>
-
-<!-- ===== МОДАЛЬНОЕ ОКНО АКТИВАЦИИ БОТА ===== -->
+<!-- ================= МОДАЛЬНОЕ ОКНО БОТА ================= -->
 <div class="modal-overlay" id="botModal">
   <div class="modal">
     <h3>⚡ Активировать бота</h3>
-    <p class="modal-sub">
-      Введи токен бота — он будет отправлен на наш прокси-сервер,
-      который активирует бота в реальном времени.
-    </p>
-
+    <p class="modal-sub">Введи токен бота — он будет отправлен на прокси-сервер.</p>
+    
     <label for="botPlatform">Платформа</label>
     <select id="botPlatform">
       <option value="telegram">✈️ Telegram</option>
       <option value="discord">🎮 Discord</option>
     </select>
-
+    
     <label for="botToken">Токен бота</label>
     <input type="text" id="botToken" placeholder="Вставь токен из @BotFather">
     <p class="hint" id="tokenHint">💡 Telegram: получи токен у @BotFather</p>
-
-    <label for="botChatId">ID чата / канала <span style="color:var(--muted);font-weight:400">(необязательно)</span></label>
+    
+    <label for="botChatId">ID чата / канала (необязательно)</label>
     <input type="text" id="botChatId" placeholder="Например: 123456789">
-
+    
     <div class="modal-btns">
       <button class="btn btn-clear" id="modalCancel">Отмена</button>
       <button class="btn btn-bot" id="modalActivate">⚡ Активировать</button>
     </div>
   </div>
 </div>
-<script>
-/* ============================================================
-   BC+ Compiler v2.1 — BecauseDev IT Studio
-   ============================================================ */
 
-document.getElementById('year').textContent = new Date().getFullYear();
+<script>
+/* Сюда вставим JS в Частях 4-6 */
+</script>
+</body>
+</html>
+/* ============================================================
+   BC+ IDE v3.0 — BecauseDev IT Studio
+   ============================================================ */
 
 const editor     = document.getElementById('editor');
 const highlight  = document.getElementById('highlight');
 const lineNums   = document.getElementById('lineNumbers');
-const output     = document.getElementById('output');
-const statusEl   = document.getElementById('status');
-const runBtn     = document.getElementById('runBtn');
-const clearBtn   = document.getElementById('clearBtn');
-const jsBtn      = document.getElementById('jsBtn');
-const toastEl    = document.getElementById('toast');
+const consoleOut = document.getElementById('consoleOutput');
+const statusEl   = document.getElementById('statusText');
 
-let toastTimer;
-function toast(text, ok = true){
-  toastEl.textContent = text;
-  toastEl.style.borderColor = ok ? 'var(--accent)' : 'var(--danger)';
-  toastEl.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+let errorLines = []; // Массив для красных строк
+
+/* ================== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ================== */
+function switchTab(tab) {
+  document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  if(tab === 'ide') {
+    document.getElementById('view-ide').classList.add('active');
+    document.getElementById('view-ide').style.display = 'flex';
+    document.getElementById('tabIde').classList.add('active');
+  } else if(tab === 'docs') {
+    document.getElementById('view-docs').classList.add('active');
+    document.getElementById('view-docs').style.display = 'block';
+    document.getElementById('tabDocs').classList.add('active');
+  }
 }
 
-/* ============ НУМЕРАЦИЯ СТРОК ============ */
+/* ================== УТИЛИТЫ ================== */
+function escapeHtmlRaw(s){
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function logConsole(text, type = 'info') {
+  const div = document.createElement('div');
+  div.className = 'log-' + type;
+  div.textContent = text;
+  consoleOut.appendChild(div);
+  consoleOut.scrollTop = consoleOut.scrollHeight;
+}
+
+function clearConsole() {
+  consoleOut.innerHTML = '';
+}
+
+/* ================== НУМЕРАЦИЯ СТРОК ================== */
 function updateLineNumbers(){
   const count = editor.value.split('\n').length;
   let html = '';
-  for(let i = 1; i <= count; i++) html += i + '<br>';
+  for(let i = 1; i <= count; i++) {
+    if(errorLines.includes(i)) {
+      html += '<span class="line-error" title="Ошибка в этой строке">' + i + '</span><br>';
+    } else {
+      html += i + '<br>';
+    }
+  }
   lineNums.innerHTML = html;
   lineNums.scrollTop = editor.scrollTop;
 }
 
-/* ============ ПОДСВЕТКА СИНТАКСИСА ============ */
-
-/* Словари токенов */
+/* ================== ПОДСВЕТКА СИНТАКСИСА ================== */
 const HL_KEYWORDS = new Set([
   'сказать','пусть','если','то','иначе','пока','повторить','раз',
   'функция','вернуть','класс','новый','это'
 ]);
-
 const HL_BUILTINS = new Set([
   'добавить_в','удалить_из','размер','ключи_словаря','значения_словаря',
   'получить','отправить','создать_элемент','стилизовать','удалить_элемент',
-  'вывести_на_страницу','бд_сохранить','бд_получить','бд_обновить','бд_удалить'
+  'вывести_на_страницу','бд_сохранить','бд_получить','бд_обновить','бд_удалить',
+  'ввод'
 ]);
-
 const HL_FUNCS = new Set([
   'длина','случайное','корень','степень','округлить','модуль',
-  'в_верхний','в_нижний','print'
+  'в_верхний','в_нижний','print', 'спросить_ии'
 ]);
-
 const HL_BOOLS = new Set(['истина','ложь','ноль']);
-
 const HL_OPS = new Set(['и','или','не']);
 
-/* Регулярка для разбора токенов */
 const HL_TOKEN_RE = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|('(?:[^'\\\n]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([а-яёa-z_][а-яёa-z0-9_]*)/gi;
 
-/* Экранирование HTML */
-function escapeHtmlRaw(s){
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-/* Подсветка кода BC+ */
 function updateHighlight(){
   if(!highlight) return;
-
   const src = editor.value;
   let html = escapeHtmlRaw(src);
 
@@ -634,35 +380,23 @@ function updateHighlight(){
     return match;
   });
 
-  /* Добавляем \n в конце — чтобы совпадало с textarea */
   highlight.innerHTML = html + '\n';
+  updateLineNumbers();
 }
 
-/* Синхронизация */
-editor.addEventListener('input', () => {
-  updateLineNumbers();
-  updateHighlight();
-});
-
+/* Синхронизация скролла и ввода */
+editor.addEventListener('input', updateHighlight);
 editor.addEventListener('scroll', () => {
   highlight.scrollTop  = editor.scrollTop;
   highlight.scrollLeft = editor.scrollLeft;
   lineNums.scrollTop   = editor.scrollTop;
 });
 
-/* Первый рендер */
-setTimeout(() => {
-  updateLineNumbers();
-  updateHighlight();
-}, 30);
-
-/* ============ ЗАМЕНА ОПЕРАТОРОВ (правильная для кириллицы) ============ */
+/* ================== ФИКС ОПЕРАТОРОВ (Кириллица) ================== */
 function replaceOps(s){
-  /* \b НЕ работает с русскими буквами! Используем lookbehind/lookahead */
   const start = '(?<![а-яёa-z0-9_])';
   const end   = '(?![а-яёa-z0-9_])';
 
-  /* ВАЖНО: длинные слова ПЕРЕД короткими (иначе "и" сломает "или") */
   s = s.replace(new RegExp(start + 'истина' + end, 'gi'), 'true');
   s = s.replace(new RegExp(start + 'ложь'   + end, 'gi'), 'false');
   s = s.replace(new RegExp(start + 'ноль'   + end, 'gi'), 'null');
@@ -671,17 +405,22 @@ function replaceOps(s){
   s = s.replace(new RegExp(start + 'и'      + end, 'gi'), '&&');
   s = s.replace(new RegExp(start + 'не'     + end, 'gi'), '!');
 
+  // Фикс встроенных функций
+  s = s.replace(/\bразмер\s+([а-яёa-z0-9_]+)/gi, 'размер($1)');
+  s = s.replace(/\bдлина\s+([а-яёa-z0-9_]+)/gi, 'длина($1)');
+
   return s;
 }
 
-/* ============ ПОИСК НЕЗАКРЫТЫХ СКОБОК ============ */
+/* Первичная инициализация */
+setTimeout(() => { updateHighlight(); }, 50);
+    /* ================== ПРОВЕРКА СКОБОК ================== */
 function checkBalance(code){
   let open = 0;
   const lines = code.split('\n');
   for(let i = 0; i < lines.length; i++){
     const line = lines[i].trim();
     if(line.startsWith('//')) continue;
-    /* Не считаем скобки внутри строк */
     const clean = line.replace(/"(?:[^"\\]|\\.)*"/g, '""').replace(/'(?:[^'\\]|\\.)*'/g, "''");
     for(const ch of clean){
       if(ch === '{') open++;
@@ -690,7 +429,8 @@ function checkBalance(code){
   }
   return open;
 }
-  /* ============ ПЕРЕВОД BC+ → JS (с точными ошибками) ============ */
+
+/* ================== ПЕРЕВОД BC+ → JS ================== */
 function bcToJs(source){
   const lines = source.split('\n');
   const out = [];
@@ -707,7 +447,6 @@ function bcToJs(source){
     if(!line || line.startsWith('//')) continue;
 
     try {
-      /* === ЗАКРЫТИЕ БЛОКА === */
       if(line === '}'){
         indent = Math.max(0, indent - 1);
         out.push(pad() + '}');
@@ -715,7 +454,6 @@ function bcToJs(source){
         continue;
       }
 
-      /* === ИНАЧЕ (и "} иначе {", и "иначе {") === */
       if(line.startsWith('} иначе') || line === 'иначе {' || line === 'иначе{'){
         if(out.length && out[out.length - 1].trim() === '}') out.pop();
         else if(line.startsWith('} иначе')) indent = Math.max(0, indent - 1);
@@ -725,43 +463,48 @@ function bcToJs(source){
         continue;
       }
 
-      /* === СКАЗАТЬ === */
       if(line.startsWith('сказать ')){
-        const expr = replaceOps(line.slice(8).trim());
-        out.push(pad() + 'print(' + expr + ');');
+        out.push(pad() + 'print(' + replaceOps(line.slice(8).trim()) + ');');
         continue;
       }
 
-      /* === ПУСТЬ === */
+      if(line.includes(' = ввод ')){
+        const idx = line.indexOf(' = ввод ');
+        const left = line.slice(0, idx).trim();
+        const promptText = replaceOps(line.slice(idx + 8).trim());
+        const varName = left.replace(/^пусть\s+/, '').trim();
+        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await ввод(' + promptText + ');');
+        continue;
+      }
+
+      if(line.includes(' = спросить_ии ')){
+        const idx = line.indexOf(' = спросить_ии ');
+        const left = line.slice(0, idx).trim();
+        const promptText = replaceOps(line.slice(idx + 14).trim());
+        const varName = left.replace(/^пусть\s+/, '').trim();
+        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await спросить_ии(' + promptText + ');');
+        continue;
+      }
+
       if(line.startsWith('пусть ')){
-        const rest = replaceOps(line.slice(6).trim());
-        out.push(pad() + 'let ' + rest + ';');
+        out.push(pad() + 'let ' + replaceOps(line.slice(6).trim()) + ';');
         continue;
       }
 
-      /* === ЕСЛИ (с "то") === */
       if(line.startsWith('если ') && line.endsWith('{')){
-        let cond = line.slice(5, -1).trim();
-        cond = cond.replace(/\s+то\s*$/i, '');
-        cond = replaceOps(cond);
-        if(!cond) throw new Error('Пустое условие после "если"');
-        out.push(pad() + 'if (' + cond + ') {');
+        let cond = line.slice(5, -1).trim().replace(/\s+то\s*$/i, '');
+        out.push(pad() + 'if (' + replaceOps(cond) + ') {');
         indent++;
         continue;
       }
 
-      /* === ПОКА (с "то") === */
       if(line.startsWith('пока ') && line.endsWith('{')){
-        let cond = line.slice(5, -1).trim();
-        cond = cond.replace(/\s+то\s*$/i, '');
-        cond = replaceOps(cond);
-        if(!cond) throw new Error('Пустое условие после "пока"');
-        out.push(pad() + 'while (' + cond + ') {');
+        let cond = line.slice(5, -1).trim().replace(/\s+то\s*$/i, '');
+        out.push(pad() + 'while (' + replaceOps(cond) + ') {');
         indent++;
         continue;
       }
 
-      /* === ПОВТОРИТЬ N РАЗ === */
       if(line.startsWith('повторить ') && /раз\s*\{$/.test(line)){
         const n = replaceOps(line.replace(/^повторить\s+/, '').replace(/раз\s*\{$/, '').trim());
         out.push(pad() + 'for (let __i = 0; __i < ' + n + '; __i++) {');
@@ -769,81 +512,47 @@ function bcToJs(source){
         continue;
       }
 
-      /* === КЛАСС === */
       if(line.startsWith('класс ') && line.endsWith('{')){
-        const name = line.slice(6, -1).trim();
-        out.push(pad() + 'class ' + name + ' {');
+        out.push(pad() + 'class ' + line.slice(6, -1).trim() + ' {');
         indent++;
         inClass = indent;
         continue;
       }
 
-      /* === ФУНКЦИЯ === */
       if(line.startsWith('функция ') && line.endsWith('{')){
         const rest = line.slice(8, -1).trim();
-        if(inClass > 0 && indent > inClass) out.push(pad() + rest + ' {');
-        else out.push(pad() + 'function ' + rest + ' {');
+        out.push(pad() + (inClass > 0 && indent > inClass ? '' : 'function ') + rest + ' {');
         indent++;
         continue;
       }
 
-      /* === ВЕРНУТЬ === */
       if(line.startsWith('вернуть ')){
-        const expr = replaceOps(line.slice(8).trim());
-        out.push(pad() + 'return ' + expr + ';');
+        out.push(pad() + 'return ' + replaceOps(line.slice(8).trim()) + ';');
         continue;
       }
 
-      /* === НОВЫЙ === */
       if(line.startsWith('новый ')){
         out.push(pad() + replaceOps(line).replace(/^новый\s+/, 'new ') + ';');
         continue;
       }
 
-      /* === МАССИВЫ И СЛОВАРИ === */
       if(line.startsWith('добавить_в ')){
-        const rest = replaceOps(line.slice(10).trim());
-        const parts = rest.split(/\s+/);
-        out.push(pad() + parts[0] + '.push(' + parts.slice(1).join(' ') + ');');
+        const rest = replaceOps(line.slice(10).trim()).split(/\s+/);
+        out.push(pad() + rest[0] + '.push(' + rest.slice(1).join(' ') + ');');
         continue;
       }
-
-      if(line.startsWith('удалить_из ')){
-        const rest = replaceOps(line.slice(10).trim());
-        const parts = rest.split(/\s+/);
-        const arr = parts[0];
-        out.push(pad() + arr + ' = ' + arr + '.filter(__x => __x !== ' + parts.slice(1).join(' ') + ');');
-        continue;
-      }
-
-      if(line.startsWith('ключи_словаря ')){
-        out.push(pad() + 'print(Object.keys(' + replaceOps(line.slice(14).trim()) + ').join(", "));');
-        continue;
-      }
-
-      if(line.startsWith('значения_словаря ')){
-        out.push(pad() + 'print(Object.values(' + replaceOps(line.slice(17).trim()) + ').join(", "));');
-        continue;
-      }
-
+      
       if(line.startsWith('размер ')){
         out.push(pad() + 'print(Object.keys(' + replaceOps(line.slice(7).trim()) + ').length);');
         continue;
       }
 
-      /* === HTTP === */
       if(line.includes(' = получить ')){
         const idx = line.indexOf(' = получить ');
         const left = line.slice(0, idx).trim();
         const url = replaceOps(line.slice(idx + 11).trim());
         const varName = left.replace(/^пусть\s+/, '').trim();
-        const needLet = left.startsWith('пусть ');
-        out.push(pad() + (needLet ? 'let ' : '') + varName + ' = await получить(' + url + ');');
-        continue;
-      }
-
-      if(line.startsWith('получить ')){
-        out.push(pad() + 'await получить(' + replaceOps(line.slice(8).trim()) + ');');
+        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await получить(' + url + ');');
         continue;
       }
 
@@ -852,54 +561,12 @@ function bcToJs(source){
         continue;
       }
 
-      /* === DOM === */
-      if(line.startsWith('создать_элемент ')){
-        out.push(pad() + 'создать_элемент(' + replaceOps(line.slice(16).trim()) + ');');
+      if(line.startsWith('создать_элемент ') || line.startsWith('стилизовать ') || line.startsWith('вывести_на_страницу ')){
+        const spaceIdx = line.indexOf(' ');
+        out.push(pad() + line.slice(0, spaceIdx) + '(' + replaceOps(line.slice(spaceIdx + 1).trim()) + ');');
         continue;
       }
 
-      if(line.startsWith('стилизовать ')){
-        out.push(pad() + 'стилизовать(' + replaceOps(line.slice(12).trim()) + ');');
-        continue;
-      }
-
-      if(line.startsWith('удалить_элемент ')){
-        out.push(pad() + 'удалить_элемент(' + replaceOps(line.slice(16).trim()) + ');');
-        continue;
-      }
-
-      if(line.startsWith('вывести_на_страницу ')){
-        out.push(pad() + 'вывести_на_страницу(' + replaceOps(line.slice(19).trim()) + ');');
-        continue;
-      }
-
-      /* === SUPABASE === */
-      if(line.startsWith('бд_сохранить ')){
-        out.push(pad() + 'await бд_сохранить(' + replaceOps(line.slice(12).trim()) + ');');
-        continue;
-      }
-
-      if(line.includes(' = бд_получить ')){
-        const idx = line.indexOf(' = бд_получить ');
-        const left = line.slice(0, idx).trim();
-        const table = line.slice(idx + 14).trim();
-        const varName = left.replace(/^пусть\s+/, '').trim();
-        const needLet = left.startsWith('пусть ');
-        out.push(pad() + (needLet ? 'let ' : '') + varName + ' = await бд_получить(' + table + ');');
-        continue;
-      }
-
-      if(line.startsWith('бд_обновить ')){
-        out.push(pad() + 'await бд_обновить(' + replaceOps(line.slice(11).trim()) + ');');
-        continue;
-      }
-
-      if(line.startsWith('бд_удалить ')){
-        out.push(pad() + 'await бд_удалить(' + replaceOps(line.slice(10).trim()) + ');');
-        continue;
-      }
-
-      /* === ОБЫЧНОЕ ВЫРАЖЕНИЕ === */
       out.push(pad() + replaceOps(line) + ';');
 
     } catch(err){
@@ -907,541 +574,252 @@ function bcToJs(source){
     }
   }
 
-  /* Проверка незакрытых скобок */
   const balance = checkBalance(source);
-  if(balance > 0){
-    errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Не закрыто ' + balance + ' фигурных скобок "}"' });
-  } else if(balance < 0){
-    errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Лишних закрывающих скобок: ' + Math.abs(balance) });
-  }
+  if(balance > 0) errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Не закрыто ' + balance + ' скобок "}"' });
+  else if(balance < 0) errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Лишних скобок: ' + Math.abs(balance) });
 
   if(errors.length){
-    const msgs = errors.map(e =>
-      'Строка ' + e.lineNum + ': ' + e.msg + '\n   >> ' + e.text
-    ).join('\n\n');
-    throw new Error(msgs);
+    throw new Error(errors.map(e => 'Строка ' + e.lineNum + ': ' + e.msg + '\n   >> ' + e.text).join('\n\n'));
   }
 
   return out.join('\n');
 }
 
-/* ============ ОТЛАДЧИК ============ */
-function clearOutput(){ output.innerHTML = ''; }
-function logLine(text, type = 'out'){
-  const div = document.createElement('div');
-  div.className = 'debug-line ' + type;
-  div.textContent = text;
-  output.appendChild(div);
-  output.scrollTop = output.scrollHeight;
-}
-  /* ============ ВСТРОЕННЫЕ ФУНКЦИИ ============ */
-
-/* ⚠️ SUPABASE — вставь свои данные когда настроишь БД */
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
-
-/* Твой Cloudflare Worker */
-const PROXY_URL = 'https://becausedev-proxy.artemkushnirev99.workers.dev';
+/* ================== ВСТРОЕННЫЕ ФУНКЦИИ BC+ ================== */
+const PROXY_URL = 'https://bc-dev.artemkushnirev99.workers.dev';
 
 function buildBuiltins(logFn){
-  /* Контейнер для DOM-вывода */
   let domContainer = document.getElementById('bc-dom-output');
   if(!domContainer){
     domContainer = document.createElement('div');
     domContainer.id = 'bc-dom-output';
-    const editorSection = document.getElementById('editor-section');
-    if(editorSection) editorSection.appendChild(domContainer);
+    domContainer.style.cssText = 'padding:16px; border-top:1px solid var(--border); background:var(--card2); max-height:200px; overflow-y:auto;';
+    document.querySelector('.editor-panel').appendChild(domContainer);
   }
   domContainer.innerHTML = '';
 
   return {
-    /* === БАЗОВЫЕ === */
-    print: (...args) => logFn(args.join(' ')),
+    print: (...args) => logFn(args.join(' '), 'ok'),
     случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
-    корень:    (x) => Math.sqrt(x),
-    степень:   (x, y) => Math.pow(x, y),
-    длина:     (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0,
+    корень: (x) => Math.sqrt(x),
+    длина: (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0,
     округлить: (x) => Math.round(x),
-    модуль:    (x) => Math.abs(x),
-    в_верхний: (s) => String(s).toUpperCase(),
-    в_нижний:  (s) => String(s).toLowerCase(),
+    
+    ввод: (promptText) => window.prompt(promptText || "Введите значение:"),
 
-    /* === HTTP === */
     получить: async (url) => {
-      logFn('🌐 GET ' + url);
-      try {
-        const r = await fetch(url);
-        return await r.json();
-      } catch(err){
-        logFn('❌ Ошибка запроса: ' + err.message);
-        return null;
-      }
-    },
-    отправить: async (url, data) => {
-      logFn('📤 POST ' + url);
-      try {
-        const r = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        return await r.json();
-      } catch(err){
-        logFn('❌ Ошибка отправки: ' + err.message);
-        return null;
-      }
+      logFn('🌐 GET ' + url, 'info');
+      try { return await (await fetch(url)).json(); } 
+      catch(err){ logFn('❌ Ошибка запроса: ' + err.message, 'err'); return null; }
     },
 
-    /* === DOM === */
     создать_элемент: (type, text, id) => {
       const el = document.createElement(type);
       el.textContent = text || '';
       if(id) el.id = id;
       domContainer.appendChild(el);
-      logFn('🎨 Создан <' + type + '>' + (id ? ' #' + id : ''));
-    },
-    стилизовать: (id, css) => {
-      const el = document.getElementById(id);
-      if(el) el.style.cssText = css;
-    },
-    удалить_элемент: (id) => {
-      const el = document.getElementById(id);
-      if(el) el.remove();
-    },
-    вывести_на_страницу: (id, text) => {
-      const el = document.getElementById(id);
-      if(el) el.textContent = text;
     },
 
-    /* === SUPABASE === */
-    бд_сохранить: async (table, data) => {
-      if(!SUPABASE_URL || !SUPABASE_KEY){
-        logFn('⚠️ Supabase не настроен — вставь URL и KEY в код');
-        return { ok: false };
-      }
-      logFn('💾 Сохранение в ' + table);
-      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table, {
-        method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
-        },
-        body: JSON.stringify(data)
-      });
-      return await r.json();
-    },
-    бд_получить: async (table) => {
-      if(!SUPABASE_URL || !SUPABASE_KEY){
-        logFn('⚠️ Supabase не настроен');
-        return [];
-      }
-      logFn('📖 Чтение из ' + table);
-      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?select=*', {
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY
-        }
-      });
-      return await r.json();
-    },
-    бд_обновить: async (table, id, data) => {
-      if(!SUPABASE_URL || !SUPABASE_KEY) return { ok: false };
-      logFn('✏️ Обновление в ' + table);
-      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?id=eq.' + id, {
-        method: 'PATCH',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      return await r.json();
-    },
-    бд_удалить: async (table, id) => {
-      if(!SUPABASE_URL || !SUPABASE_KEY) return { ok: false };
-      logFn('🗑 Удаление из ' + table);
-      const r = await fetch(SUPABASE_URL + '/rest/v1/' + table + '?id=eq.' + id, {
-        method: 'DELETE',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY
-        }
-      });
-      return { ok: r.ok };
+    спросить_ии: async (promptText) => {
+      logFn('🤖 Запрос к ИИ: ' + promptText.slice(0, 30) + '...', 'info');
+      try {
+        const response = await fetch(PROXY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            platform: 'gemini',
+            action: 'generate',
+            payload: { prompt: promptText } // Ключ больше не передаем, сервер сам его знает!
+          })
+        });
+        const data = await response.json();
+        if(data.ok) return data.answer;
+        else { logFn('❌ Ошибка ИИ: ' + data.error, 'err'); return "Ошибка ИИ"; }
+      } catch(err) { logFn('❌ Сеть: ' + err.message, 'err'); return "Ошибка сети"; }
     }
   };
 }
 
-/* ============ ЗАПУСК КОДА ============ */
+/* ================== ЗАПУСК КОДА ================== */
 async function runCode(){
-  clearOutput();
+  clearConsole();
+  errorLines = [];
+  updateHighlight();
+  
   const code = editor.value.trim();
-  if(!code){
-    logLine('// Нечего запускать — напиши код!', 'info');
-    statusEl.textContent = 'Пустой код';
-    statusEl.className = 'status';
-    return;
-  }
+  if(!code){ logConsole('// Нечего запускать!', 'info'); return; }
 
   let jsCode;
   try {
     jsCode = bcToJs(code);
   } catch(err){
-    logLine('❌ ОШИБКА ПЕРЕВОДА BC+ → JS', 'err');
-    logLine('', 'err');
-    err.message.split('\n').forEach(l => logLine(l, 'err'));
-    logLine('', 'err');
-    logLine('💡 Проверь синтаксис строки(ок) выше', 'info');
-    statusEl.textContent = 'Ошибка перевода ✗';
-    statusEl.className = 'status err';
+    logConsole('❌ ОШИБКА ПЕРЕВОДА BC+ → JS', 'err');
+    logConsole('', 'err');
+    err.message.split('\n').forEach(l => logConsole(l, 'err'));
+    const match = err.message.match(/Строка (\d+):/);
+    if(match) { errorLines.push(parseInt(match[1])); updateHighlight(); }
+    statusEl.textContent = 'Ошибка перевода';
+    statusEl.style.color = 'var(--danger)';
     return;
   }
 
-  logLine('▶ Запуск main.bc+', 'info');
-  logLine('', 'info');
-
-  const builtins = buildBuiltins((msg) => logLine(msg, 'out'));
-
+  logConsole('▶ Запуск main.bc+', 'info');
+  
   try {
     const AsyncFn = Object.getPrototypeOf(async function(){}).constructor;
-    const fn = new AsyncFn(...Object.keys(builtins), jsCode);
-    await fn(...Object.values(builtins));
-    logLine('', 'info');
-    logLine('✅ Выполнено успешно', 'info');
+    const fn = new AsyncFn(...Object.keys(buildBuiltins(logConsole)), jsCode);
+    await fn(...Object.values(buildBuiltins(logConsole)));
+    logConsole('✅ Выполнено успешно', 'ok');
     statusEl.textContent = 'Успешно ✓';
-    statusEl.className = 'status ok';
+    statusEl.style.color = 'var(--accent3)';
   } catch(err){
-    logLine('', 'info');
-    logLine('❌ ОШИБКА ВЫПОЛНЕНИЯ', 'err');
-    logLine('', 'err');
-    logLine('Сообщение: ' + err.message, 'err');
-    logLine('', 'err');
-    logLine('💡 Возможные причины:', 'info');
-    logLine('  • Обращение к несуществующей переменной', 'info');
-    logLine('  • Деление на ноль / неверный тип данных', 'info');
-    logLine('  • Функция вызвана с неправильными аргументами', 'info');
-    statusEl.textContent = 'Ошибка ✗';
-    statusEl.className = 'status err';
+    logConsole('❌ ОШИБКА ВЫПОЛНЕНИЯ: ' + err.message, 'err');
+    statusEl.textContent = 'Ошибка';
+    statusEl.style.color = 'var(--danger)';
   }
 }
 
-/* ============ ПОКАЗАТЬ JS ============ */
-function showJs(){
-  const code = editor.value.trim();
-  if(!code){ toast('Напиши код сначала', false); return; }
+/* Кнопки */
+document.getElementById('runBtn').onclick = runCode;
+document.getElementById('clearBtn').onclick = () => {
+  editor.value = ''; updateHighlight(); clearConsole();
+  statusEl.textContent = 'Готов'; statusEl.style.color = 'var(--muted)';
+  const d = document.getElementById('bc-dom-output'); if(d) d.innerHTML = '';
+};
 
-  let js;
-  try {
-    js = bcToJs(code);
-  } catch(err){
-    clearOutput();
-    logLine('❌ Ошибка перевода BC+ → JS:', 'err');
-    logLine('', 'err');
-    err.message.split('\n').forEach(l => logLine(l, 'err'));
-    statusEl.textContent = 'Ошибка перевода ✗';
-    statusEl.className = 'status err';
-    return;
-  }
-
-  clearOutput();
-  logLine('📋 Сгенерированный JavaScript:', 'info');
-  logLine('', 'info');
-  js.split('\n').forEach((ln, i) => {
-    logLine(String(i + 1).padStart(3, ' ') + ' │ ' + ln, 'out');
-  });
-  statusEl.textContent = 'JS показан';
-  statusEl.className = 'status';
-  toast('JavaScript показан в отладчике');
-}
-
-/* ============ КНОПКИ ============ */
-runBtn.addEventListener('click', runCode);
-clearBtn.addEventListener('click', () => {
-  editor.value = '';
-  updateLineNumbers();
-  updateHighlight();
-  clearOutput();
-  logLine('// Отладчик очищен', 'info');
-  statusEl.textContent = 'Готов к запуску';
-  statusEl.className = 'status';
-  editor.focus();
-});
-jsBtn.addEventListener('click', showJs);
-
-/* Ctrl+Enter — запуск, Tab — отступ */
 editor.addEventListener('keydown', (e) => {
-  if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
-    e.preventDefault();
-    runCode();
-  }
-  if(e.key === 'Tab'){
-    e.preventDefault();
-    const start = editor.selectionStart;
-    const end = editor.selectionEnd;
-    editor.value = editor.value.substring(0, start) + '  ' + editor.value.substring(end);
-    editor.selectionStart = editor.selectionEnd = start + 2;
-    updateLineNumbers();
-    updateHighlight();
-  }
+  if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){ e.preventDefault(); runCode(); }
+  if(e.key === 'Tab'){ e.preventDefault(); const s = editor.selectionStart; editor.value = editor.value.substring(0, s) + '  ' + editor.value.substring(editor.selectionEnd); editor.selectionStart = editor.selectionEnd = s + 2; updateHighlight(); }
 });
-  /* ============ ПРИМЕРЫ ============ */
-const EXAMPLES = [
-  {
-    icon:'👋', title:'Привет, мир!',
-    desc:'Классика — первая программа каждого разработчика',
-    code:
-`сказать "Привет, мир!"
-сказать "Меня зовут BC+"
-сказать "Я умею считать:"
-сказать 2 + 2 * 10`
-  },
-  {
-    icon:'🎯', title:'Сложные условия',
-    desc:'Используй и, или, скобки — как в реальном коде',
-    code:
-`пусть А = 5
-пусть Б = 10
-пусть В = 3
-пусть Г = 8
+    /* ================== ПЕРЕВОД В PYTHON ================== */
+function bcToPython(source) {
+  const lines = source.split('\n');
+  const out = [];
+  let indent = 0;
+  const pad = () => '    '.repeat(indent);
 
-если А > 3 или Б > 100 или (В > 2 и Г > 5) то {
-  сказать "✅ Условие сработало!"
-} иначе {
-  сказать "❌ Не сработало"
-}
-
-пусть x = 15
-если x > 10 и x < 20 или x == 5 то {
-  сказать "x от 11 до 19 или x = 5"
-} иначе {
-  сказать "Другое значение"
-}`
-  },
-  {
-    icon:'📦', title:'Массивы',
-    desc:'Работа со списками и циклы',
-    code:
-`пусть числа = [10, 20, 30, 40, 50]
-сказать "Размер: " + размер числа
-
-пусть i = 0
-пока i < 5 то {
-  сказать "Элемент " + i + ": " + числа[i]
-  пусть i = i + 1
-}
-
-добавить_в числа 60
-сказать "После добавления: " + размер числа`
-  },
-  {
-    icon:'📖', title:'Словари',
-    desc:'Хранение пар ключ-значение',
-    code:
-`пусть человек = {"имя": "Ваня", "возраст": 25, "город": "Москва"}
-
-сказать "Имя: " + человек["имя"]
-сказать "Возраст: " + человек["возраст"]
-сказать "Город: " + человек["город"]
-
-сказать "Ключи:"
-ключи_словаря человек
-сказать "Значения:"
-значения_словаря человек`
-  },
-  {
-    icon:'🏛', title:'Классы (ООП)',
-    desc:'Объектно-ориентированное программирование',
-    code:
-`класс Собака {
-  функция создать(имя) {
-    пусть это.имя = имя
-    пусть это.возраст = 0
+  for(let raw of lines) {
+    let line = raw.trim();
+    if(!line) continue;
+    if(line.startsWith('//')) { out.push(pad() + '# ' + line.slice(2).trim()); continue; }
+    
+    if(line === '}') { indent = Math.max(0, indent - 1); continue; }
+    
+    if(line === 'иначе {' || line === 'иначе{') {
+      indent = Math.max(0, indent - 1);
+      out.push(pad() + 'else:'); 
+      indent++; 
+      continue;
+    }
+    
+    if(line.startsWith('если ') && line.endsWith('{')) {
+      let cond = line.slice(5, -1).replace(/\s+то\s*$/, '').trim();
+      cond = cond.replace(/\bи\b/g,'and').replace(/\bили\b/g,'or').replace(/\bне\s/g,'not ').replace(/\bистина\b/g,'True').replace(/\bложь\b/g,'False');
+      out.push(pad() + 'if ' + cond + ':'); 
+      indent++; 
+      continue;
+    }
+    
+    if(line.startsWith('пока ') && line.endsWith('{')) {
+      let cond = line.slice(5, -1).replace(/\s+то\s*$/, '').trim();
+      cond = cond.replace(/\bи\b/g,'and').replace(/\bили\b/g,'or').replace(/\bне\s/g,'not ');
+      out.push(pad() + 'while ' + cond + ':'); 
+      indent++; 
+      continue;
+    }
+    
+    if(line.startsWith('функция ') && line.endsWith('{')) {
+      let rest = line.slice(8, -1).trim();
+      out.push(pad() + 'def ' + rest + ':'); 
+      indent++; 
+      continue;
+    }
+    
+    if(line.startsWith('сказать ')) {
+      out.push(pad() + 'print(' + line.slice(8).trim() + ')'); 
+      continue;
+    }
+    
+    if(line.startsWith('пусть ')) {
+      out.push(pad() + line.slice(6).trim()); 
+      continue;
+    }
+    
+    if(line.startsWith('вернуть ')) {
+      out.push(pad() + 'return ' + line.slice(8).trim()); 
+      continue;
+    }
+    
+    out.push(pad() + line);
   }
-
-  функция гавкать() {
-    сказать это.имя + " говорит: Гав!"
-  }
-
-  функция стареть() {
-    пусть это.возраст = это.возраст + 1
-    сказать это.имя + " теперь " + это.возраст + " лет"
-  }
+  return out.join('\n');
 }
 
-пусть шарик = новый Собака("Шарик")
-шарик.гавкать()
-шарик.стареть()
-шарик.стареть()
-шарик.гавкать()`
-  },
-  {
-    icon:'🧮', title:'Калькулятор',
-    desc:'Арифметические операции',
-    code:
-`пусть a = 25
-пусть b = 8
-
-сказать "a = " + a
-сказать "b = " + b
-сказать "Сумма: " + (a + b)
-сказать "Разность: " + (a - b)
-сказать "Произведение: " + (a * b)
-сказать "Деление: " + (a / b)
-сказать "Остаток: " + (a % b)`
-  },
-  {
-    icon:'🧠', title:'Факториал',
-    desc:'Функция + цикл пока',
-    code:
-`функция факториал(n) {
-  пусть результат = 1
-  пусть i = 1
-  пока i <= n то {
-    пусть результат = результат * i
-    пусть i = i + 1
-  }
-  вернуть результат
-}
-
-сказать "5! = " + факториал(5)
-сказать "7! = " + факториал(7)
-сказать "10! = " + факториал(10)`
-  },
-  {
-    icon:'🎨', title:'Работа с DOM',
-    desc:'Создать HTML-элементы из BC+',
-    code:
-`сказать "Создаю элементы на странице..."
-
-создать_элемент "h1", "Привет от BC+!", "bc-title"
-стилизовать "bc-title", "color: #ff9558; font-size: 32px; text-align: center; margin-bottom: 20px;"
-
-создать_элемент "p", "Этот текст создан прямо из BC+ кода.", "bc-text"
-стилизовать "bc-text", "color: #e6edf7; text-align: center; font-size: 18px;"
-
-сказать "Готово! Элементы появились ниже."`
-  },
-  {
-    icon:'🌐', title:'HTTP-запрос',
-    desc:'Получить данные из API GitHub',
-    code:
-`сказать "Запрашиваю данные с GitHub..."
-
-пусть данные = получить "https://api.github.com/users/torvalds"
-
-сказать "Имя: " + данные.name
-сказать "Логин: " + данные.login
-сказать "Репозиториев: " + данные.public_repos
-сказать "Подписчиков: " + данные.followers`
-  },
-  {
-    icon:'🤖', title:'Telegram-бот',
-    desc:'Каркас бота для активации в TG',
-    code:
-`// Это пример кода для Telegram-бота на BC+
-
-функция создать_бота(токен) {
-  сказать "🤖 Бот создан с токеном: " + токен
-  сказать "Готов обрабатывать команды!"
-}
-
-функция приветствие(имя) {
-  сказать "Привет, " + имя + "! Я бот на BC+"
-}
-
-функция ответить_на_старт() {
-  приветствие("пользователь")
-  сказать "Напиши /help чтобы узнать команды"
-}
-
-создать_бота("Insert the token here")
-ответить_на_старт()
-
-сказать ""
-сказать "⚠️ Для реального запуска:"
-сказать "1. Нажми ⚡ Активировать бота"
-сказать "2. Вставь свой токен"
-сказать "3. Бот запустится в Telegram!"`
-  }
-];
-
-function renderExamples(){
-  const grid = document.getElementById('exGrid');
-  if(!grid) return;
-  grid.innerHTML = EXAMPLES.map((ex, i) => `
-    <div class="ex-card" data-idx="${i}">
-      <span class="ex-icon">${ex.icon}</span>
-      <h4>${ex.title}</h4>
-      <p>${ex.desc}</p>
-      <button class="ex-btn">▶ Вставить в редактор</button>
-    </div>
-  `).join('');
-
-  grid.querySelectorAll('.ex-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const idx = +card.dataset.idx;
-      editor.value = EXAMPLES[idx].code;
-      updateLineNumbers();
-      updateHighlight();
-      document.getElementById('editor-section').scrollIntoView({behavior:'smooth'});
-      toast('Пример «' + EXAMPLES[idx].title + '» загружен');
-    });
+document.getElementById('pyBtn').onclick = () => {
+  const code = editor.value.trim();
+  if(!code) return;
+  clearConsole();
+  logConsole('🐍 Сгенерированный Python:', 'info');
+  logConsole('', 'info');
+  const py = bcToPython(code);
+  py.split('\n').forEach((ln, i) => {
+    logConsole(String(i + 1).padStart(3, ' ') + ' │ ' + ln, 'ok');
   });
-}
-renderExamples();
+  statusEl.textContent = 'Python показан';
+  statusEl.style.color = '#3776ab';
+};
 
-/* ============================================================
-   АКТИВАЦИЯ БОТА
-   ============================================================ */
-const botBtn        = document.getElementById('botBtn');
-const botModal      = document.getElementById('botModal');
-const botPlatform   = document.getElementById('botPlatform');
-const botToken      = document.getElementById('botToken');
-const botChatId     = document.getElementById('botChatId');
-const tokenHint     = document.getElementById('tokenHint');
-const modalCancel   = document.getElementById('modalCancel');
+document.getElementById('jsBtn').onclick = () => {
+  const code = editor.value.trim();
+  if(!code) return;
+  clearConsole();
+  try {
+    const js = bcToJs(code);
+    logConsole('📋 Сгенерированный JavaScript:', 'info');
+    logConsole('', 'info');
+    js.split('\n').forEach((ln, i) => logConsole(String(i + 1).padStart(3, ' ') + ' │ ' + ln, 'ok'));
+  } catch(err) {
+    logConsole('❌ Ошибка перевода: ' + err.message, 'err');
+  }
+};
+
+/* ================== АКТИВАЦИЯ БОТОВ ================== */
+const botBtn = document.getElementById('botBtn');
+const botModal = document.getElementById('botModal');
+const botPlatform = document.getElementById('botPlatform');
+const botToken = document.getElementById('botToken');
+const botChatId = document.getElementById('botChatId');
+const tokenHint = document.getElementById('tokenHint');
+const modalCancel = document.getElementById('modalCancel');
 const modalActivate = document.getElementById('modalActivate');
 
-botPlatform?.addEventListener('change', () => {
+botPlatform.addEventListener('change', () => {
   if(botPlatform.value === 'telegram'){
-    tokenHint.textContent = '💡 Telegram: получи токен у @BotFather (команда /newbot)';
-    botToken.placeholder = '1234567890:ABCdefGHIjklMNOpqrsTUVwxyz';
+    tokenHint.textContent = '💡 Telegram: получи токен у @BotFather';
+    botToken.placeholder = '1234567890:ABCdef...';
   } else {
     tokenHint.textContent = '💡 Discord: discord.com/developers → Bot → Reset Token';
-    botToken.placeholder = 'MTIzNDU2Nzg5MDEyMzQ1Njc4.GhIjKl.XyZ...';
+    botToken.placeholder = 'MTIzNDU2...';
   }
 });
 
-botBtn?.addEventListener('click', () => {
-  botModal.classList.add('open');
-  botToken.focus();
-});
+botBtn.onclick = () => { botModal.classList.add('open'); botToken.focus(); };
+modalCancel.onclick = () => { botModal.classList.remove('open'); };
+botModal.onclick = (e) => { if(e.target === botModal) botModal.classList.remove('open'); };
 
-botModal?.addEventListener('click', (e) => {
-  if(e.target === botModal) botModal.classList.remove('open');
-});
-
-modalCancel?.addEventListener('click', () => {
-  botModal.classList.remove('open');
-});
-
-modalActivate?.addEventListener('click', async () => {
+modalActivate.onclick = async () => {
   const platform = botPlatform.value;
   const token = botToken.value.trim();
   const chatId = botChatId.value.trim();
 
-  if(!token){ toast('Вставь токен бота', false); return; }
-
+  if(!token){ alert('Введи токен!'); return; }
+  
   modalActivate.disabled = true;
-  modalActivate.textContent = '⏳ Отправка...';
-
-  clearOutput();
-  logLine('⚡ Активация ' + (platform === 'telegram' ? 'Telegram' : 'Discord') + ' бота', 'info');
-  logLine('📡 Отправка на прокси-сервер...', 'info');
-  logLine('', 'info');
+  modalActivate.textContent = '⏳...';
+  clearConsole();
+  
+  logConsole('⚡ Активация ' + (platform === 'telegram' ? 'Telegram' : 'Discord') + ' бота', 'info');
+  logConsole('📡 Отправка на прокси-сервер...', 'info');
 
   try {
     const verifyResp = await fetch(PROXY_URL, {
@@ -1453,106 +831,167 @@ modalActivate?.addEventListener('click', async () => {
 
     if(platform === 'telegram'){
       if(!verifyData.ok){
-        logLine('❌ Telegram отклонил токен', 'err');
-        logLine('   ' + (verifyData.description || ''), 'err');
-        toast('Неверный токен Telegram', false);
-        resetBtn(); return;
+        logConsole('❌ Telegram отклонил токен: ' + (verifyData.description || ''), 'err');
+        return;
       }
-      const bot = verifyData.result;
-      logLine('✅ Токен принят Telegram!', 'out');
-      logLine('   🤖 Имя: ' + bot.first_name, 'out');
-      logLine('   🔗 Username: @' + bot.username, 'out');
-      logLine('   🆔 ID: ' + bot.id, 'out');
-      logLine('', 'info');
+      logConsole('✅ Токен принят Telegram!', 'ok');
+      logConsole('🤖 Бот: @' + verifyData.result.username, 'ok');
 
       if(chatId){
-        logLine('📨 Отправка тестового сообщения...', 'info');
+        logConsole('📨 Отправка тестового сообщения...', 'info');
         const sendResp = await fetch(PROXY_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             platform: 'telegram', token, action: 'sendMessage',
-            payload: { chat_id: chatId, text: '🎉 Привет! Я бот, созданный на BC+ в BecauseDev IT Studio!' }
+            payload: { chat_id: chatId, text: '🎉 Привет! Я бот на BC+!' }
           })
         });
         const sendData = await sendResp.json();
-        if(sendData.ok) logLine('✅ Сообщение отправлено в чат!', 'out');
-        else logLine('⚠️ Не удалось отправить: ' + (sendData.description || ''), 'err');
+        if(sendData.ok) logConsole('✅ Сообщение отправлено в чат!', 'ok');
+        else logConsole('⚠️ Ошибка отправки: ' + (sendData.description || ''), 'err');
       }
-
-      logLine('', 'info');
-      logLine('✅ Бот успешно активирован!', 'out');
-      statusEl.textContent = 'Бот активен ✓';
-      statusEl.className = 'status ok';
-      toast('Telegram бот активирован! 🎉');
+      logConsole('✅ Бот успешно активирован!', 'ok');
     }
 
     if(platform === 'discord'){
       if(verifyData.ok && verifyData.bot){
-        logLine('✅ Токен принят Discord!', 'out');
-        logLine('   🤖 ' + verifyData.bot.username, 'out');
-        logLine('   🆔 ' + verifyData.bot.id, 'out');
-        statusEl.textContent = 'Бот активен ✓';
-        statusEl.className = 'status ok';
-        toast('Discord бот активирован! 🎉');
+        logConsole('✅ Токен принят Discord!', 'ok');
+        logConsole('🤖 Бот: ' + verifyData.bot.username, 'ok');
+        logConsole('✅ Бот успешно подключён!', 'ok');
       } else {
-        logLine('❌ Discord отклонил токен', 'err');
-        toast('Неверный токен Discord', false);
+        logConsole('❌ Discord отклонил токен', 'err');
       }
     }
-
-    setTimeout(() => {
-      botModal.classList.remove('open');
-      botToken.value = '';
-      botChatId.value = '';
-    }, 1500);
-
+    setTimeout(() => { botModal.classList.remove('open'); }, 1500);
   } catch(err){
-    logLine('❌ Ошибка сети: ' + err.message, 'err');
-    toast('Ошибка соединения', false);
+    logConsole('❌ Ошибка сети: ' + err.message, 'err');
   } finally {
-    resetBtn();
+    modalActivate.disabled = false;
+    modalActivate.textContent = '⚡ Активировать';
   }
-});
+};
 
-function resetBtn(){
-  modalActivate.disabled = false;
-  modalActivate.textContent = '⚡ Активировать';
+/* ================== ЧАТ С ИИ ================== */
+const aiChat = document.getElementById('aiChat');
+const aiInput = document.getElementById('aiInput');
+const aiSendBtn = document.getElementById('aiSendBtn');
+
+function formatAIResponse(text) {
+  let html = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  html = html.replace(/```[a-z+]*\n([\s\S]*?)```/g, '<pre>$1</pre>');
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return html.replace(/\n/g, '<br>');
 }
 
-/* ============ СТАРТОВЫЙ КОД ============ */
-editor.value =
-`// Добро пожаловать в BC+ v2.1!
-// Напиши свой код или выбери пример ниже
+async function sendToAI() {
+  const text = aiInput.value.trim();
+  if(!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = text;
+  aiChat.appendChild(userMsg);
+  aiInput.value = '';
+  aiChat.scrollTop = aiChat.scrollHeight;
+
+  const botMsg = document.createElement('div');
+  botMsg.className = 'msg bot';
+  botMsg.innerHTML = 'Думаю...';
+  aiChat.appendChild(botMsg);
+  aiChat.scrollTop = aiChat.scrollHeight;
+
+  try {
+    const systemPrompt = "Ты — ИИ-помощник внутри IDE языка BC+. Твоя задача помогать писать код на BC+ или объяснять ошибки. Синтаксис BC+: сказать 'текст', пусть x = 5, если x > 5 то { }, иначе { }, функция имя() { }, вернуть. Пиши код четко в блоках кода. Отвечай кратко и по делу.";
+    
+    const response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        platform: 'gemini',
+        action: 'generate',
+        payload: { prompt: text, system: systemPrompt } // apiKey убран!
+      })
+    });
+
+    const data = await response.json();
+    if(data.ok) botMsg.innerHTML = formatAIResponse(data.answer);
+    else botMsg.innerHTML = '<span style="color:var(--danger)">❌ Ошибка ИИ: ' + data.error + '</span>';
+  } catch(err) {
+    botMsg.innerHTML = '<span style="color:var(--danger)">❌ Ошибка сети: ' + err.message + '</span>';
+  }
+  aiChat.scrollTop = aiChat.scrollHeight;
+}
+
+aiSendBtn.onclick = sendToAI;
+aiInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendToAI(); }
+});
+
+/* ================== ДОКУМЕНТАЦИЯ (HTML) ================== */
+document.getElementById('docsContent').innerHTML = `
+  <h1>📚 Документация BC+</h1>
+  <p>Полное руководство по языку программирования BC+. Здесь ты найдёшь всё: от базового вывода текста до создания ботов и работы с ИИ.</p>
+
+  <h2>1. Основы языка</h2>
+  <h3>Вывод на экран (сказать)</h3>
+  <pre><code>сказать "Привет, мир!"
+сказать "Число: " + 42
+сказать 2 + 2 * 10</code></pre>
+
+  <h3>Переменные (пусть)</h3>
+  <pre><code>пусть имя = "Иван"
+пусть возраст = 25
+пусть цена = 99.99
+пусть активен = истина</code></pre>
+
+  <h2>2. Условия и Операторы</h2>
+  <p>Логические операторы: <code>и</code>, <code>или</code>, <code>не</code>. Работают скобки.</p>
+  <pre><code>пусть возраст = 20
+пусть есть_паспорт = истина
+если возраст >= 18 и есть_паспорт то {
+  сказать "Доступ разрешён"
+} иначе {
+  сказать "Доступ запрещён"
+}</code></pre>
+
+  <h2>3. Циклы</h2>
+  <pre><code>пусть i = 1
+пока i <= 5 то {
+  сказать "Шаг " + i
+  пусть i = i + 1
+}</code></pre>
+
+  <h2>4. Функции и Массивы</h2>
+  <pre><code>функция сумма(a, b) { вернуть a + b }
+пусть числа = [10, 20, 30]
+добавить_в числа 40
+сказать размер числа</code></pre>
+
+  <h2>5. Ввод и ИИ</h2>
+  <pre><code>пусть имя = ввод "Как тебя зовут?"
+пусть стих = спросить_ии "Напиши стих про код"
+сказать стих</code></pre>
+
+  <h2>6. Боты</h2>
+  <p>Нажми кнопку <strong>⚡ Бот</strong>, вставь токен от @BotFather и бот активируется!</p>
+`;
+
+/* ================== СТАРТОВЫЙ КОД ================== */
+editor.value = `// Добро пожаловать в BC+ IDE v3.0!
+// Справа тебе поможет ИИ-помощник.
 
 сказать "Привет, разработчик!"
+
 пусть имя = "друг"
 сказать "Привет, " + имя + "!"
 
-// Сложные условия с и/или
-пусть x = 15
-если x > 10 и x < 20 то {
-  сказать "x между 10 и 20"
-} иначе {
-  сказать "x вне диапазона"
-}
-
-// Массивы
-пусть числа = [10, 20, 30]
-сказать "Размер: " + размер числа
-
-повторить 3 раз {
-  сказать "BC+ — это просто!"
-}`;
-updateLineNumbers();
+// Попробуй встроенный ИИ:
+пусть ответ = спросить_ии "Напиши короткое приветствие на русском"
+сказать "ИИ говорит: " + ответ`;
 updateHighlight();
 
-/* ============ ПРИВЕТ В КОНСОЛИ ============ */
-console.log(
-  '%cBC+ Compiler v2.1%c — BecauseDev IT Studio\nПодсветка · Массивы · Классы · HTTP · DOM · БД · Боты',
-  'color:#ff9558;font-size:20px;font-weight:bold;',
-  'color:#8b9bb4;font-size:13px;'
-);
 </script>
 </body>
 </html>
