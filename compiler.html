@@ -337,8 +337,8 @@ function replaceOps(s){
   s = s.replace(new RegExp(start + 'или'    + end, 'gi'), '||');
   s = s.replace(new RegExp(start + 'и'      + end, 'gi'), '&&');
   s = s.replace(new RegExp(start + 'не'     + end, 'gi'), '!');
-  s = s.replace(/\bразмер\s+([а-яёa-z0-9_]+)/gi, 'размер($1)');
-  s = s.replace(/\bдлина\s+([а-яёa-z0-9_]+)/gi, 'длина($1)');
+    s = s.replace(/(?<![а-яёa-z0-9_])размер\s+([а-яёa-z0-9_]+)/gi, 'размер($1)');
+    s = s.replace(/(?<![а-яёa-z0-9_])длина\s+([а-яёa-z0-9_]+)/gi, 'длина($1)');
   return s;
 }
 
@@ -457,7 +457,10 @@ function buildBuiltins(logFn){
   return {
     print: (...args) => logFn(args.join(' '), 'ok'),
     случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
-    корень: (x) => Math.sqrt(x), длина: (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0, округлить: (x) => Math.round(x),
+              корень: (x) => Math.sqrt(x),
+          длина: (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0,
+          размер: (x) => (x && typeof x === 'object') ? Object.keys(x).length : 0,
+          округлить: (x) => Math.round(x),
     ввод: (promptText) => window.prompt(promptText || "Введите значение:"),
     получить: async (url) => { try { return await (await fetch(url)).json(); } catch(err){ logFn('❌ Ошибка: ' + err.message, 'err'); return null; } },
     создать_элемент: (type, text, id) => { const el = document.createElement(type); el.textContent = text || ''; if(id) el.id = id; domContainer.appendChild(el); },
