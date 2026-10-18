@@ -608,8 +608,14 @@ function bcToJs(source) {
         continue;
       }
 
-      // 18. DOM (Работа с HTML и Графика)
-      if (line.startsWith('создать_элемент ') || line.startsWith('стилизовать ') || line.startsWith('вывести_на_страницу ') || line.startsWith('нарисовать_')) {
+            // 18. Графика (нарисовать_...) - теперь скобки не дублируются
+      if (line.startsWith('нарисовать_')) {
+        out.push(pad() + replaceOps(line) + ';');
+        continue;
+      }
+      
+      // 18.1 DOM (Работа с HTML)
+      if (line.startsWith('создать_элемент ') || line.startsWith('стилизовать ') || line.startsWith('вывести_на_страницу ')) {
         const spaceIdx = line.indexOf(' ');
         out.push(pad() + line.slice(0, spaceIdx) + '(' + replaceOps(line.slice(spaceIdx + 1).trim()) + ');');
         continue;
@@ -732,7 +738,7 @@ function buildBuiltins(logFn) {
       const c = document.getElementById('gameCanvas');
       if(c) { const ctx = c.getContext('2d'); ctx.fillStyle = color; ctx.fillRect(x, y, w, h); }
     },
-    нарисовать_картинку: (url, x, y, w, h) => {
+        нарисовать_картинку: (url, x, y, w, h) => {
       document.getElementById('gameScreenContainer').style.display = 'block';
       const c = document.getElementById('gameCanvas');
       if(c) { 
@@ -741,7 +747,14 @@ function buildBuiltins(logFn) {
         img.src = url; 
         img.onload = () => { ctx.drawImage(img, x, y, w, h); }; 
       }
-    }
+    }, // <-- ЗАПЯТАЯ
+    конфетти: () => {
+      if (typeof confetti === 'function') {
+        confetti();
+      } else {
+        logFn('❌ Библиотека конфетти не загружена!', 'err');
+      }
+    } // <-- БЕЗ ЗАПЯТОЙ (потому что это последняя команда в списке)
   };
 }
   /* ================== ЗАПУСК КОДА ================== */
