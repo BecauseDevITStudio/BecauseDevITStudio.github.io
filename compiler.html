@@ -672,7 +672,7 @@ function buildBuiltins(logFn) {
     минимум: (...a) => Math.min(...a),
     максимум: (...a) => Math.max(...a),
     ввод: (promptText) => window.prompt(promptText || "Введите значение:"),
-    подождать: (ms) => new Promise(r => setTimeout(r, ms)),
+    подождать: (ms) => new Promise(r => setTimeout(() => requestAnimationFrame(r), ms)),
     
     // HTTP Запросы
     получить: async (url) => {
