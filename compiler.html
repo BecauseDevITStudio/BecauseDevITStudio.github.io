@@ -5,193 +5,113 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BC+ IDE v3.0 — BecauseDev Studio</title>
 <style>
+/* 1. Переменные */
 :root {
-  --bg: #0a0e1a;
-  --card: #141b2d;
-  --card2: #1a2338;
-  --bg-code: #050810;
-  --accent: #00e0ff;
-  --accent2: #7c5cff;
-  --accent3: #00ffa3;
-  --danger: #ff5f56;
-  --bc: #ff6b35;
-  --bc2: #ff9558;
-  --ai: #a855f7;
-  --text: #e6edf7;
-  --muted: #8b9bb4;
-  --border: rgba(0, 224, 255, 0.15);
+  --bg: #0a0e1a; --card: #141b2d; --card2: #1a2338;
+  --bg-code: #050810; --accent: #00e0ff; --accent2: #7c5cff;
+  --accent3: #00ffa3; --danger: #ff5f56; --bc: #ff6b35;
+  --bc2: #ff9558; --ai: #a855f7; --text: #e6edf7;
+  --muted: #8b9bb4; --border: rgba(0,224,255,0.15);
 }
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* 2. Сброс */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text);
+  line-height: 1.6; height: 100vh; overflow: hidden; display: flex; flex-direction: column;
   background-image: radial-gradient(circle at 15% 10%, rgba(124,92,255,.15), transparent 40%),
                     radial-gradient(circle at 85% 20%, rgba(0,224,255,.12), transparent 40%);
   background-attachment: fixed;
 }
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-  /* Шапка сайта */
+a { color: var(--accent); text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* 3. Шапка */
 header {
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10, 14, 26, 0.95);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  z-index: 10;
+  padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10,14,26,0.95); border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10;
 }
-.logo {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.logo span {
-  color: var(--bc);
-  font-family: monospace;
-}
-.tabs {
-  display: flex;
-  gap: 10px;
-}
+.logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+.logo span { color: var(--bc); font-family: monospace; }
+.tabs { display: flex; gap: 10px; }
 .tab-btn {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
-  transition: 0.3s;
-  font-size: 0.9rem;
+  background: transparent; border: none; color: var(--muted); font-weight: 600;
+  padding: 8px 16px; border-radius: 8px; transition: 0.3s; font-size: 0.9rem;
 }
-.tab-btn:hover {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
-}
-.tab-btn.active {
-  color: var(--accent);
-  background: rgba(0, 224, 255, 0.1);
-}
+.tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.tab-btn.active { color: var(--accent); background: rgba(0,224,255,0.1); }
+  /* 4. Рабочая область */
+.workspace { display: flex; flex: 1; overflow: hidden; }
+.view { display: none; width: 100%; height: 100%; }
+.view.active { display: flex; }
 
-/* Рабочая область */
-.workspace {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-.view {
-  display: none;
-  width: 100%;
-  height: 100%;
-}
-.view.active {
-  display: flex;
-}
-
-/* Панели */
+/* 5. Панели */
 .editor-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--border);
-  min-width: 0;
-  background: var(--card);
+  flex: 1; display: flex; flex-direction: column;
+  border-right: 1px solid var(--border); min-width: 0; background: var(--card);
 }
-.side-panel {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  background: var(--card);
-  flex-shrink: 0;
+.side-panel { width: 400px; display: flex; flex-direction: column; background: var(--card); flex-shrink: 0; }
+
+/* 6. Верхняя панель редактора */
+.editor-topbar {
+  padding: 12px 16px; background: rgba(0, 224, 255, 0.05);
+  border-bottom: 1px solid var(--border); display: flex;
+  justify-content: space-between; align-items: center;
+  font-family: monospace; font-size: 0.85rem; color: var(--muted);
 }
 
-/* Верхняя панель файла */
-.editor-topbar {
-  padding: 12px 16px;
-  background: rgba(0, 224, 255, 0.05);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: monospace;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-  /* Панель с кнопками */
+/* 7. Панель с кнопками */
 .controls {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 10px 16px;
-  background: var(--card2);
-  border-bottom: 1px solid var(--border);
+  display: flex; gap: 10px; flex-wrap: wrap; padding: 10px 16px;
+  background: var(--card2); border-bottom: 1px solid var(--border);
 }
 .btn {
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  border: none;
-  transition: 0.3s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  padding: 10px 18px; border-radius: 8px; font-weight: 600;
+  font-size: 0.85rem; border: none; transition: 0.3s;
+  display: inline-flex; align-items: center; gap: 6px;
 }
-.btn:hover {
-  transform: translateY(-2px);
-}
-.btn-run {
-  background: linear-gradient(135deg, var(--accent3), var(--accent));
-  color: #051018;
-  box-shadow: 0 4px 15px rgba(0, 255, 163, 0.3);
-}
-.btn-clear {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-.btn-clear:hover {
-  border-color: var(--danger);
-  color: var(--danger);
-}
-.btn-js {
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  color: #051018;
-}
-.btn-py {
-  background: linear-gradient(135deg, #3776ab, #ffd343);
-  color: #fff;
-}
-.btn-bot {
-  background: linear-gradient(135deg, var(--bc), var(--bc2));
-  color: #fff;
-}
-.btn-share {
-  background: linear-gradient(135deg, #ff9a9e, #fecfef);
-  color: #000;
-}
+.btn:hover { transform: translateY(-2px); }
 
-/* Область редактора */
+/* 8. Цвета кнопок */
+.btn-run { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #051018; box-shadow: 0 4px 15px rgba(0,255,163,0.3); }
+.btn-clear { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-clear:hover { border-color: var(--danger); color: var(--danger); }
+.btn-js { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #051018; }
+.btn-py { background: linear-gradient(135deg, #3776ab, #ffd343); color: #fff; }
+.btn-bot { background: linear-gradient(135deg, var(--bc), var(--bc2)); color: #fff; }
+.btn-share { background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #000; }
+  /* 9. Область редактора */
+.editor-wrap { display: flex; flex: 1; position: relative; overflow: hidden; }
+.line-numbers {
+  padding: 16px 12px; background: rgba(0, 224, 255, 0.02); color: var(--muted);
+  font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.65;
+  text-align: right; min-width: 50px; user-select: none;
+  overflow: hidden; border-right: 1px solid var(--border);
+}
+.code-area { position: relative; flex: 1; overflow: hidden; height: 100%; }
+
+/* 10. ФИКС БЕЛОГО ОКНА ВВОДА */
+#editor {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  padding: 16px; border: none; outline: none;
+  resize: none !important; /* Запрещаем менять размер */
+  background: transparent !important; /* Убираем белый фон */
+  color: transparent !important; /* Текст прозрачный */
+  caret-color: var(--text) !important; /* Курсор видимый */
+  font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.65;
+  white-space: pre; tab-size: 2; overflow: auto; z-index: 2;
+}
+#editor::selection { background: rgba(0, 224, 255, 0.25); color: transparent; }
+
+/* 11. Слой с подсветкой (лежит под текстом) */
+.highlight {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  padding: 16px; margin: 0; border: none;
+  font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.65;
+  white-space: pre; tab-size: 2; background: transparent;
+  color: var(--text); pointer-events: none; /* Не перехватывает клики */
+  z-index: 1; user-select: none; overflow: auto;
+}
+  /* 9. Область редактора и ФИКС БЕЛОГО ФОНА */
 .editor-wrap {
   display: flex;
   flex: 1;
@@ -215,10 +135,76 @@ header {
   position: relative;
   flex: 1;
   overflow: hidden;
+  height: 100%;
 }
-  /* Блок Отладчика (Консоль) */
+
+/* Прозрачный ввод */
+#editor {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  padding: 16px;
+  border: none;
+  outline: none;
+  resize: none !important;
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: var(--text) !important;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre;
+  tab-size: 2;
+  overflow: auto;
+  z-index: 2;
+}
+#editor::selection {
+  background: rgba(0, 224, 255, 0.25);
+  color: transparent;
+}
+
+/* Слой с подсветкой */
+.highlight {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  padding: 16px;
+  margin: 0;
+  border: none;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre;
+  tab-size: 2;
+  color: var(--text);
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  overflow: auto;
+}
+
+/* Яркие цвета токенов */
+.c-comment { color: #6a9955; font-style: italic; }
+.c-string { color: #ce9178; }
+.c-number { color: #b5cea8; }
+.c-keyword { color: #c586c0; font-weight: 600; }
+.c-builtin { color: #4fc1ff; }
+.c-bool { color: #569cd6; font-weight: 600; }
+.c-operator { color: #d4a0ff; }
+.c-func { color: #dcdcaa; }
+
+/* Ошибка в строке */
+.line-error {
+  color: var(--danger) !important;
+  font-weight: bold;
+  background: rgba(255, 95, 86, 0.15);
+  border-radius: 4px;
+  cursor: help;
+}
+  /* 10. Отладчик (Консоль) */
 .console-panel {
-  height: 220px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -247,7 +233,17 @@ header {
 .log-ok { color: var(--accent3); }
 .log-info { color: var(--muted); }
 
-/* Панель Локального бота */
+/* 11. Окно для игр (Canvas) */
+#gameCanvas {
+  display: none;
+  width: 100%;
+  height: 400px;
+  background: #000;
+  border-top: 2px solid var(--accent);
+  box-shadow: inset 0 0 20px rgba(0, 224, 255, 0.1);
+}
+
+/* 12. Панель Локального бота */
 .ai-panel {
   flex: 1;
   display: flex;
@@ -275,151 +271,46 @@ header {
   gap: 12px;
   scroll-behavior: smooth;
 }
-  /* Сообщения бота */
-.msg {
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  max-width: 90%;
-  word-wrap: break-word;
-}
-.msg.bot {
-  background: var(--bg-code);
-  border: 1px solid var(--ai);
-  color: var(--text);
-  align-self: flex-start;
-  border-bottom-left-radius: 2px;
-}
-.msg.user {
-  background: rgba(168, 85, 247, 0.2);
-  color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 2px;
-}
-.msg pre {
-  background: #000;
-  padding: 10px;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 8px 0;
-  font-family: monospace;
-  font-size: 0.8rem;
-  border: 1px solid var(--border);
-}
-.msg code {
-  background: #000;
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-family: monospace;
-  color: var(--accent3);
-}
+  /* 13. Сообщения бота */
+.msg { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; max-width: 90%; word-wrap: break-word; }
+.msg.bot { background: var(--bg-code); border: 1px solid var(--ai); color: var(--text); align-self: flex-start; border-bottom-left-radius: 2px; }
+.msg.user { background: rgba(168, 85, 247, 0.2); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+.msg pre { background: #000; padding: 10px; border-radius: 8px; overflow-x: auto; margin: 8px 0; font-family: monospace; font-size: 0.8rem; border: 1px solid var(--border); }
+.msg code { background: #000; padding: 2px 4px; border-radius: 4px; font-family: monospace; color: var(--accent3); }
 
-/* Поле ввода бота */
-.ai-input-box {
-  padding: 12px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 8px;
-  background: var(--card);
-}
-.ai-input {
-  flex: 1;
-  background: var(--bg-code);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: #fff;
-  outline: none;
-  resize: none;
-  font-family: inherit;
-  font-size: 0.9rem;
-}
+/* 14. Поле ввода бота */
+.ai-input-box { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--card); }
+.ai-input { flex: 1; background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: #fff; outline: none; resize: none; font-family: inherit; font-size: 0.9rem; }
 .ai-input:focus { border-color: var(--ai); }
-.ai-send {
-  background: var(--ai);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0 16px;
-  font-weight: bold;
-}
+.ai-send { background: var(--ai); color: #fff; border: none; border-radius: 8px; padding: 0 16px; font-weight: bold; }
 .ai-send:hover { background: #9333ea; }
 
-/* Модалка */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 1000;
-  background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px);
-  display: none; align-items: center; justify-content: center; padding: 20px;
-}
+/* 15. Модальное окно */
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.open { display: flex; }
-.modal {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 16px; padding: 28px; max-width: 480px; width: 100%;
-}
+.modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
 .modal h3 { font-size: 1.4rem; margin-bottom: 8px; }
 .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
 .modal label { display: block; font-size: 0.85rem; color: var(--muted); margin: 16px 0 8px; }
-.modal input {
-  width: 100%; padding: 12px; background: var(--bg-code);
-  border: 1px solid var(--border); border-radius: 10px;
-  color: var(--text); font-family: monospace; outline: none;
-}
+.modal input { width: 100%; padding: 12px; background: var(--bg-code); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: monospace; outline: none; }
 .modal input:focus { border-color: var(--bc); }
 .modal-btns { display: flex; gap: 12px; margin-top: 24px; }
 
-/* Документация */
+/* 16. Документация */
 .docs-container { width: 100%; height: 100%; overflow-y: auto; padding: 40px 60px; background: var(--bg); }
 .docs-inner { max-width: 900px; margin: 0 auto; }
 .docs-inner h1 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
 .docs-inner h2 { font-size: 1.8rem; margin: 40px 0 16px; color: var(--accent2); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.docs-inner p, .docs-inner li { font-size: 1rem; color: var(--muted); margin-bottom: 12px; }
+.docs-inner p { font-size: 1rem; color: var(--muted); margin-bottom: 12px; }
 .docs-inner code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--bc2); }
 .docs-inner pre { background: var(--bg-code); padding: 16px; border-radius: 10px; overflow-x: auto; margin: 16px 0; border: 1px solid var(--border); }
 
-/* Адаптив */
+/* 17. Адаптив */
 @media (max-width: 900px) {
   .workspace { flex-direction: column; }
   .editor-panel { height: 60vh; border-right: none; border-bottom: 1px solid var(--border); }
   .side-panel { width: 100%; height: 40vh; }
   .docs-container { padding: 20px; }
-}
-  /* ФИКС БЕЛОГО РЕДАКТОРА */
-#editor {
-  background: transparent !important;
-  color: transparent !important;
-  caret-color: #e6edf7 !important;
-  resize: none !important;
-  outline: none !important;
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  padding: 16px;
-  font-family: 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.65;
-  white-space: pre;
-  z-index: 2;
-}
-.highlight {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  padding: 16px;
-  font-family: 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.65;
-  white-space: pre;
-  color: #e6edf7;
-  background: transparent;
-  pointer-events: none;
-  z-index: 1;
-  overflow: auto;
-}
-.code-area {
-  position: relative;
-  flex: 1;
-  overflow: hidden;
 }
 </style>
 </head>
@@ -468,6 +359,10 @@ header {
           <textarea id="editor" spellcheck="false" placeholder="сказать 'Привет, мир!'"></textarea>
         </div>
       </div>
+      
+      <!-- Холст для 2D игр -->
+      <canvas id="gameCanvas" width="800" height="400"></canvas>
+      
     </div>
     <!-- ^^^ Закрыли левую панель (editor-panel) -->
 
@@ -498,69 +393,43 @@ header {
           <button class="ai-send" id="aiSendBtn">▶</button>
         </div>
       </div>
-
     </div>
-    <!-- ^^^ Закрыли правую панель (side-panel) -->
   </div>
-  <!-- ^^^ Закрыли вкладку IDE (view-ide) -->
     <!-- ВКЛАДКА: ДОКУМЕНТАЦИЯ -->
   <div id="view-docs" class="view">
     <div class="docs-container">
       <div class="docs-inner" id="docsContent">
-        <!-- Сюда JS подставит полный текст документации -->
         <h1>Загрузка документации...</h1>
       </div>
     </div>
   </div>
-
 </div>
-<!-- ^^^ Закрыли workspace -->
 
 <!-- МОДАЛЬНОЕ ОКНО БОТА -->
 <div class="modal-overlay" id="botModal">
   <div class="modal">
     <h3>⚡ Активировать бота</h3>
     <p class="modal-sub">Введи токен бота — он отправит тестовое сообщение.</p>
-    
     <label for="botToken">Токен бота</label>
     <input type="text" id="botToken" placeholder="Вставь токен из @BotFather">
-    
     <label for="botChatId">ID чата (только для TG)</label>
     <input type="text" id="botChatId" placeholder="Например: 123456789">
-    
     <div class="modal-btns">
       <button class="btn btn-clear" id="modalCancel">Отмена</button>
       <button class="btn btn-bot" id="modalActivate">⚡ Активировать</button>
     </div>
   </div>
 </div>
-
 <script>
-/* ============================================================
-   BC+ IDE v3.0 — BecauseDev IT Studio (Локальный JS)
-   ============================================================ */
-
-// Получаем доступ к элементам страницы
 const editor = document.getElementById('editor');
 const highlight = document.getElementById('highlight');
 const lineNums = document.getElementById('lineNumbers');
 const consoleOut = document.getElementById('consoleOutput');
 const statusEl = document.getElementById('statusText');
-
-// Переменная для хранения номеров строк с ошибками
 let errorLines = [];
-  /* ================== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ================== */
-function switchTab(tab) {
-  // Скрываем все вкладки
-  document.querySelectorAll('.view').forEach(v => {
-    v.classList.remove('active');
-    v.style.display = 'none';
-  });
-  
-  // Убираем активный класс у кнопок
+  function switchTab(tab) {
+  document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); v.style.display = 'none'; });
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
-  // Показываем нужную вкладку
   if (tab === 'ide') {
     document.getElementById('view-ide').classList.add('active');
     document.getElementById('view-ide').style.display = 'flex';
@@ -571,65 +440,42 @@ function switchTab(tab) {
     document.getElementById('tabDocs').classList.add('active');
   }
 }
-
-/* ================== ОТЛАДЧИК (ЛОГИ) ================== */
 function logConsole(text, type = 'info') {
   const div = document.createElement('div');
   div.className = 'log-' + type;
   div.textContent = text;
   consoleOut.appendChild(div);
-  // Автоматически скроллим вниз при новом сообщении
   consoleOut.scrollTop = consoleOut.scrollHeight;
 }
-
-function clearConsole() {
-  consoleOut.innerHTML = '';
-}
-  /* ================== НУМЕРАЦИЯ СТРОК ================== */
-function updateLineNumbers() {
+function clearConsole() { consoleOut.innerHTML = ''; }
+  function updateLineNumbers() {
   const count = editor.value.split('\n').length;
   let html = '';
-  
   for (let i = 1; i <= count; i++) {
-    // Если строка есть в массиве ошибок — красим номер в красный
-    if (errorLines.includes(i)) {
-      html += '<span class="line-error" title="Ошибка в этой строке">' + i + '</span><br>';
-    } else {
-      html += i + '<br>';
-    }
+    if (errorLines.includes(i)) html += '<span class="line-error" title="Ошибка">' + i + '</span><br>';
+    else html += i + '<br>';
   }
-  
   lineNums.innerHTML = html;
-  // Синхронизируем скролл номеров строк с текстом
   lineNums.scrollTop = editor.scrollTop;
 }
 
-/* ================== ПОДСВЕТКА СИНТАКСИСА ================== */
-const HL_KEYWORDS = new Set(['сказать','пусть','если','то','иначе','пока','повторить','раз','функция','вернуть','класс','новый','это']);
-const HL_BUILTINS = new Set(['добавить_в','удалить_из','размер','ключи_словаря','значения_словаря','получить','отправить','создать_элемент','стилизовать','удалить_элемент','вывести_на_страницу','ввод']);
-const HL_FUNCS = new Set(['длина','случайное','корень','степень','округлить','модуль','в_верхний','в_нижний','print', 'спросить_ии', 'ии']);
+const HL_KEYWORDS = new Set(['сказать','пусть','если','то','иначе','пока','повторить','раз','функция','вернуть','класс','новый','это','выбрать','случай','по_умолчанию','прервать','продолжить','подключить']);
+const HL_BUILTINS = new Set(['добавить_в','удалить_из','размер','ключи_словаря','значения_словаря','получить','отправить','создать_элемент','стилизовать','удалить_элемент','вывести_на_страницу','ввод','сортировать','перевернуть','в_строку','в_число','подождать','очистить_экран','нарисовать_круг','нарисовать_квадрат']);
+const HL_FUNCS = new Set(['длина','случайное','корень','степень','округлить','модуль','в_верхний','в_нижний','print','спросить_ии','ии','синус','косинус','минимум','максимум']);
 const HL_BOOLS = new Set(['истина','ложь','ноль']);
 const HL_OPS = new Set(['и','или','не']);
-
-// Регулярное выражение для поиска токенов (слов, строк, чисел)
 const HL_TOKEN_RE = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*")|('(?:[^'\\\n]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([а-яёa-z_][а-яёa-z0-9_]*)/gi;
 
-// Экранирование HTML
-function escapeHtmlRaw(s) {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
+function escapeHtmlRaw(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
 function updateHighlight() {
   if (!highlight) return;
   let html = escapeHtmlRaw(editor.value);
-
-  // Заменяем найденные токены на цветные теги
   html = html.replace(HL_TOKEN_RE, (match, comment, dq, sq, num, word) => {
     if (comment) return '<span class="c-comment">' + comment + '</span>';
     if (dq)      return '<span class="c-string">' + dq + '</span>';
     if (sq)      return '<span class="c-string">' + sq + '</span>';
     if (num)     return '<span class="c-number">' + num + '</span>';
-    
     if (word) {
       const lower = word.toLowerCase();
       if (HL_BOOLS.has(lower))    return '<span class="c-bool">' + word + '</span>';
@@ -641,25 +487,19 @@ function updateHighlight() {
     }
     return match;
   });
-
   highlight.innerHTML = html + '\n';
   updateLineNumbers();
 }
 
-// Синхронизация скролла
 editor.addEventListener('input', updateHighlight);
 editor.addEventListener('scroll', () => {
   highlight.scrollTop = editor.scrollTop;
   highlight.scrollLeft = editor.scrollLeft;
   lineNums.scrollTop = editor.scrollTop;
 });
-  /* ================== ЗАМЕНА ОПЕРАТОРОВ ================== */
-function replaceOps(s) {
-  // Используем lookbehind и lookahead, чтобы не задеть буквы внутри слов
+  function replaceOps(s) {
   const start = '(?<![а-яёa-z0-9_])';
   const end = '(?![а-яёa-z0-9_])';
-
-  // Заменяем русские слова на JS-аналоги
   s = s.replace(new RegExp(start + 'истина' + end, 'gi'), 'true');
   s = s.replace(new RegExp(start + 'ложь' + end, 'gi'), 'false');
   s = s.replace(new RegExp(start + 'ноль' + end, 'gi'), 'null');
@@ -667,56 +507,34 @@ function replaceOps(s) {
   s = s.replace(new RegExp(start + 'или' + end, 'gi'), '||');
   s = s.replace(new RegExp(start + 'и' + end, 'gi'), '&&');
   s = s.replace(new RegExp(start + 'не' + end, 'gi'), '!');
-
-  // Фикс функций без скобок (например: "размер список" -> "размер(список)")
   s = s.replace(/(?<![а-яёa-z0-9_])размер\s+([а-яёa-z0-9_]+)/gi, 'размер($1)');
   s = s.replace(/(?<![а-яёa-z0-9_])длина\s+([а-яёa-z0-9_]+)/gi, 'длина($1)');
-
   return s;
 }
-
-/* ================== ПРОВЕРКА СКОБОК ================== */
 function checkBalance(code) {
   let open = 0;
   const lines = code.split('\n');
-  
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-    // Пропускаем комментарии
     if (line.startsWith('//')) continue;
-    
-    // Убираем кавычки, чтобы скобки внутри строк не считались за код
     const clean = line.replace(/"(?:[^"\\]|\\.)*"/g, '""').replace(/'(?:[^'\\]|\\.)*'/g, "''");
-    
-    for (const ch of clean) {
-      if (ch === '{') open++;
-      if (ch === '}') open--;
-    }
+    for (const ch of clean) { if (ch === '{') open++; if (ch === '}') open--; }
   }
-  return open; // Если 0 — всё ок
+  return open;
 }
-  /* ================== ПЕРЕВОД BC+ → JS ================== */
-function bcToJs(source) {
+  function bcToJs(source) {
   const lines = source.split('\n');
-  const out = []; // Сюда собираем JS-код
-  let indent = 0; // Уровень отступа
-  let inClass = 0; // Находимся ли внутри класса
-  const pad = () => '  '.repeat(indent); // Функция отступов
+  const out = [];
+  let indent = 0;
+  let inClass = 0;
+  const pad = () => '  '.repeat(indent);
   const errors = [];
-
-  // Проходим по каждой строке кода
   for (let i = 0; i < lines.length; i++) {
-    const raw = lines[i];
-    const lineNum = i + 1;
-    const line = raw.trim();
-
+    const raw = lines[i], lineNum = i + 1, line = raw.trim();
     if (!line || line.startsWith('//')) continue;
-
     try {
-      // 1. Закрытие блока (фигурная скобка)
       if (line === '}') {
         indent = Math.max(0, indent - 1);
-        // Заглядываем на следующую строку, чтобы не закрыть блок раньше времени, если дальше "иначе"
         const nextLine = (i + 1 < lines.length) ? lines[i + 1].trim() : '';
         if (!nextLine.startsWith('иначе')) {
           out.push(pad() + '}');
@@ -724,327 +542,112 @@ function bcToJs(source) {
         }
         continue;
       }
-
-      // 2. Иначе
-      if (line.startsWith('} иначе') || line.startsWith('иначе')) {
+      if (line.startsWith('} иначе') || line.startsWith('иначе если')) {
         if (line.startsWith('} иначе')) indent = Math.max(0, indent - 1);
-        out.push(pad() + '} else {');
-        indent++;
-        continue;
+        let cond = line.startsWith('иначе если ') ? line.slice(11, -1).trim().replace(/\s+то\s*$/i, '') : '';
+        out.push(pad() + (cond ? '} else if (' + replaceOps(cond) + ') {' : '} else {'));
+        indent++; continue;
       }
-
-      // 3. Вывод текста (сказать)
-      if (line.startsWith('сказать ')) {
-        out.push(pad() + 'print(' + replaceOps(line.slice(8).trim()) + ');');
-        continue;
-      }
-
-      // 4. ИИ (короткая команда)
+      if (line.startsWith('сказать ')) { out.push(pad() + 'print(' + replaceOps(line.slice(8).trim()) + ');'); continue; }
       if (line.startsWith('ии ') || line.startsWith('спросить_ии ')) {
         const promptText = line.replace(/^(ии|спросить_ии)\s+/, '');
-        out.push(pad() + 'print(await спросить_ии(' + replaceOps(promptText) + '));');
-        continue;
+        out.push(pad() + 'print(await спросить_ии(' + replaceOps(promptText) + '));'); continue;
       }
-            // 5. Ввод (диалог с пользователем)
       if (line.includes(' = ввод ')) {
         const idx = line.indexOf(' = ввод ');
         const left = line.slice(0, idx).trim();
         const promptText = replaceOps(line.slice(idx + 8).trim());
         const varName = left.replace(/^пусть\s+/, '').trim();
-        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await ввод(' + promptText + ');');
-        continue;
+        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await ввод(' + promptText + ');'); continue;
       }
-
-      // 6. ИИ с сохранением в переменную
+      if (line.startsWith('подождать ')) { out.push(pad() + 'await подождать(' + replaceOps(line.slice(10).trim()) + ');'); continue; }
       if (line.includes(' = спросить_ии ')) {
         const idx = line.indexOf(' = спросить_ии ');
         const left = line.slice(0, idx).trim();
         const promptText = replaceOps(line.slice(idx + 14).trim());
         const varName = left.replace(/^пусть\s+/, '').trim();
-        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await спросить_ии(' + promptText + ');');
-        continue;
+        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await спросить_ии(' + promptText + ');'); continue;
       }
-
-      // 7. Объявление переменной (пусть)
-      if (line.startsWith('пусть ')) {
-        out.push(pad() + 'let ' + replaceOps(line.slice(6).trim()) + ';');
-        continue;
-      }
-
-      // 8. Условие (если)
-      if (line.startsWith('если ') && line.endsWith('{')) {
-        // Убираем слово "то" в конце условия, если оно есть
-        let cond = line.slice(5, -1).trim().replace(/\s+то\s*$/i, '');
-        out.push(pad() + 'if (' + replaceOps(cond) + ') {');
-        indent++;
-        continue;
-      }
-
-      // 9. Цикл (пока)
-      if (line.startsWith('пока ') && line.endsWith('{')) {
-        let cond = line.slice(5, -1).trim().replace(/\s+то\s*$/i, '');
-        out.push(pad() + 'while (' + replaceOps(cond) + ') {');
-        indent++;
-        continue;
-      }
-            // 10. Цикл (повторить N раз)
-      if (line.startsWith('повторить ') && /раз\s*\{$/.test(line)) {
-        const n = replaceOps(line.replace(/^повторить\s+/, '').replace(/раз\s*\{$/, '').trim());
-        out.push(pad() + 'for (let __i = 0; __i < ' + n + '; __i++) {');
-        indent++;
-        continue;
-      }
-
-      // 11. Объявление класса
-      if (line.startsWith('класс ') && line.endsWith('{')) {
-        const name = line.slice(6, -1).trim();
-        out.push(pad() + 'class ' + name + ' {');
-        indent++;
-        inClass = indent; // Запоминаем, что мы внутри класса
-        continue;
-      }
-
-      // 12. Объявление функции
-      if (line.startsWith('функция ') && line.endsWith('{')) {
-        const rest = line.slice(8, -1).trim();
-        // Если внутри класса, метод без слова "function"
-        if (inClass > 0 && indent > inClass) {
-          out.push(pad() + 'async ' + rest + ' {');
-        } else {
-          out.push(pad() + 'async function ' + rest + ' {');
-        }
-        indent++;
-        continue;
-      }
-
-      // 13. Возврат значения
-      if (line.startsWith('вернуть ')) {
-        out.push(pad() + 'return ' + replaceOps(line.slice(8).trim()) + ';');
-        continue;
-      }
-
-      // 14. Создание объекта (новый)
-      if (line.startsWith('новый ')) {
-        out.push(pad() + replaceOps(line).replace(/^новый\s+/, 'new ') + ';');
-        continue;
-      }
-
-      // 15. Работа с массивами
-      if (line.startsWith('добавить_в ')) {
-        const rest = replaceOps(line.slice(10).trim()).split(/\s+/);
-        out.push(pad() + rest[0] + '.push(' + rest.slice(1).join(' ') + ');');
-        continue;
-      }
-      if (line.startsWith('размер ')) {
-        out.push(pad() + 'print(Object.keys(' + replaceOps(line.slice(7).trim()) + ').length);');
-        continue;
-      }
-
-      // 16. HTTP Запросы
-      if (line.includes(' = получить ')) {
-        const idx = line.indexOf(' = получить ');
-        const left = line.slice(0, idx).trim();
-        const url = replaceOps(line.slice(idx + 11).trim());
-        const varName = left.replace(/^пусть\s+/, '').trim();
-        out.push(pad() + (left.startsWith('пусть ') ? 'let ' : '') + varName + ' = await получить(' + url + ');');
-        continue;
-      }
-      if (line.startsWith('отправить ')) {
-        out.push(pad() + 'await отправить(' + replaceOps(line.slice(10).trim()) + ');');
-        continue;
-      }
-
-      // 17. DOM (Работа с HTML)
-      if (line.startsWith('создать_элемент ') || line.startsWith('стилизовать ') || line.startsWith('вывести_на_страницу ')) {
-        const spaceIdx = line.indexOf(' ');
-        out.push(pad() + line.slice(0, spaceIdx) + '(' + replaceOps(line.slice(spaceIdx + 1).trim()) + ');');
-        continue;
-      }
-
-      // 18. Обычное выражение
-      out.push(pad() + replaceOps(line) + ';');
-
-    } catch (err) {
-      errors.push({ lineNum, text: line, msg: err.message });
-    }
-  }
-
-  // Проверка скобок в конце файла
-  const balance = checkBalance(source);
-  if (balance > 0) errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Не закрыто ' + balance + ' скобок "}"' });
-  else if (balance < 0) errors.push({ lineNum: lines.length, text: '(конец файла)', msg: 'Лишних скобок: ' + Math.abs(balance) });
-
-  // Если есть ошибки, выбрасываем их
-  if (errors.length) {
-    throw new Error(errors.map(e => 'Строка ' + e.lineNum + ': ' + e.msg + '\n   >> ' + e.text).join('\n\n'));
-  }
-
-  // Возвращаем готовый JS-код
-  return out.join('\n');
-}
-  /* ================== ВСТРОЕННЫЕ ФУНКЦИИ ================== */
-// URL нашего сервера для работы ИИ и ботов
-const PROXY_URL = 'https://bc-dev.artemkushnirev99.workers.dev';
-
-function buildBuiltins(logFn) {
-  // Контейнер для вывода HTML-элементов
-  let domContainer = document.getElementById('bc-dom-output');
-  if (!domContainer) {
-    domContainer = document.createElement('div');
-    domContainer.id = 'bc-dom-output';
-    domContainer.style.cssText = 'padding:16px; border-top:1px solid var(--border); background:var(--card2); max-height:200px; overflow-y:auto;';
-    document.querySelector('.editor-panel').appendChild(domContainer);
-  }
-  domContainer.innerHTML = ''; // Очищаем при новом запуске
-
-  return {
-    print: (...args) => logFn(args.join(' '), 'ok'),
-    случайное: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
-    корень: (x) => Math.sqrt(x),
-    степень: (x, y) => Math.pow(x, y),
-    длина: (x) => (Array.isArray(x) || typeof x === 'string') ? x.length : 0,
-    размер: (x) => (x && typeof x === 'object') ? Object.keys(x).length : 0,
-    округлить: (x) => Math.round(x),
-    модуль: (x) => Math.abs(x),
-    в_верхний: (s) => String(s).toUpperCase(),
-    в_нижний: (s) => String(s).toLowerCase(),
-    ввод: (promptText) => window.prompt(promptText || "Введите значение:"),
-    
-    получить: async (url) => {
-      logFn('🌐 GET ' + url, 'info');
-      try { 
-        return await (await fetch(url)).json(); 
-      } catch (err) { 
-        logFn('❌ Ошибка: ' + err.message, 'err'); 
-        return null; 
-      }
-    },
-    
-    создать_элемент: (type, text, id) => {
-      const el = document.createElement(type);
-      el.textContent = text || '';
-      if (id) el.id = id;
-      domContainer.appendChild(el);
-    },
-    
-    спросить_ии: async (promptText) => {
-      logFn('🤖 Запрос к ИИ...', 'info');
-      try {
-        const res = await fetch(PROXY_URL, { 
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify({ platform: 'gemini', action: 'generate', payload: { prompt: promptText } }) 
-        });
-        const data = await res.json();
-        if(data.ok) return data.answer;
-        else { logFn('❌ Ошибка ИИ: ' + data.error, 'err'); return "Ошибка"; }
-      } catch(err) { 
-        logFn('❌ Сеть: ' + err.message, 'err'); 
-        return "Ошибка сети"; 
-      }
-    }
-  };
-}
-
-/* ================== ЗАПУСК КОДА ================== */
-async function runCode() {
-  clearConsole();
-  errorLines = []; 
-  updateHighlight(); 
-  
-  const code = editor.value.trim();
-  if (!code) { logConsole('// Нечего запускать!', 'info'); return; }
-
-  let jsCode;
-  try {
-    jsCode = bcToJs(code); 
-  } catch (err) {
-    logConsole('❌ ОШИБКА ПЕРЕВОДА BC+ → JS', 'err');
-    err.message.split('\n').forEach(l => logConsole(l, 'err'));
-    const match = err.message.match(/Строка (\d+):/);
-    if (match) { errorLines.push(parseInt(match[1])); updateHighlight(); }
-    return;
-  }
-
-  logConsole('▶ Запуск main.bc+', 'info');
-  
-  try {
-    const AsyncFn = Object.getPrototypeOf(async function(){}).constructor;
-    const builtinsObj = buildBuiltins(logConsole);
-    const fn = new AsyncFn(...Object.keys(builtinsObj), jsCode);
-    await fn(...Object.values(builtinsObj));
-    logConsole('✅ Выполнено успешно', 'ok');
-  } catch (err) {
-    logConsole('❌ ОШИБКА ВЫПОЛНЕНИЯ: ' + err.message, 'err');
-  }
-    }
-  /* ================== КНОПКИ РЕДАКТОРА ================== */
-document.getElementById('runBtn').onclick = runCode;
-
-document.getElementById('clearBtn').onclick = () => {
-  editor.value = ''; 
-  errorLines = []; 
-  updateHighlight(); 
-  clearConsole();
-  const d = document.getElementById('bc-dom-output'); 
-  if (d) d.innerHTML = '';
-};
-
-document.getElementById('jsBtn').onclick = () => {
-  clearConsole();
-  try {
-    logConsole('📋 Сгенерированный JavaScript:', 'info');
-    logConsole(bcToJs(editor.value.trim()), 'ok');
-  } catch (err) { logConsole('❌ Ошибка перевода: ' + err.message, 'err'); }
-};
-
+      if (line.startsWith('пусть ')) { out.push(pad() + 'let ' + replaceOps(line.slice(6).trim()) + ';'); continue; }
+      /* ================== ПЕРЕВОД В PYTHON ================== */
 document.getElementById('pyBtn').onclick = () => {
   const lines = editor.value.trim().split('\n');
   let out = [], indent = 0;
-  const pad = () => '    '.repeat(indent);
+  const pad = () => '    '.repeat(indent); // В Python 4 пробела
 
   for (let raw of lines) {
     let line = raw.trim();
     if (!line) continue;
+    
+    // Комментарии
     if (line.startsWith('//')) { out.push(pad() + '# ' + line.slice(2).trim()); continue; }
+    
+    // Закрытие блоков
     if (line === '}') { indent = Math.max(0, indent - 1); continue; }
     if (line === 'иначе {' || line === 'иначе{') { 
-      indent = Math.max(0, indent - 1); out.push(pad() + 'else:'); indent++; continue; 
+      indent = Math.max(0, indent - 1); 
+      out.push(pad() + 'else:'); 
+      indent++; 
+      continue; 
     }
+    
+    // Условия и циклы
     if (line.startsWith('если ') && line.endsWith('{')) {
       let c = line.slice(5, -1).replace(/\s+то\s*$/, '').replace(/\bи\b/g,'and').replace(/\bили\b/g,'or');
-      out.push(pad() + 'if ' + c + ':'); indent++; continue;
+      out.push(pad() + 'if ' + c + ':'); 
+      indent++; 
+      continue;
     }
     if (line.startsWith('пока ') && line.endsWith('{')) {
       let c = line.slice(5, -1).replace(/\s+то\s*$/, '').replace(/\bи\b/g,'and').replace(/\bили\b/g,'or');
-      out.push(pad() + 'while ' + c + ':'); indent++; continue;
+      out.push(pad() + 'while ' + c + ':'); 
+      indent++; 
+      continue;
     }
+    
+    // Функции
     if (line.startsWith('функция ') && line.endsWith('{')) { 
-      out.push(pad() + 'def ' + line.slice(8, -1).trim() + ':'); indent++; continue; 
+      out.push(pad() + 'def ' + line.slice(8, -1).trim() + ':'); 
+      indent++; 
+      continue; 
     }
+    
+    // Остальные команды
     if (line.startsWith('сказать ')) { out.push(pad() + 'print(' + line.slice(8).trim() + ')'); continue; }
     if (line.startsWith('пусть ')) { out.push(pad() + line.slice(6).trim()); continue; }
     if (line.startsWith('вернуть ')) { out.push(pad() + 'return ' + line.slice(8).trim()); continue; }
+    
     out.push(pad() + line);
   }
-  clearConsole(); logConsole('🐍 Python:', 'info'); logConsole(out.join('\n'), 'ok');
+  
+  clearConsole(); 
+  logConsole('🐍 Сгенерированный Python:', 'info'); 
+  logConsole(out.join('\n'), 'ok');
 };
-
-/* ================== ПОДЕЛИТЬСЯ КОДОМ ================== */
+      /* ================== ПОДЕЛИТЬСЯ КОДОМ ================== */
 document.getElementById('shareBtn').onclick = () => {
   try {
-    const encoded = btoa(unescape(encodeURIComponent(editor.value)));
+    const code = editor.value;
+    // Кодируем код в Base64, чтобы передать его в ссылке
+    const encoded = btoa(unescape(encodeURIComponent(code)));
     const url = window.location.origin + window.location.pathname + '?code=' + encoded;
+    
     navigator.clipboard.writeText(url);
     alert('🔗 Ссылка на код скопирована! Отправь её другу.');
-  } catch (e) { alert('Ошибка при создании ссылки: ' + e.message); }
+  } catch (e) {
+    alert('Ошибка при создании ссылки: ' + e.message);
+  }
 };
 
 /* ================== ГОРЯЧИЕ КЛАВИШИ ================== */
 editor.addEventListener('keydown', (e) => {
+  // Ctrl+Enter или Cmd+Enter — Запуск кода
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { 
-    e.preventDefault(); runCode(); 
+    e.preventDefault(); 
+    runCode(); 
   }
+  
+  // Tab — вставка двух пробелов (отступ)
   if (e.key === 'Tab') { 
     e.preventDefault(); 
     const s = editor.selectionStart; 
@@ -1053,7 +656,7 @@ editor.addEventListener('keydown', (e) => {
     updateHighlight(); 
   }
 });
-  /* ================== МОДАЛЬНОЕ ОКНО БОТА ================== */
+      /* ================== МОДАЛЬНОЕ ОКНО БОТА ================== */
 const botBtn = document.getElementById('botBtn');
 const botModal = document.getElementById('botModal');
 const modalCancel = document.getElementById('modalCancel');
@@ -1115,30 +718,30 @@ modalActivate.onclick = async () => {
       logConsole('✅ Сообщение успешно отправлено в чат!', 'ok');
     }
     
-    // Закрываем окно через 1.5 секунды и очищаем поля
+    // Закрываем окно через 1.5 секунды
     setTimeout(() => { 
       botModal.classList.remove('open'); 
       document.getElementById('botToken').value = ''; 
       document.getElementById('botChatId').value = ''; 
-      modalActivate.disabled = false; 
-      modalActivate.textContent = '⚡ Активировать'; 
     }, 1500);
     
   } catch (err) { 
     logConsole('❌ Ошибка сети: ' + err.message, 'err'); 
+  } finally { 
     modalActivate.disabled = false; 
     modalActivate.textContent = '⚡ Активировать'; 
   }
 };
-  /* ================== УМНЫЙ ЛОКАЛЬНЫЙ БОТ ================== */
+      /* ================== ЧАТ С ЛОКАЛЬНЫМ БОТОМ ================== */
 const aiChat = document.getElementById('aiChat');
 const aiInput = document.getElementById('aiInput');
 const aiSendBtn = document.getElementById('aiSendBtn');
 
 async function sendToAI() {
-  const text = aiInput.value.trim(); if(!text) return;
+  const text = aiInput.value.trim(); 
+  if(!text) return;
 
-  // Выводим сообщение пользователя
+  // 1. Выводим сообщение пользователя в чат
   const userMsg = document.createElement('div');
   userMsg.className = 'msg user';
   userMsg.textContent = text;
@@ -1147,7 +750,7 @@ async function sendToAI() {
   aiInput.value = '';
   aiChat.scrollTop = aiChat.scrollHeight;
 
-  // Создаем сообщение бота
+  // 2. Создаем пузырь для ответа бота (пока пустой)
   const botMsg = document.createElement('div');
   botMsg.className = 'msg bot';
   aiChat.appendChild(botMsg);
@@ -1156,7 +759,7 @@ async function sendToAI() {
   let answer = "";
   let codeToInject = "";
 
-  // Умные ответы на вопросы
+  // 3. Умные ответы на обычные вопросы
   const now = new Date();
   if (cmd.includes('привет')) {
     answer = "Привет, разработчик! Напиши <b>/help</b>, чтобы увидеть список моих команд.";
@@ -1166,23 +769,83 @@ async function sendToAI() {
     answer = "Сегодня " + now.toLocaleDateString('ru-RU', { weekday: 'long' }) + ".";
   } else if (cmd.includes('какое число') || cmd.includes('какая дата')) {
     answer = "Сегодня " + now.toLocaleDateString('ru-RU') + ".";
+  } else {
+    // Если это не простой вопрос, значит это команда (обработаем в следующей части)
+    answer = "🤔 Думаю над командой...";
+  }
+
+  // 4. Выводим ответ бота
+  botMsg.innerHTML = answer;
+  aiChat.scrollTop = aiChat.scrollHeight;
+}
+
+// Обработчики отправки
+aiSendBtn.onclick = sendToAI;
+aiInput.addEventListener('keydown', (e) => { 
+  if (e.key === 'Enter' && !e.shiftKey) { 
+    e.preventDefault(); 
+    sendToAI(); 
   } 
-  // База команд (25 штук)
+});
+      async function sendToAI() {
+  const text = aiInput.value.trim(); if(!text) return;
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = text;
+  aiChat.appendChild(userMsg);
+  
+  aiInput.value = '';
+  aiChat.scrollTop = aiChat.scrollHeight;
+
+  const botMsg = document.createElement('div');
+  botMsg.className = 'msg bot';
+  aiChat.appendChild(botMsg);
+
+  const cmd = text.toLowerCase().trim();
+  let answer = "";
+  let codeToInject = "";
+  const now = new Date();
+
+  // --- Умные ответы ---
+  if (cmd.includes('привет')) {
+    answer = "Привет, разработчик! Напиши <b>/help</b>, чтобы увидеть список моих команд.";
+  } else if (cmd.includes('как дела')) {
+    answer = "У меня всё отлично! Код компилируется без ошибок. А у тебя как?";
+  } else if (cmd.includes('какой день')) {
+    answer = "Сегодня " + now.toLocaleDateString('ru-RU', { weekday: 'long' }) + ".";
+  } else if (cmd.includes('какое число') || cmd.includes('какая дата')) {
+    answer = "Сегодня " + now.toLocaleDateString('ru-RU') + ".";
+  } 
+  // --- СЛОВАРЬ КОМАНД (Часть 1) ---
   else {
     const C = {
       '/help': { t: "📋 <b>Команды:</b><br>/калькулятор, /факториал, /фибоначчи, /матрица, /взлом, /пароль, /угадай, /викторина, /тг_бот, /http, /погода, /массивы, /словари, /классы, /циклы, /функции, /условия, /время, /очистить, /js, /python, /ошибка, /секрет, /шутка", c: "" },
+      
       '/калькулятор': { t: "Готово! Жми ▶ Запустить.", c: `сказать "🧮 КАЛЬКУЛЯТОР"\nпусть a = ввод "Введи 1-е число:"\nпусть b = ввод "Введи 2-е число:"\nпусть д = ввод "Действие (+, -, *, /):"\nесли д == "+" то {\n  сказать "Сумма: " + (a + b)\n} иначе {\n  если д == "-" то {\n    сказать "Разность: " + (a - b)\n  } иначе {\n    если д == "*" то {\n      сказать "Умножение: " + (a * b)\n    } иначе {\n      если д == "/" то {\n        сказать "Деление: " + (a / b)\n      }\n    }\n  }\n}` },
+      
       '/факториал': { t: "Функция факториала добавлена.", c: `функция факториал(n) {\n  пусть res = 1\n  пусть i = 1\n  пока i <= n то {\n    res = res * i\n    i = i + 1\n  }\n  вернуть res\n}\nсказать "5! = " + факториал(5)` },
+      
       '/фибоначчи': { t: "Числа Фибоначчи готовы.", c: `пусть a = 0\nпусть b = 1\nсказать "Фибоначчи:"\nповторить 10 раз {\n  сказать a\n  пусть temp = a + b\n  a = b\n  b = temp\n}` },
+      
       '/матрица': { t: "Матрица запущена.", c: `сказать "🟢 МАТРИЦА"\nпусть i = 1\nпока i <= 30 то {\n  сказать "01010110 " + случайное(1000,9999) + " 11010 " + случайное(10,99)\n  i = i + 1\n}` },
+      
       '/взлом': { t: "Взлом Пентагона начат.", c: `сказать "💻 ВЗЛОМ..."\nпусть i = 1\nпока i <= 20 то {\n  сказать "📡 IP: " + случайное(10,255) + "." + случайное(10,255) + " ... ДОСТУП ПОЛУЧЕН"\n  i = i + 1\n}\nсказать "💀 СИСТЕМА ВЗЛОМАНА"` },
+      
       '/пароль': { t: "Генератор паролей.", c: `пусть пароль = ""\nпусть симв = "abcdefghijklmnopqrstuvwxyz0123456789"\nпусть i = 0\nпока i < 12 то {\n  пароль = пароль + симв[случайное(0, 35)]\n  i = i + 1\n}\nсказать "Пароль: " + пароль` },
+      
       '/угадай': { t: "Игра 'Угадай число'.", c: `сказать "🎲 УГАДАЙ (1-10)"\nпусть секрет = случайное(1, 10)\nпусть попытка = ввод "Твой вариант:"\nесли попытка == секрет то {\n  сказать "🎉 Угадал!"\n} иначе {\n  сказать "❌ Мимо! Было " + секрет\n}` },
+      
       '/викторина': { t: "Викторина готова.", c: `сказать "❓ ВИКТОРИНА"\nпусть баллы = 0\nпусть o1 = ввод "2+2=?"\nесли o1 == "4" то {\n  баллы = баллы + 1\n}\nсказать "Результат: " + баллы` },
+      
       '/тг_бот': { t: "Шаблон TG-бота.", c: `сказать "🤖 ТГ-бот..."\nпусть токен = "12345:ABC"\nсказать "Готов!"` },
+      
       '/http': { t: "HTTP запрос.", c: `сказать "Запрос API..."\nпусть d = получить "https://api.github.com/users/torvalds"\nсказать "Имя: " + d.name` },
+      
       '/погода': { t: "Симулятор погоды.", c: `сказать "🌤 Погода..."\nпусть t = случайное(-15, 35)\nесли t > 0 то {\n  сказать "На улице " + t + "°C. Тепло!"\n} иначе {\n  сказать "На улице " + t + "°C. Надевай шапку!"\n}` },
-      '/массивы': { t: "Пример массивов.", c: `пусть ф = ["яблоко", "банан"]\nсказать "Всего: " + размер ф\nдобавить_в ф "груша"\nсказать "Теперь: " + размер ф` },
+      
+      // Продолжение словаря в следующей части...
+            '/массивы': { t: "Пример массивов.", c: `пусть ф = ["яблоко", "банан"]\nсказать "Всего: " + размер ф\nдобавить_в ф "груша"\nсказать "Теперь: " + размер ф` },
       '/словари': { t: "Пример словарей.", c: `пусть и = {"имя": "Герой", "hp": 100}\nсказать "Имя: " + и["имя"]\nи["hp"] = 80\nсказать "HP: " + и["hp"]` },
       '/классы': { t: "Пример ООП.", c: `класс Герой {\n  функция создать(имя) {\n    пусть это.имя = имя\n  }\n  функция крик() {\n    сказать это.имя + ": Ура!"\n  }\n}\nпусть я = новый Герой("Иван")\nя.крик()` },
       '/циклы': { t: "Примеры циклов.", c: `сказать "Пока:"\nпусть i = 1\nпока i <= 3 то {\n  сказать i\n  i = i + 1\n}\nповторить 2 раз {\n  сказать "Ура!"\n}` },
@@ -1197,12 +860,15 @@ async function sendToAI() {
       '/шутка': { t: "— Почему программисты путают Хэллоуин и Рождество? — Потому что OCT 31 == DEC 25!", c: "" }
     };
 
+    // Обработка команд
     if (C[cmd]) {
       answer = C[cmd].t;
       codeToInject = C[cmd].c;
 
       if (codeToInject === "CLEAR") {
-        editor.value = ""; updateHighlight(); document.getElementById('bc-dom-output').innerHTML = '';
+        editor.value = ""; 
+        updateHighlight(); 
+        document.getElementById('bc-dom-output').innerHTML = '';
       } else if (codeToInject === "JS") {
         document.getElementById('jsBtn').click();
       } else if (codeToInject === "PY") {
@@ -1217,49 +883,104 @@ async function sendToAI() {
     }
   }
 
+  // Выводим ответ в чат
   botMsg.innerHTML = answer;
   aiChat.scrollTop = aiChat.scrollHeight;
-}
-
-aiSendBtn.onclick = sendToAI;
-aiInput.addEventListener('keydown', (e) => { 
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendToAI(); } 
-});
-
-/* ================== ЗАГРУЗКА ИЗ ССЫЛКИ ================== */
+      }
+      /* ================== ЗАГРУЗКА КОДА ИЗ ССЫЛКИ ================== */
 window.addEventListener('load', () => {
+  // Получаем параметры из URL (то, что идет после знака ?)
   const urlParams = new URLSearchParams(window.location.search);
   const sharedCode = urlParams.get('code');
   
   if (sharedCode) {
     try {
+      // Расшифровываем Base64 код из ссылки
       editor.value = decodeURIComponent(escape(atob(sharedCode)));
       updateHighlight();
-      logConsole('✅ Код загружен из ссылки!', 'ok');
+      logConsole('✅ Код успешно загружен из ссылки!', 'ok');
     } catch (e) {
-      logConsole('❌ Ошибка чтения кода из ссылки.', 'err');
+      logConsole('❌ Ошибка чтения кода из ссылки (поврежденный URL).', 'err');
     }
   } else {
-    editor.value = `// Добро пожаловать в BC+ IDE v3.0!\n// Справа тебе поможет локальный бот.\n\nсказать "Привет, разработчик!"\nпусть имя = "друг"\nсказать "Привет, " + имя + "!"\n\n// Попробуй команду ИИ:\nии "Напиши короткое приветствие на русском"`;
+    // Стартовый код для новых пользователей (если нет ссылки)
+    editor.value = `// Добро пожаловать в BC+ IDE v3.0!
+// Справа тебе поможет локальный бот.
+
+сказать "Привет, разработчик!"
+пусть имя = "друг"
+сказать "Привет, " + имя + "!"
+
+// Попробуй команду ИИ (напиши /help в чат):
+ии "Напиши короткое приветствие на русском"`;
   }
+  
+  // Обязательно обновляем подсветку после вставки кода
   updateHighlight();
 });
-
-/* ================== ДОКУМЕНТАЦИЯ ================== */
+      /* ================== ДОКУМЕНТАЦИЯ ================== */
 document.getElementById('docsContent').innerHTML = `
   <h1>📚 Полное руководство по BC+</h1>
-  <p>Добро пожаловать в официальную документацию языка BC+.</p>
-  <h2>1. Переменные (пусть)</h2>
-  <pre><code>пусть имя = "Ваня"\nпусть возраст = 25</code></pre>
-  <h2>2. Вывод (сказать)</h2>
-  <pre><code>сказать "Привет, мир!"</code></pre>
-  <h2>3. Условия</h2>
-  <pre><code>если возраст >= 18 и есть_паспорт то {\n  сказать "Доступ разрешён"\n} иначе {\n  сказать "Запрещено"\n}</code></pre>
-  <h2>4. Циклы</h2>
-  <pre><code>пусть i = 1\nпока i <= 5 то {\n  сказать "Шаг " + i\n  i = i + 1\n}</code></pre>
-  <h2>5. Локальный бот</h2>
-  <p>Встроенный бот справа понимает 25 команд (напиши /help).</p>
+  <p>Добро пожаловать в официальную документацию языка BC+. Здесь ты найдешь все: от простых переменных до создания игр и ботов.</p>
+  
+  <h2>1. Основы</h2>
+  <p>Команда <code>сказать</code> выводит текст в отладчик. Переменные создаются словом <code>пусть</code>.</p>
+  <pre><code>сказать "Привет, мир!"
+пусть имя = "Ваня"
+пусть возраст = 25</code></pre>
+  
+  <h2>2. Условия</h2>
+  <p>Используй <code>если</code> и <code>иначе</code> для проверки условий. Можно использовать <code>иначе если</code>.</p>
+  <pre><code>если возраст >= 18 и есть_паспорт то {
+  сказать "Доступ разрешён"
+} иначе если возраст >= 14 то {
+  сказать "Доступ частично"
+} иначе {
+  сказать "Запрещено"
+}</code></pre>
+  
+  <h2>3. Циклы</h2>
+  <p>Цикл <code>пока</code> работает до выполнения условия, а <code>повторить N раз</code> — заданное количество раз.</p>
+  <pre><code>пусть i = 1
+пока i <= 5 то {
+  сказать "Шаг " + i
+  i = i + 1
+}
+повторить 3 раз {
+  сказать "Ура!"
+}</code></pre>
+
+  <h2>4. Функции и Классы</h2>
+  <p>Функции возвращают значения через <code>вернуть</code>.</p>
+  <pre><code>функция умн(a, b) {
+  вернуть a * b
+}
+сказать умн(6, 7)</code></pre>
+
+  <h2>5. Массивы и Словари</h2>
+  <pre><code>пусть ф = ["яблоко", "банан"]
+добавить_в ф "груша"
+сказать размер ф
+сказать ф[0]</code></pre>
+
+  <h2>6. Работа с ИИ и Ботами</h2>
+  <p>Вызови ИИ прямо в коде или активируй реального бота через кнопку ⚡ Бот.</p>
+  <pre><code>пусть ответ = спросить_ии "Напиши стих про код"
+сказать ответ</code></pre>
+
+  <h2>7. Создание 2D-игр (Canvas)</h2>
+  <p>Мы добавили графические команды! Обязательно используй <code>подождать 15</code> в игровом цикле, чтобы страница не зависла.</p>
+  <pre><code>очистить_экран "#111"
+нарисовать_круг 100, 100, 30, "red"
+нарисовать_квадрат 200, 200, 50, 50, "blue"
+подождать 15</code></pre>
+
+  <h2>8. Внешние Библиотеки</h2>
+  <p>Ты можешь загрузить любую JS-библиотеку по ссылке (CDN) и использовать её.</p>
+  <pre><code>подключить "https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"</code></pre>
 `;
+      /* ================== КОНЕЦ СКРИПТА ================== */
+console.log('BC+ IDE v3.0 успешно загружена!');
 </script>
 </body>
 </html>
