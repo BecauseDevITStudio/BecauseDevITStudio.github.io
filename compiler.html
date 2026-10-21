@@ -3,50 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC+ IDE v4.1 — BecauseDev Studio</title>
+<title>BC+ IDE v4.1 — Halloween Edition 🎃</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0e1a; --card: #141b2d; --card2: #1a2338;
-  --bg-code: #050810; --accent: #00e0ff; --accent2: #7c5cff;
-  --accent3: #00ffa3; --danger: #ff5f56; --bc: #ff6b35;
-  --bc2: #ff9558; --ai: #a855f7; --text: #e6edf7;
-  --muted: #8b9bb4; --border: rgba(0,224,255,0.15);
+  --bg: #0a0514; /* Мрачный фиолетово-черный */
+  --card: #1a0f2e;
+  --card2: #24163d;
+  --bg-code: #05020a;
+  --accent: #ff6600; /* Тыквенный оранжевый */
+  --accent2: #8a2be2; /* Колдовской фиолетовый */
+  --accent3: #39ff14; /* Токсично-зеленый */
+  --danger: #ff3333;
+  --bc: #ff3300;
+  --bc2: #ff9933;
+  --ai: #a855f7;
+  --text: #fcece0;
+  --muted: #a08f9e;
+  --border: rgba(255, 102, 0, 0.25);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text);
-  line-height: 1.6; height: 100vh; overflow: hidden; display: flex; flex-direction: column;
-  background-image: radial-gradient(circle at 15% 10%, rgba(124,92,255,.15), transparent 40%),
-                    radial-gradient(circle at 85% 20%, rgba(0,224,255,.12), transparent 40%);
+  font-family: 'Montserrat', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+  height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+  background-image: radial-gradient(circle at 10% 10%, rgba(138,43,226,.15), transparent 40%),
+                    radial-gradient(circle at 90% 90%, rgba(255,102,0,.15), transparent 40%);
   background-attachment: fixed;
 }
 a { color: var(--accent); text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 
+/* Хэллоуинская паутина по углам */
+body::before, body::after {
+  content: ''; position: fixed; width: 120px; height: 120px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,100 M0,20 L80,100 M20,0 L100,80 M0,50 L50,100 M50,0 L100,50" stroke="rgba(255,102,0,0.2)" stroke-width="1.5"/></svg>');
+  background-size: cover; pointer-events: none; z-index: 9999;
+}
+body::before { top: 0; left: 0; }
+body::after { bottom: 0; right: 0; transform: rotate(180deg); }
+
 /* Шапка */
 header {
   padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
-  background: rgba(10,14,26,0.95); border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10;
+  background: rgba(10,5,20,0.9); backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--border); flex-shrink: 0; z-index: 10;
 }
-.logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-.logo span { color: var(--bc); font-family: monospace; }
+.logo { 
+  font-family: 'Creepster', cursive; font-size: 1.6rem; font-weight: 800;
+  color: var(--accent); display: flex; align-items: center; gap: 8px;
+  text-shadow: 0 0 10px var(--accent);
+}
+.logo span { color: var(--accent2); font-family: monospace; text-shadow: none; }
 .tabs { display: flex; gap: 10px; }
 .tab-btn {
   background: transparent; border: none; color: var(--muted); font-weight: 600;
   padding: 8px 16px; border-radius: 8px; transition: 0.3s; font-size: 0.9rem;
 }
-.tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-.tab-btn.active { color: var(--accent); background: rgba(0,224,255,0.1); }
+.tab-btn:hover { color: var(--accent); background: rgba(255,102,0,0.1); }
+.tab-btn.active { color: var(--accent); background: rgba(255,102,0,0.2); border: 1px solid var(--accent); }
 
 /* Рабочая область */
 .workspace { display: flex; flex: 1; overflow: hidden; }
 .view { display: none; width: 100%; height: 100%; }
 .view.active { display: flex; }
-.editor-panel { flex: 1; display: flex; flex-direction: column; border-right: 1px solid var(--border); min-width: 0; background: var(--card); }
+  /* Панели */
+.editor-panel { flex: 1; display: flex; flex-direction: column; border-right: 2px solid var(--border); min-width: 0; background: var(--card); }
 .side-panel { width: 400px; display: flex; flex-direction: column; background: var(--card); flex-shrink: 0; }
-  /* Верхняя панель редактора */
+
+/* Верхняя панель файла */
 .editor-topbar {
-  padding: 12px 16px; background: rgba(0,224,255,0.05); border-bottom: 1px solid var(--border);
+  padding: 12px 16px; background: rgba(255,102,0,0.05); border-bottom: 1px solid var(--border);
   display: flex; justify-content: space-between; align-items: center; font-family: monospace; font-size: 0.85rem; color: var(--muted);
 }
 
@@ -56,25 +83,25 @@ header {
   padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 0.85rem;
   border: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 6px;
 }
-.btn:hover { transform: translateY(-2px); }
-.btn-run { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #051018; box-shadow: 0 4px 15px rgba(0,255,163,0.3); }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-run { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #051018; box-shadow: 0 4px 15px rgba(57,255,20,0.3); }
 .btn-clear { background: transparent; color: var(--text); border: 1px solid var(--border); }
 .btn-clear:hover { border-color: var(--danger); color: var(--danger); }
-.btn-js { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #051018; }
+.btn-js { background: linear-gradient(135deg, var(--accent2), var(--ai)); color: #fff; }
 .btn-py { background: linear-gradient(135deg, #3776ab, #ffd343); color: #fff; }
-.btn-bot { background: linear-gradient(135deg, var(--bc), var(--bc2)); color: #fff; }
+.btn-bot { background: linear-gradient(135deg, var(--bc), var(--accent)); color: #fff; }
 .btn-share { background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #000; }
 
 /* Область редактора */
 .editor-wrap { display: flex; flex: 1; position: relative; overflow: hidden; }
 .line-numbers {
-  padding: 16px 12px; background: rgba(0,224,255,0.02); color: var(--muted);
+  padding: 16px 12px; background: rgba(255,102,0,0.03); color: var(--muted);
   font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.65;
   text-align: right; min-width: 50px; user-select: none; overflow: hidden; border-right: 1px solid var(--border);
 }
 .code-area { position: relative; flex: 1; overflow: hidden; }
 #editor {
-  background: transparent !important; color: transparent !important; caret-color: #e6edf7 !important;
+  background: transparent !important; color: transparent !important; caret-color: var(--accent) !important;
   resize: none !important; outline: none !important; position: absolute; top: 0; left: 0;
   width: 100%; height: 100%; padding: 16px; font-family: 'Consolas', monospace;
   font-size: 14px; line-height: 1.65; white-space: pre; z-index: 2;
@@ -82,74 +109,74 @@ header {
 .highlight {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 16px;
   font-family: 'Consolas', monospace; font-size: 14px; line-height: 1.65;
-  white-space: pre; color: #e6edf7; background: transparent; pointer-events: none; z-index: 1; overflow: auto;
+  white-space: pre; color: var(--text); background: transparent; pointer-events: none; z-index: 1; overflow: auto;
 }
 
-/* Цвета подсветки синтаксиса */
-.line-error { color: var(--danger) !important; font-weight: bold; background: rgba(255,95,86,0.15); border-radius: 4px; }
+/* Цвета подсветки синтаксиса (жуткие) */
+.line-error { color: var(--danger) !important; font-weight: bold; background: rgba(255,51,51,0.15); border-radius: 4px; }
 .c-comment { color: #6a9955; font-style: italic; }
-.c-string { color: #ce9178; } .c-number { color: #b5cea8; }
-.c-keyword { color: #c586c0; font-weight: 600; } .c-builtin { color: #4fc1ff; }
-.c-func { color: #dcdcaa; } .c-bool { color: #569cd6; } .c-operator { color: #d4a0ff; }
+.c-string { color: #ff9933; } .c-number { color: #39ff14; }
+.c-keyword { color: #ff6600; font-weight: 600; } .c-builtin { color: #8a2be2; }
+.c-func { color: #dcdcaa; } .c-bool { color: #a855f7; } .c-operator { color: #ff6600; }
 
-/* НОВОЕ: Меню автодополнения (IntelliSense) */
+/* Меню автодополнения (IntelliSense) */
 .autocomplete-menu {
   position: absolute; bottom: 20px; left: 20px; background: var(--card2);
   border: 1px solid var(--accent); border-radius: 8px; padding: 5px;
   display: none; flex-direction: column; gap: 4px; z-index: 100;
-  box-shadow: 0 10px 25px rgba(0,224,255,0.3); max-height: 200px; overflow-y: auto; min-width: 180px;
+  box-shadow: 0 10px 25px rgba(255,102,0,0.3); max-height: 200px; overflow-y: auto; min-width: 180px;
 }
 .autocomplete-item {
   padding: 8px 12px; color: var(--text); font-family: 'Consolas', monospace;
   font-size: 14px; cursor: pointer; border-radius: 4px; display: flex;
   justify-content: space-between; transition: 0.2s;
 }
-.autocomplete-item:hover, .autocomplete-item.active { background: rgba(0,224,255,0.2); color: var(--accent3); }
+.autocomplete-item:hover, .autocomplete-item.active { background: rgba(255,102,0,0.2); color: var(--accent3); }
 .autocomplete-type { font-size: 0.7rem; color: var(--muted); margin-left: 10px; }
 
-/* 2D Экран для игр (скрыт по умолчанию) */
+/* 2D Экран для игр */
 #gameScreenContainer { display: none; border-top: 2px solid var(--accent); background: #000; position: relative; flex-shrink: 0; }
 #gameCanvas { width: 100%; height: 300px; display: block; }
   /* Блок Отладчика (Консоль) */
 .console-panel { height: 220px; display: flex; flex-direction: column; flex-shrink: 0; }
-.console-head { padding: 10px 16px; background: rgba(255,107,53,0.05); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--bc); display: flex; justify-content: space-between; font-family: monospace; }
+.console-head { padding: 10px 16px; background: rgba(255,102,0,0.05); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--accent); display: flex; justify-content: space-between; font-family: monospace; }
 .console-body { flex: 1; background: var(--bg-code); padding: 12px 16px; overflow-y: auto; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; line-height: 1.5; }
 .log-err { color: var(--danger); } .log-ok { color: var(--accent3); } .log-info { color: var(--muted); }
 
 /* Чат с локальным ботом */
 .ai-panel { flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid var(--border); min-height: 0; }
-.ai-head { background: rgba(168,85,247,0.1); color: var(--ai); padding: 12px 16px; font-weight: bold; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(168,85,247,0.2); }
+.ai-head { background: rgba(138,43,226,0.1); color: var(--accent2); padding: 12px 16px; font-weight: bold; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
 .ai-chat { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
 .msg { padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; max-width: 90%; word-wrap: break-word; }
-.msg.bot { background: var(--bg-code); border: 1px solid var(--ai); color: var(--text); align-self: flex-start; border-bottom-left-radius: 2px; }
-.msg.user { background: rgba(168,85,247,0.2); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
+.msg.bot { background: var(--bg-code); border: 1px solid var(--accent2); color: var(--text); align-self: flex-start; border-bottom-left-radius: 2px; }
+.msg.user { background: rgba(138,43,226,0.2); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
 .msg pre { background: #000; padding: 10px; border-radius: 8px; overflow-x: auto; margin: 8px 0; font-family: monospace; font-size: 0.8rem; border: 1px solid var(--border); }
 .msg code { background: #000; padding: 2px 4px; border-radius: 4px; font-family: monospace; color: var(--accent3); }
 .ai-input-box { padding: 12px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--card); }
 .ai-input { flex: 1; background: var(--bg-code); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: #fff; outline: none; resize: none; font-family: inherit; font-size: 0.9rem; }
-.ai-input:focus { border-color: var(--ai); }
-.ai-send { background: var(--ai); color: #fff; border: none; border-radius: 8px; padding: 0 16px; font-weight: bold; }
+.ai-input:focus { border-color: var(--accent2); }
+.ai-send { background: var(--accent2); color: #fff; border: none; border-radius: 8px; padding: 0 16px; font-weight: bold; }
+.ai-send:hover { background: #7b24c9; }
 
 /* Модальное окно */
-.modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.open { display: flex; }
-.modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; }
-.modal h3 { font-size: 1.4rem; margin-bottom: 8px; }
+.modal { background: var(--card); border: 2px solid var(--accent); border-radius: 16px; padding: 28px; max-width: 480px; width: 100%; box-shadow: 0 0 30px rgba(255,102,0,0.2); }
+.modal h3 { font-family: 'Creepster', cursive; font-size: 1.8rem; margin-bottom: 8px; color: var(--accent); }
 .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
 .modal label { display: block; font-size: 0.85rem; color: var(--muted); margin: 16px 0 8px; }
 .modal input { width: 100%; padding: 12px; background: var(--bg-code); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: monospace; outline: none; }
 .modal-btns { display: flex; gap: 12px; margin-top: 24px; }
 
-/* Документация */
+/* Документация (Гримуар) */
 .docs-container { width: 100%; height: 100%; overflow-y: auto; padding: 40px 60px; background: var(--bg); }
 .docs-inner { max-width: 900px; margin: 0 auto; }
-.docs-inner h1 { font-size: 2.5rem; margin-bottom: 20px; color: var(--accent); }
+.docs-inner h1 { font-family: 'Creepster', cursive; font-size: 3rem; margin-bottom: 20px; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
 .docs-inner h2 { font-size: 1.8rem; margin: 40px 0 16px; color: var(--accent2); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 .docs-inner p { font-size: 1rem; color: var(--muted); margin-bottom: 12px; }
-.docs-inner code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--bc2); }
+.docs-inner code { background: var(--bg-code); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--accent3); }
 .docs-inner pre { background: var(--bg-code); padding: 16px; border-radius: 10px; overflow-x: auto; margin: 16px 0; border: 1px solid var(--border); }
 
-/* Адаптив для телефонов */
 @media (max-width: 900px) {
   .workspace { flex-direction: column; }
   .editor-panel { height: 60vh; border-right: none; border-bottom: 1px solid var(--border); }
@@ -162,10 +189,10 @@ header {
 
 <!-- ШАПКА САЙТА -->
 <header>
-  <div class="logo"><span>&lt;/&gt;</span> BC+ IDE <span>v4.1</span></div>
+  <div class="logo">🎃 BC+ IDE <span>v4.1</span></div>
   <div class="tabs">
-    <button class="tab-btn active" id="tabIde" onclick="switchTab('ide')">💻 Компилятор</button>
-    <button class="tab-btn" id="tabDocs" onclick="switchTab('docs')">📚 Документация</button>
+    <button class="tab-btn active" id="tabIde" onclick="switchTab('ide')">🎃 Компилятор</button>
+    <button class="tab-btn" id="tabDocs" onclick="switchTab('docs')">📜 Гримуар</button>
   </div>
   <a href="index.html" style="font-size:.85rem;color:var(--muted);">← На сайт</a>
 </header>
@@ -180,12 +207,12 @@ header {
       
       <div class="editor-topbar">
         <div style="display:flex;align-items:center;gap:10px;">
-          <span style="color:#ff5f56;">●</span>
-          <span style="color:#ffbd2e;">●</span>
-          <span style="color:#27c93f;">●</span>
+          <span style="color:#ff3333;">●</span>
+          <span style="color:var(--accent);">●</span>
+          <span style="color:var(--accent3);">●</span>
           <span style="margin-left:10px;">main.bc+</span>
         </div>
-        <span>BC+ v4.1 · UTF-8</span>
+        <span>🕸️ BC+ v4.1 · UTF-8</span>
       </div>
 
       <!-- Кнопки управления -->
@@ -240,7 +267,7 @@ header {
           <span style="font-size:.7rem; opacity:0.7;">Локальный</span>
         </div>
         <div class="ai-chat" id="aiChat">
-          <div class="msg bot">Привет! Напиши <b>/help</b>, чтобы увидеть список команд.</div>
+          <div class="msg bot">Привет! Я локальный бот BC+. Напиши <b>/help</b>, чтобы увидеть список команд.</div>
         </div>
         <div class="ai-input-box">
           <textarea class="ai-input" id="aiInput" rows="1" placeholder="Напиши команду (/help)..."></textarea>
@@ -253,11 +280,11 @@ header {
 
   </div>
   <!-- ^^^ Конец вкладки IDE (view-ide) -->
-    <!-- ВКЛАДКА: ДОКУМЕНТАЦИЯ -->
+    <!-- ВКЛАДКА: ДОКУМЕНТАЦИЯ (ГРИМУАР) -->
   <div id="view-docs" class="view">
     <div class="docs-container">
       <div class="docs-inner" id="docsContent">
-        <h1>Загрузка документации...</h1>
+        <h1>Загрузка гримуара...</h1>
       </div>
     </div>
   </div>
@@ -268,8 +295,8 @@ header {
 <!-- МОДАЛЬНОЕ ОКНО ДЛЯ БОТА -->
 <div class="modal-overlay" id="botModal">
   <div class="modal">
-    <h3>⚡ Активировать бота</h3>
-    <p class="modal-sub">Введи токен бота — он отправит тестовое сообщение.</p>
+    <h3>⚡ Вызвать духа (Бота)</h3>
+    <p class="modal-sub">Введи токен бота — он отправит тестовое сообщение в мир живых.</p>
     
     <label for="botToken">Токен бота</label>
     <input type="text" id="botToken" placeholder="Вставь токен из @BotFather">
@@ -279,14 +306,14 @@ header {
     
     <div class="modal-btns">
       <button class="btn btn-clear" id="modalCancel">Отмена</button>
-      <button class="btn btn-bot" id="modalActivate">⚡ Активировать</button>
+      <button class="btn btn-bot" id="modalActivate">🎃 Активировать</button>
     </div>
   </div>
 </div>
 
 <script>
 /* ============================================================
-   BC+ IDE v4.1 — JavaScript (Начало)
+   BC+ IDE v4.1 HALLOWEEN — JavaScript (Начало)
    ============================================================ */
 
 // Элементы страницы
@@ -667,7 +694,7 @@ function buildBuiltins(logFn) {
     максимум: (...a) => Math.max(...a),
     ввод: (promptText) => window.prompt(promptText || "Введите значение:"),
     
-    // ФИКС ДЛЯ ПЛАВНОЙ АНИМАЦИИ
+    // Плавная пауза для анимаций
     подождать: (ms) => new Promise(r => setTimeout(() => requestAnimationFrame(r), ms)),
     
     получить: async (url) => {
@@ -728,7 +755,7 @@ function buildBuiltins(logFn) {
       if(c) { const ctx = c.getContext('2d'); const img = new Image(); img.src = url; img.onload = () => { ctx.drawImage(img, x, y, w, h); }; }
     },
     конфетти: () => {
-      if (typeof confetti === 'function') confetti();
+      if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, colors: ['#ff6600', '#8a2be2', '#39ff14'] });
       else logFn('❌ Библиотека конфетти не загружена!', 'err');
     }
   };
@@ -744,7 +771,7 @@ async function runCode() {
   if (gameScreen) gameScreen.style.display = 'none';
 
   const code = editor.value.trim();
-  if (!code) { logConsole('// Нечего запускать!', 'info'); return; }
+  if (!code) { logConsole('// Нечего запускать! Напиши хоть одну строчку.', 'info'); return; }
 
   let jsCode;
   try {
@@ -759,7 +786,7 @@ async function runCode() {
     return;
   }
 
-  logConsole('▶ Запуск main.bc+', 'info');
+  logConsole('▶ Запуск main.bc+ 🎃', 'info');
   
   try {
     // Создаем асинхронную функцию (для await ввода, ИИ, загрузки библиотек)
@@ -869,7 +896,7 @@ document.getElementById('shareBtn').onclick = () => {
     const url = window.location.origin + window.location.pathname + '?code=' + encoded;
     
     navigator.clipboard.writeText(url).then(() => {
-      alert('🔗 Ссылка на код скопирована в буфер обмена!');
+      alert('🔗 Ссылка на заклинание скопирована в буфер обмена! 🎃');
     }).catch(() => {
       prompt('Скопируй ссылку вручную:', url);
     });
@@ -883,7 +910,7 @@ const aiInput = document.getElementById('aiInput');
 const aiSendBtn = document.getElementById('aiSendBtn');
 
 const BOT_COMMANDS = {
-  '/help': { t: "📋 <b>Доступные команды:</b><br>/привет, /калькулятор, /тг_бот, /игра_угадай, /массив, /цикл, /функция, /графика, /конфетти, /ии, /пароль, /время, /рандом, /ошибка, /ввод, /сайт, /строка, /словарь, /математика, /очистить, /сброс, /хоррор, /запрос, /таймер, /если.", c: "" },
+  '/help': { t: "📋 <b>Доступные команды:</b><br>/привет, /калькулятор, /тг_бот, /игра_угадай, /массив, /цикл, /функция, /графика, /хэллоуин, /конфетти, /ии, /пароль, /время, /рандом, /ошибка, /ввод, /сайт, /строка, /словарь, /математика, /очистить, /сброс, /хоррор, /запрос, /таймер, /если.", c: "" },
   '/привет': { t: "Привет! Вот твой код:", c: `сказать "Привет, мир!"` },
   '/калькулятор': { t: "Калькулятор:", c: `пусть a = ввод "1-е число:"\nпусть b = ввод "2-е число:"\nпусть sum = a + b\nсказать "Сумма: " + sum` },
   '/тг_бот': { t: "Шаблон TG-бота:", c: `сказать "Я готов стать ботом!"` },
@@ -891,7 +918,8 @@ const BOT_COMMANDS = {
   '/массив': { t: "Работа с массивами:", c: `пусть ф = ["яблоко", "банан"]\nдобавить_в ф "груша"\nсказать ф` },
   '/цикл': { t: "Пример цикла:", c: `повторить 5 раз {\n  сказать "Привет!"\n}` },
   '/функция': { t: "Пример функции:", c: `функция умн(a, b) {\n  вернуть a * b\n}\nсказать умн(6, 7)` },
-  '/графика': { t: "Рисуем 2D-круг:", c: `очистить_экран("#111")\nнарисовать_круг(100, 100, 50, "#00e0ff")` },
+  '/графика': { t: "Рисуем 2D-круг:", c: `очистить_экран("#111")\nнарисовать_круг(100, 100, 50, "#ff6600")` },
+  '/хэллоуин': { t: "🎃 Хэллоуин-салют:", c: `подключить "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"\nочистить_экран("#0a0514")\nнарисовать_круг(400, 150, 60, "#ff6600")\nнарисовать_квадрат(350, 100, 100, 100, "#8a2be2")\nподождать(500)\nконфетти()` },
   '/конфетти': { t: "Салют из библиотеки:", c: `подключить "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"\nподождать(500)\nконфетти()` },
   '/ии': { t: "Запрос к Gemini:", c: `пусть ответ = спросить_ии "Как дела?"\nсказать ответ` },
   '/пароль': { t: "Генератор паролей:", c: `пусть пароль = ""\nповторить 8 раз {\n  пусть код = случайное(33, 126)\n  пароль = пароль + в_строку(код)\n}\nсказать пароль` },
@@ -958,7 +986,7 @@ function sendToAI() {
       addMessage('bot', response.t, response.c);
     }
   } else {
-    addMessage('bot', "Я не знаю такой команды. Напиши <b>/help</b> для списка.");
+    addMessage('bot', "Я не знаю такой команды. Напиши <b>/help</b> для списка заклинаний.");
   }
 }
 
@@ -983,8 +1011,8 @@ modalActivate.onclick = async () => {
   if (!token) { alert('Введи токен бота!'); return; }
 
   modalActivate.disabled = true;
-  modalActivate.textContent = '⏳...';
-  clearConsole(); logConsole('⚡ Подключение к серверу...', 'info');
+  modalActivate.textContent = '⏳ Вызов...';
+  clearConsole(); logConsole('⚡ Подключение к потустороннему миру...', 'info');
 
   try {
     const verifyRes = await fetch(PROXY_URL, {
@@ -995,26 +1023,26 @@ modalActivate.onclick = async () => {
     
     if (!verifyData.ok) {
       logConsole('❌ Ошибка Telegram: ' + verifyData.description, 'err');
-      modalActivate.disabled = false; modalActivate.textContent = '⚡ Активировать';
+      modalActivate.disabled = false; modalActivate.textContent = '🎃 Активировать';
       return;
     }
-    logConsole('✅ Бот: @' + verifyData.result.username, 'ok');
+    logConsole('✅ Дух вызван! Бот: @' + verifyData.result.username, 'ok');
 
     if (chatId) {
       logConsole('📨 Отправка сообщения...', 'info');
       await fetch(PROXY_URL, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ platform: 'telegram', token, action: 'sendMessage', payload: { chat_id: chatId, text: '🎉 Привет от BC+!' } })
+        body: JSON.stringify({ platform: 'telegram', token, action: 'sendMessage', payload: { chat_id: chatId, text: '🎃 Привет от BC+ из мира духов!' } })
       });
       logConsole('✅ Сообщение отправлено!', 'ok');
     }
     setTimeout(() => { 
       botModal.classList.remove('open'); 
-      modalActivate.disabled = false; modalActivate.textContent = '⚡ Активировать'; 
+      modalActivate.disabled = false; modalActivate.textContent = '🎃 Активировать'; 
     }, 1500);
   } catch (err) { 
     logConsole('❌ Ошибка сети: ' + err.message, 'err'); 
-    modalActivate.disabled = false; modalActivate.textContent = '⚡ Активировать'; 
+    modalActivate.disabled = false; modalActivate.textContent = '🎃 Активировать'; 
   }
 };
   /* ================== СИСТЕМА АВТОДОПОЛНЕНИЯ (INTELLISENSE) ================== */
@@ -1178,41 +1206,44 @@ window.addEventListener('load', () => {
       logConsole('❌ Ошибка чтения кода из ссылки.', 'err');
     }
   } else {
-    // Код по умолчанию, если ссылки нет
-    editor.value = `// Добро пожаловать в BC+ IDE v4.1!\n// Справа тебе поможет локальный бот.\n\nсказать "Привет, разработчик!"\nпусть имя = "друг"\nсказать "Привет, " + имя + "!"\n\n// Попробуй команду ИИ:\nии "Напиши короткое приветствие на русском"`;
+    // Код по умолчанию, если ссылки нет (Хэллоуин-версия)
+    editor.value = `// Добро пожаловать в BC+ IDE v4.1 Halloween! 🎃\n// Справа тебе поможет локальный бот (напиши /help).\n\nсказать "Привет, разработчик!"\nпусть дух = "призрак"\nсказать "Привет, " + дух + "!"\n\n// Попробуй команду ИИ:\nии "Напиши короткое страшное приветствие на русском"`;
   }
   
   updateHighlight();
   switchTab('ide');
 });
-  /* ================== ДОКУМЕНТАЦИЯ ================== */
+  /* ================== ДОКУМЕНТАЦИЯ (ГРИМУАР) ================== */
 document.getElementById('docsContent').innerHTML = `
-  <h1>📚 Полное руководство по BC+ (v4.1)</h1>
-  <p>Добро пожаловать в официальную документацию языка BC+. Теперь с автодополнением!</p>
+  <h1>📜 Гримуар BC+ (v4.1)</h1>
+  <p>Добро пожаловать в священную книгу знаний языка BC+. Здесь ты найдешь все заклинания для управления кодом и духами.</p>
   
   <h2>1. Переменные (пусть)</h2>
+  <p>Создавай артефакты для хранения данных:</p>
   <pre><code>пусть имя = "Ваня"\nпусть возраст = 25</code></pre>
   
   <h2>2. Вывод (сказать)</h2>
+  <p>Огласи свои мысли в консоль (Отладчик):</p>
   <pre><code>сказать "Привет, мир!"</code></pre>
   
   <h2>3. Условия и Циклы</h2>
+  <p>Управляй потоками энергии:</p>
   <pre><code>если возраст >= 18 и есть_паспорт {\n  сказать "Доступ разрешён"\n} иначе {\n  сказать "Запрещено"\n}\n\nпусть i = 1\nпока i <= 5 {\n  сказать "Шаг " + i\n  i = i + 1\n}</code></pre>
   
-  <h2>4. Библиотеки (подключить)</h2>
-  <p>Ты можешь скачивать любые JS-библиотеки прямо из кода. Например, для эффектов:</p>
+  <h2>4. Темная магия (Библиотеки)</h2>
+  <p>Ты можешь призывать сторонние JS-библиотеки прямо из кода:</p>
   <pre><code>подключить "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"\nподождать(500)\nконфетти()</code></pre>
 
-  <h2>5. 2D Графика (Игры)</h2>
-  <p>Открывает нижний экран и рисует объекты. Идеально для игр и анимаций:</p>
-  <pre><code>очистить_экран("#111")\nнарисовать_круг(100, 100, 50, "#00e0ff")\nнарисовать_квадрат(200, 100, 50, 50, "#ff0000")\nнарисовать_картинку("ссылка_на_картинку.png", 300, 100, 100, 100)</code></pre>
+  <h2>5. 2D Графика (Иллюзии)</h2>
+  <p>Открывает нижний экран и рисует объекты. Идеально для создания проклятых игр:</p>
+  <pre><code>очистить_экран("#0a0514")\nнарисовать_круг(100, 100, 50, "#ff6600")\nнарисовать_квадрат(200, 100, 50, 50, "#8a2be2")\nнарисовать_картинку("ссылка_на_картинку.png", 300, 100, 100, 100)</code></pre>
   
-  <h2>6. Работа с ИИ</h2>
+  <h2>6. Работа с ИИ (Некромантия)</h2>
   <p>Задай вопрос нейросети (Gemini) прямо из кода:</p>
   <pre><code>пусть ответ = спросить_ии "Как дела?"\nсказать ответ</code></pre>
   
   <h2>7. Локальный бот и Автодополнение</h2>
-  <p>Встроенный бот справа понимает 25 команд (напиши /help). А при наборе кода в редакторе выпадают подсказки — просто нажми <b>Enter</b> или <b>Tab</b>, чтобы вставить нужное слово!</p>
+  <p>Встроенный дух-помощник справа понимает 25 команд (напиши <code>/help</code>). А при наборе кода в редакторе выпадают подсказки — просто нажми <b>Enter</b> или <b>Tab</b>, чтобы вставить нужное слово!</p>
 `;
 </script>
 </body>
